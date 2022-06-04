@@ -10,12 +10,13 @@
 - Created a web server (Node+Express)
 - Created a basic Vue frontend (no functionality yet)
 - Host the frontend + server on Heroku
-- Display the server "database" on the frontend
+- Get and display the server "database" on the frontend
+- Get and display the server "database" on discord
 
 ## TODO:
 
-- Create a faux database on the server. Use this until MongoDB is set up
 - Allow adding to the "database" with the bot
 - Set up MongoDB
 - Re-enable twillio commands
 - Separate out the twillio commands into a separate file
+- Determine if I need to keep Procfile

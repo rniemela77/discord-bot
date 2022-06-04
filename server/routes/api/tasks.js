@@ -1,29 +1,41 @@
+const axios = require("axios");
 const express = require("express");
 // const mongodb = require("mongodb");
 
 const router = express.Router();
+
+let taskList = [
+  {
+    task1: "hello",
+  },
+  {
+    task2: "tkasks",
+  },
+  {
+    task3: "dfssdf",
+  },
+  {
+    task4: "sdfsdf",
+  },
+];
 
 // Get Tasks
 router.get("/", async (req, res) => {
   console.log("GETTING TASKS");
   //   const tasks = await loadTasksCollection();
 
-  const taskList = [
-    {
-      task1: "hello",
-    },
-    {
-      task2: "tkasks",
-    },
-    {
-      task3: "dfssdf",
-    },
-    {
-      task4: "sdfsdf",
-    },
-  ];
   //   res.send(await tasks.find({}).toArray());
   res.send(taskList);
+});
+
+// Add Task
+router.post("/", async (req, res) => {
+  console.log("POSTING TASK");
+  await axios.post("/api/tasks", {
+    task6: req.body.task1,
+  });
+  console.log("POSTED");
+  res.status(201).send();
 });
 
 /*
