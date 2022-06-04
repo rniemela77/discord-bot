@@ -12,11 +12,12 @@
 - Host the frontend + server on Heroku
 - Get and display the server "database" on the frontend
 - Get and display the server "database" on discord
+- Allow discord bot to modify the server "database", and have frontend display the changes
 
 ## TODO:
 
-- Allow adding to the "database" with the bot
 - Set up MongoDB
 - Re-enable twillio commands
 - Separate out the twillio commands into a separate file
 - Determine if I need to keep Procfile
+- Handle API fail errors on the backend, frontend and discord.
