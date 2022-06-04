@@ -10,11 +10,10 @@ app.listen(process.env.PORT || 4000, function () {
 });
 
 console.log("index.js finished");
-console.log("starting sunbot/index.js");
+// console.log("starting sunbot/index.js");
+// var discordbot = require("./sunbot/setup.js");
+// console.log("sunbot/index.js finished");
 
-var discordbot = require("./sunbot/setup.js");
-
-console.log("sunbot/index.js finished");
 // const accountSid = "AC59e92976399298f4bb18dfd3c09bce3d";
 // const authToken = "96631abdcf3e223bf00979e202cfc410";
 // const tclient = require("twilio")(accountSid, authToken);
