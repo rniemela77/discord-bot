@@ -10,12 +10,12 @@
 - Created a web server (Node+Express)
 - Created a basic Vue frontend (no functionality yet)
 - Host the frontend + server on Heroku
+- Display the server "database" on the frontend
 
 ## TODO:
 
-- Develop Vue frontend
-- Have server communicate with frontend (and vice versa)
-- Create a faux database to store the users and their scheduled messages. Use this until MongoDB is set up
+- Create a faux database on the server. Use this until MongoDB is set up
+- Allow adding to the "database" with the bot
 - Set up MongoDB
 - Re-enable twillio commands
 - Separate out the twillio commands into a separate file
