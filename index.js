@@ -1,21 +1,39 @@
 console.log("starting index.js");
 var express = require("express");
 var app = express();
+
 var path = require("path");
+
 app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-app.listen(process.env.PORT || 4000, function () {
-  console.log("Node app is working!");
+  res.sendFile(path.join(__dirname, "/server/public/index.html"));
 });
 
 console.log("index.js finished");
 
-console.log("BOT_TOKEN: " + process.env.BOT_TOKEN);
+if (process.env.NODE_ENV === "production") {
+  console.log("App started in production mode");
 
-console.log("starting sunbot/index.js");
-var discordbot = require("./sunbot/setup.js");
-console.log("sunbot/index.js finished");
+  // Static folder
+  app.use(express.static(__dirname + "/server/public/"));
+
+  // Handle SPA
+  app.get(/.*/, (req, res) =>
+    res.sendFile(__dirname + "/server/public/index.html")
+  );
+}
+
+const port = process.env.PORT || 4000;
+app.listen(port, function () {
+  console.log("Node app is working! port: " + port);
+});
+
+// console.log("BOT_TOKEN: " + process.env.BOT_TOKEN);
+
+// console.log("starting sunbot/index.js");
+// var discordbot = require("./sunbot/setup.js");
+// console.log("sunbot/index.js finished");
+
+// Handle production
 
 // const accountSid = "AC59e92976399298f4bb18dfd3c09bce3d";
 // const authToken = "96631abdcf3e223bf00979e202cfc410";
