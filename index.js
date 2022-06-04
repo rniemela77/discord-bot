@@ -11,6 +11,8 @@ app.listen(process.env.PORT || 4000, function () {
 
 console.log("index.js finished");
 
+console.log("BOT_TOKEN: " + process.env.BOT_TOKEN);
+
 console.log("starting sunbot/index.js");
 var discordbot = require("./sunbot/setup.js");
 console.log("sunbot/index.js finished");
