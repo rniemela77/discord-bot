@@ -31,9 +31,10 @@ router.get("/", async (req, res) => {
 // Add Task
 router.post("/", async (req, res) => {
   console.log("POSTING TASK");
-  await axios.post("/api/tasks", {
-    task6: req.body.task1,
-  });
+  //   await axios.post("/api/tasks", {
+  //     task6: req.body.task1,
+  //   });
+  taskList.push(req.body);
   console.log("POSTED");
   res.status(201).send();
 });

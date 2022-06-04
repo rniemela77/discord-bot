@@ -24,6 +24,7 @@ module.exports = function (client, prefix) {
     //     msg: withMsg,
     //   });
     // }
+    // Get tasks
     if (command === "gettasks") {
       axios
         .get("http://localhost:3000/api/tasks")
@@ -45,25 +46,24 @@ module.exports = function (client, prefix) {
           console.log(error);
         });
     }
-    // if (command === "addtask") {
-    //   const task = args.join(" ");
+    // Add task
+    else if (command === "addtask") {
+      let newTask = {};
 
-    //   console.log("POSTING TASK");
+      // Parse arguments into object
+      let taskKey = args.join(" ").split("[").join("").split("]");
+      newTask[taskKey[0]] = taskKey[1].trim();
 
-    //   router.post("/", async (req, res) => {
-    //     console.log("POSTING TASK");
-    //     await axios.post("/api/tasks", {
-    //       task6: task,
-    //     });
-    //     console.log("POSTED");
-    //     res.status(201).send();
-    //   });
-
-    //   console.log("posted?");
-
-    //   message.reply(`Added task: ${task}`);
-    // } else
-    if (command === "ping") {
+      axios.post("http://localhost:3000/api/tasks", newTask).then(
+        (response) => {
+          console.log(response);
+          message.reply("Task added.");
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else if (command === "ping") {
       const timeTaken = Date.now() - message.createdTimestamp;
       message.reply(`Pong! This message had a latency of ${timeTaken}ms.`);
     } else if (command === "sum") {
@@ -72,6 +72,4 @@ module.exports = function (client, prefix) {
       message.reply(`The sum of all the arguments you provided is ${sum}!`);
     }
   });
-
-  console.log("bot commands finished");
 };
