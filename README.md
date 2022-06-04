@@ -16,6 +16,8 @@
 
 ## TODO:
 
+- Make a way for the frontend to create "rows" on the database
+- Communicate to discord when a row is created
 - Set up MongoDB
 - Re-enable twillio commands
 - Separate out the twillio commands into a separate file
