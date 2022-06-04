@@ -1,16 +1,24 @@
-console.log("starting index.js");
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const app = express();
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
-const path = require("path");
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
 
+// Serve `tasks.js` file on route '/api/tasks'
+const tasks = require("./server/routes/api/tasks");
+app.use("/api/tasks", tasks);
+
+// Serve static assets if in production
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "/server/public/index.html"));
 });
 
-console.log("index.js finished");
-
+// Handle production
 if (process.env.NODE_ENV === "production") {
   console.log("App started in production mode");
 
@@ -23,17 +31,14 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
+// Start server
 const port = process.env.PORT;
-console.log("port: ", port);
 app.listen(port, function () {
   console.log("Node app is working! port: " + port);
 });
 
-// console.log("BOT_TOKEN: " + process.env.BOT_TOKEN);
-
-console.log("starting sunbot/index.js");
+// Initialize bot
 const discordbot = require("./sunbot/setup.js");
-console.log("sunbot/index.js finished");
 
 // Handle production
 
