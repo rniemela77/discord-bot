@@ -1,4 +1,5 @@
 console.log("starting index.js");
+require("dotenv").config();
 const express = require("express");
 const app = express();
 
@@ -22,7 +23,8 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT;
+console.log("port: ", port);
 app.listen(port, function () {
   console.log("Node app is working! port: " + port);
 });
