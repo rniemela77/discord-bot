@@ -4,12 +4,14 @@ import TaskService from "./TaskService";
 const tasks = ref([]);
 
 onMounted(async () => {
-  try {
-    tasks.value = await TaskService.getTasks();
-    console.log(tasks.value);
-  } catch (err) {
-    err.value = err.message;
-  }
+  setInterval(async () => {
+    try {
+      tasks.value = await TaskService.getTasks();
+      console.log(tasks.value);
+    } catch (err) {
+      err.value = err.message;
+    }
+  }, 5000);
 });
 </script>
 
