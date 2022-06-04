@@ -1,8 +1,8 @@
 console.log("starting index.js");
-var express = require("express");
-var app = express();
+const express = require("express");
+const app = express();
 
-var path = require("path");
+const path = require("path");
 
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "/server/public/index.html"));
@@ -30,7 +30,7 @@ app.listen(port, function () {
 // console.log("BOT_TOKEN: " + process.env.BOT_TOKEN);
 
 console.log("starting sunbot/index.js");
-var discordbot = require("./sunbot/setup.js");
+const discordbot = require("./sunbot/setup.js");
 console.log("sunbot/index.js finished");
 
 // Handle production
