@@ -13,9 +13,9 @@
 
 ## TODO:
 
-- Put secret keys in a .env file, which doesn't push to git, to allow for local development
 - Develop Vue frontend
-- Re-enable twillio commands
-- Separate out the twillio commands into a separate file
+- Have server communicate with frontend (and vice versa)
 - Create a faux database to store the users and their scheduled messages. Use this until MongoDB is set up
 - Set up MongoDB
+- Re-enable twillio commands
+- Separate out the twillio commands into a separate file
