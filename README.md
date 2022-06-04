@@ -15,4 +15,4 @@
 - Separate out the discord commands into a separate file
 - Create a faux database to store the users and their scheduled messages. Use this until MongoDB is set up
 - Set up MongoDB
-- Create a frontend with VueJS
+- Put secret keys in a .env file
