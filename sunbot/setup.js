@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 
-const botToken =
-  "OTgyMzkwNTg2MDg4Nzc1NzMx.GGYjUG.z_J3bSa1cY_dIGbH4p7_1Utb6sJez-fLpbhMsE";
+const botToken = process.env.BOT_TOKEN;
 
 const client = new Discord.Client({
   intents: [
