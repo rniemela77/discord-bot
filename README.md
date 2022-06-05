@@ -28,15 +28,15 @@ cd client && npm run dev
 - Get and display the server "database" on discord
 - Allow discord bot to modify the server "database", and have frontend display the changes
 - Allow creating tasks on frontend
+- Added deploy script
 
 ## TODO:
 
-- Communicate to discord when a row is created (have function like sunbot.addedTask())
-- Communicate to frontend when a row is created (Likely not possible. Add refresh button, or do get request periodically on frontend)
-- Have dev script to concurrently run both the server and frontend locally
+- Fix frontend task object when adding new task
+- Trigger discord message when task is added (have function like sunbot.addedTask())
 - Set up MongoDB
 - Re-enable twillio commands
 - Separate out the twillio commands into a separate file
 - Determine if I need to keep Procfile
 - Handle API fail errors on the backend, frontend, and discord
-- Make vue build on deploy
+- Make heroku run deploy script
