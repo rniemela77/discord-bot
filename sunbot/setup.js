@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 
+// Bot settings
 const botToken = process.env.BOT_TOKEN;
+const prefix = "!";
 
 const client = new Discord.Client({
   intents: [
@@ -13,8 +15,7 @@ const client = new Discord.Client({
   partials: ["CHANNEL"],
 });
 
-const prefix = "!";
-
-const commands = require("./commands.js")(client, prefix);
+// Bot commands
+require("./commands.js")(client, prefix);
 
 client.login(botToken);

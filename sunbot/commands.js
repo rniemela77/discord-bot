@@ -1,4 +1,4 @@
-const endpoints = require("../server/axios");
+const taskApi = require("../server/axios");
 
 module.exports = function (client, prefix) {
   client.on("messageCreate", async (message) => {
@@ -11,7 +11,7 @@ module.exports = function (client, prefix) {
 
     // Get tasks
     if (command === "gettasks") {
-      const tasks = await endpoints
+      const tasks = await taskApi
         .getTasks()
         .then((res) => {
           return res;
@@ -30,7 +30,7 @@ module.exports = function (client, prefix) {
       let newTask = {};
       newTask[taskKey[0]] = taskKey[1].trim();
 
-      const success = await endpoints.addTask(newTask).then((res) => {
+      const success = await taskApi.addTask(newTask).then((res) => {
         return res;
       });
 
