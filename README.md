@@ -23,3 +23,4 @@
 - Separate out the twillio commands into a separate file
 - Determine if I need to keep Procfile
 - Handle API fail errors on the backend, frontend and discord.
+- Make vue build on deploy

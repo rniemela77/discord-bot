@@ -1,5 +1,10 @@
 const axios = require("axios");
 
+const production = "https://supporting.herokuapp.com";
+const development = "http://localhost:3000";
+
+const BASE_URL = process.env.NODE_ENV ? production : development;
+
 module.exports = function (client, prefix) {
   client.on("messageCreate", function (message) {
     if (message.author.bot) return;
@@ -27,7 +32,7 @@ module.exports = function (client, prefix) {
     // Get tasks
     if (command === "gettasks") {
       axios
-        .get("http://localhost:3000/api/tasks")
+        .get(BASE_URL + "/api/tasks")
         .then(function (response) {
           console.log(response.data);
 
@@ -54,7 +59,7 @@ module.exports = function (client, prefix) {
       let taskKey = args.join(" ").split("[").join("").split("]");
       newTask[taskKey[0]] = taskKey[1].trim();
 
-      axios.post("http://localhost:3000/api/tasks", newTask).then(
+      axios.post(BASE_URL + "/api/tasks", newTask).then(
         (response) => {
           console.log(response);
           message.reply("Task added.");
