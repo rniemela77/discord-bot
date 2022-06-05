@@ -1,15 +1,7 @@
-const axios = require("axios");
-
-const production = "https://supporting.herokuapp.com";
-const development = "http://localhost:" + process.env.PORT;
-
-const BASE_URL =
-  process.env.NODE_ENV === "production" ? production : development;
-
-const API_URL = `${BASE_URL}/api/tasks`;
+const endpoints = require("../server/api/endpoints");
 
 module.exports = function (client, prefix) {
-  client.on("messageCreate", function (message) {
+  client.on("messageCreate", async (message) => {
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
 
@@ -19,44 +11,42 @@ module.exports = function (client, prefix) {
 
     // Get tasks
     if (command === "gettasks") {
-      axios
-        .get(API_URL)
-        .then(function (response) {
-          // convert array of objects into single string
-          let tasks = "";
-          response.data.forEach((a) => {
-            for (let key in a) {
-              tasks += `[${key}: ${a[key]}]`;
-            }
-          });
-
-          message.reply(tasks);
+      const tasks = await endpoints
+        .getTasks()
+        .then((res) => {
+          return res;
         })
-        .catch(function (error) {
-          console.log(error);
+        .catch(() => {
+          return "There was an error getting the tasks.";
         });
+
+      message.reply(tasks);
     }
     // Add task
     else if (command === "addtask") {
       // Parse arguments to create a task object
-      let newTask = {};
       let taskKey = args.join(" ").split("[").join("").split("]");
+
+      let newTask = {};
       newTask[taskKey[0]] = taskKey[1].trim();
 
-      // Send task object to server
-      axios.post(API_URL, newTask).then(
-        (response) => {
-          console.log(response);
-          message.reply("Task added.");
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    } else if (command === "ping") {
+      const success = await endpoints.addTask(newTask).then((res) => {
+        return res;
+      });
+
+      if (success) {
+        message.reply("Task added.");
+      } else {
+        message.reply("There was an error adding the task.");
+      }
+    }
+    // Ping
+    else if (command === "ping") {
       const timeTaken = Date.now() - message.createdTimestamp;
       message.reply(`Pong! This message had a latency of ${timeTaken}ms.`);
-    } else if (command === "sum") {
+    }
+    // Sum
+    else if (command === "sum") {
       const numArgs = args.map((x) => parseFloat(x));
       const sum = numArgs.reduce((counter, x) => (counter += x));
       message.reply(`The sum of all the arguments you provided is ${sum}!`);
