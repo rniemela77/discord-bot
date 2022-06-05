@@ -27,13 +27,13 @@ cd client && npm run dev
 - Get and display the server "database" on the frontend
 - Get and display the server "database" on discord
 - Allow discord bot to modify the server "database", and have frontend display the changes
-- Allow creating tasks on frontend.
+- Allow creating tasks on frontend
 
 ## TODO:
 
-- Communicate to discord when a row is created
-- Communicate to frontend when a row is created
-- Have dev script to concurrently run the server and the frontend
+- Communicate to discord when a row is created (have function like sunbot.addedTask())
+- Communicate to frontend when a row is created (Likely not possible. Add refresh button, or do get request periodically on frontend)
+- Have dev script to concurrently run both the server and frontend locally
 - Set up MongoDB
 - Re-enable twillio commands
 - Separate out the twillio commands into a separate file

@@ -41,7 +41,8 @@ app.listen(port, function () {
 });
 
 // Initialize bot
-require("./sunbot/setup.js");
+const sunbot = require("./sunbot/setup.js");
+sunbot().login();
 
 // const accountSid = "AC59e92976399298f4bb18dfd3c09bce3d";
 // const authToken = "96631abdcf3e223bf00979e202cfc410";

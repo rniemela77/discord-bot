@@ -1,21 +1,34 @@
-const Discord = require("discord.js");
+module.exports = function () {
+  let module = {};
 
-// Bot settings
-const botToken = process.env.BOT_TOKEN;
-const prefix = "!";
+  // Bot settings
+  const Discord = require("discord.js");
+  const botToken = process.env.BOT_TOKEN;
+  const prefix = "!";
+  const channelId = process.env.CHANNEL_ID;
 
-const client = new Discord.Client({
-  intents: [
-    "GUILDS",
-    "GUILD_MESSAGES",
-    "DIRECT_MESSAGES",
-    "DIRECT_MESSAGE_REACTIONS",
-    "DIRECT_MESSAGE_TYPING",
-  ],
-  partials: ["CHANNEL"],
-});
+  // Create bot client
+  const client = new Discord.Client({
+    intents: [
+      "GUILDS",
+      "GUILD_MESSAGES",
+      "DIRECT_MESSAGES",
+      "DIRECT_MESSAGE_REACTIONS",
+      "DIRECT_MESSAGE_TYPING",
+    ],
+    partials: ["CHANNEL"],
+  });
 
-// Bot commands
-require("./commands.js")(client, prefix);
+  // Set commands
+  require("./commands.js")(client, prefix);
 
-client.login(botToken);
+  // Set events
+  require("./events.js")(client, channelId);
+
+  // Function to start bot
+  module.login = function () {
+    client.login(botToken);
+  };
+
+  return module;
+};
