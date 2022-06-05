@@ -22,6 +22,7 @@ module.exports = function (client, prefix) {
 
       message.reply(tasks);
     }
+
     // Add task
     else if (command === "addtask") {
       // Parse arguments to create a task object
@@ -40,6 +41,7 @@ module.exports = function (client, prefix) {
         message.reply("There was an error adding the task.");
       }
     }
+
     // Ping
     else if (command === "ping") {
       const timeTaken = Date.now() - message.createdTimestamp;

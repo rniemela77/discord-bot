@@ -1,9 +1,12 @@
+// Allow dev environment to use different variables (port, keys, etc.)
 require("dotenv").config();
-const path = require("path");
+
+// initialize server
 const express = require("express");
-const app = express();
 const cors = require("cors");
+const path = require("path");
 const bodyParser = require("body-parser");
+const app = express();
 
 // Middleware
 app.use(cors());
@@ -38,9 +41,7 @@ app.listen(port, function () {
 });
 
 // Initialize bot
-const discordbot = require("./sunbot/setup.js");
-
-// Handle production
+require("./sunbot/setup.js");
 
 // const accountSid = "AC59e92976399298f4bb18dfd3c09bce3d";
 // const authToken = "96631abdcf3e223bf00979e202cfc410";
