@@ -1,4 +1,4 @@
-const endpoints = require("../server/api/endpoints");
+const endpoints = require("../server/axios");
 
 module.exports = function (client, prefix) {
   client.on("messageCreate", async (message) => {

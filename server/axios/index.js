@@ -35,7 +35,6 @@ const getTasks = async () => {
 const addTask = async (task) => {
   console.log("endpoints.js: Posting task");
 
-  // Send task to server
   return await axios.post(API_URL, task).then(
     (res) => {
       return true;
