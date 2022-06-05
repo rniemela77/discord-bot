@@ -1,14 +1,14 @@
 # discord-bot
 
-## How to use
+## Run locally
 
-To run the server locally
+Run server locally
 
 ```
 npm run dev
 ```
 
-To run the client locally
+Run vue frontend locally
 
 ```
 cd client && npm run dev
@@ -27,6 +27,7 @@ cd client && npm run dev
 - Get and display the server "database" on the frontend
 - Get and display the server "database" on discord
 - Allow discord bot to modify the server "database", and have frontend display the changes
+- Allow creating tasks on frontend.
 
 ## TODO:
 
