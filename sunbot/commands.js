@@ -1,9 +1,12 @@
 const axios = require("axios");
 
 const production = "https://supporting.herokuapp.com";
-const development = "http://localhost:3000";
+const development = "http://localhost:" + process.env.PORT;
 
-const BASE_URL = process.env.NODE_ENV ? production : development;
+const BASE_URL =
+  process.env.NODE_ENV === "production" ? production : development;
+
+const API_URL = `${BASE_URL}/api/tasks`;
 
 module.exports = function (client, prefix) {
   client.on("messageCreate", function (message) {
@@ -14,32 +17,14 @@ module.exports = function (client, prefix) {
     const args = commandBody.split(" ");
     const command = args.shift().toLowerCase();
 
-    // if (command === "textme") {
-    //   const phoneNumber = args[0];
-    //   const atMinute = args[1];
-    //   const withMsg = args[2];
-
-    //   message.reply(
-    //     `I will text ${phoneNumber} "${withMsg}" at ${atMinute} minutes.`
-    //   );
-
-    //   textQueue.push({
-    //     phoneNumber: `+1${phoneNumber}`,
-    //     time: atMinute,
-    //     msg: withMsg,
-    //   });
-    // }
     // Get tasks
     if (command === "gettasks") {
       axios
-        .get(BASE_URL + "/api/tasks")
+        .get(API_URL)
         .then(function (response) {
-          console.log(response.data);
-
           // convert array of objects into single string
           let tasks = "";
           response.data.forEach((a) => {
-            // render each key value pair in object
             for (let key in a) {
               tasks += `[${key}: ${a[key]}]`;
             }
@@ -53,13 +38,13 @@ module.exports = function (client, prefix) {
     }
     // Add task
     else if (command === "addtask") {
+      // Parse arguments to create a task object
       let newTask = {};
-
-      // Parse arguments into object
       let taskKey = args.join(" ").split("[").join("").split("]");
       newTask[taskKey[0]] = taskKey[1].trim();
 
-      axios.post(BASE_URL + "/api/tasks", newTask).then(
+      // Send task object to server
+      axios.post(API_URL, newTask).then(
         (response) => {
           console.log(response);
           message.reply("Task added.");

@@ -18,5 +18,3 @@ const prefix = "!";
 const commands = require("./commands.js")(client, prefix);
 
 client.login(botToken);
-
-console.log("bot setup finished");

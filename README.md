@@ -1,5 +1,19 @@
 # discord-bot
 
+## How to use
+
+To run the server locally
+
+```
+npm run dev
+```
+
+To run the client locally
+
+```
+cd client && npm run dev
+```
+
 ## Steps, Notes
 
 - Created a discord bot using Node.js and Discord.js
@@ -16,8 +30,10 @@
 
 ## TODO:
 
-- Make a way for the frontend to create "rows" on the database
+- Move axios functions to a separate file
 - Communicate to discord when a row is created
+- Figure out how to have the frontend "listen" for changes to the database without sending new get requests every x seconds
+- Have dev script to concurrently run the server and the frontend
 - Set up MongoDB
 - Re-enable twillio commands
 - Separate out the twillio commands into a separate file
