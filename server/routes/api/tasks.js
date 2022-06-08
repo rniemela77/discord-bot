@@ -28,8 +28,17 @@ router.get("/", async (req, res) => {
 
 // Add Task
 router.post("/", async (req, res) => {
-  console.log("(server) adding to database");
-  taskList.push(req.body);
+  const task = {
+    name: req.body.name.trim(),
+    description: req.body.description.trim(),
+  };
+
+  if (!task.name || !task.description) {
+    return res.status(400).send("Invalid task. Missing name or description.");
+  }
+
+  console.log("(server) added to database");
+  taskList.push(task);
   res.status(201).send();
 });
 

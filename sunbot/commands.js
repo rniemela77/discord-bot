@@ -8,9 +8,14 @@ module.exports = function (client, prefix) {
     const commandBody = message.content.slice(prefix.length);
     const args = commandBody.split(" ");
     const command = args.shift().toLowerCase();
+    if (command === "help") {
+      message.reply(
+        "`!help` - Shows this message.\n`!addtask [task name] task description` - Add a task. | eg: !addtask [study math] spend one hour studying\n`!gettasks` - Shows all tasks."
+      );
+    }
 
     // Get tasks
-    if (command === "gettasks") {
+    else if (command === "gettasks") {
       const tasks = await taskApi
         .getTasks()
         .then((res) => {
@@ -31,21 +36,30 @@ module.exports = function (client, prefix) {
     // Add task
     else if (command === "addtask") {
       // Parse arguments to create a task object
-      let taskKey = args.join(" ").split("[").join("").split("]");
+      const argsSplit = args.join(" ").split("[").join("").split("]");
+      const task = {
+        name: argsSplit[0],
+        description: argsSplit[1],
+      };
 
-      let newTask = {};
-      newTask.name = taskKey[0];
-      newTask.description = taskKey[1].trim();
-
-      const success = await taskApi.addTask(newTask).then((res) => {
-        return res;
-      });
-
-      if (success) {
-        message.reply(`Task added.`);
-      } else {
-        message.reply("There was an error adding the task.");
+      if (!task.name || !task.description || argsSplit.length !== 2) {
+        message.reply(
+          "Invalid command. Example: `!addtask [cold shower] take a cold shower`"
+        );
+        return;
       }
+
+      const apiResponse = await taskApi
+        .addTask(task)
+        .then((res) => {
+          return "Task added.";
+        })
+
+        .catch((error) => {
+          return `There was an error adding the task. ${error}`;
+        });
+
+      message.reply(apiResponse);
     }
 
     // Ping
@@ -58,6 +72,8 @@ module.exports = function (client, prefix) {
       const numArgs = args.map((x) => parseFloat(x));
       const sum = numArgs.reduce((counter, x) => (counter += x));
       message.reply(`The sum of all the arguments you provided is ${sum}!`);
+    } else {
+      message.reply('Invalid command. Type "!help" for a list of commands.');
     }
   });
 };

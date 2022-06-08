@@ -10,8 +10,6 @@ const API_URL = `${BASE_URL}/api/tasks`;
 
 // Fetch all tasks
 const getTasks = async () => {
-  console.log("endpoints.js: Getting tasks");
-
   return await axios
     .get(API_URL)
     .then((response) => {
@@ -25,8 +23,6 @@ const getTasks = async () => {
 
 // Add a task
 const addTask = async (task) => {
-  console.log("endpoints.js: Posting task");
-
   return await axios.post(API_URL, task).then(
     (res) => {
       return true;
