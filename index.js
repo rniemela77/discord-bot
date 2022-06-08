@@ -10,6 +10,7 @@ const app = express();
 
 // Middleware
 app.use(cors());
+app.use(bodyParser.json());
 
 // Serve `tasks.js` file on route '/api/tasks'
 const tasks = require("./server/routes/api/tasks");
