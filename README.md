@@ -43,3 +43,4 @@ cd client && npm run dev
 - Handle API fail errors on the backend, frontend, and discord
 - Make heroku run deploy script
 - Use package like Concurrently to create a npm dev script
+- consider using gzip. app.use(compression()) is a good idea

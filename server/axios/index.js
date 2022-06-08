@@ -15,15 +15,7 @@ const getTasks = async () => {
   return await axios
     .get(API_URL)
     .then((response) => {
-      let tasks = "";
-      // convert array of objects into single string
-      response.data.forEach((a) => {
-        for (let key in a) {
-          tasks += `[${key}: ${a[key]}]`;
-        }
-      });
-
-      return tasks;
+      return response.data;
     })
     .catch((error) => {
       console.log(error);

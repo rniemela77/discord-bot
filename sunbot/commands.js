@@ -14,7 +14,12 @@ module.exports = function (client, prefix) {
       const tasks = await taskApi
         .getTasks()
         .then((res) => {
-          return res;
+          // return each task as a string
+          let str = "";
+          res.forEach((task) => {
+            str += `${task.name} - ${task.description}\n`;
+          });
+          return str;
         })
         .catch(() => {
           return "There was an error getting the tasks.";
