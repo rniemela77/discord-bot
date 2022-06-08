@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import TaskService from "./TaskService";
+import * as TaskService from "./TaskService";
 const tasks = ref([]);
 
 const getTasks = async () => {
@@ -22,7 +22,7 @@ const addTask = async () => {
   };
 
   try {
-    await TaskService.insertTask(task);
+    await TaskService.addTask(task);
     taskName.value = "";
     taskDescription.value = "";
     getTasks();
@@ -34,7 +34,9 @@ const addTask = async () => {
 
 <template>
   <h1>Vue frontend</h1>
-  <p v-for="task in tasks" :key="task">{{ task }}</p>
+  <div v-for="task in tasks" :key="task">
+    {{ task.name }} --- {{ task.description }}
+  </div>
 
   <input type="text" v-model="taskName" placeholder="task name" />
   <input type="text" v-model="taskDescription" placeholder="task description" />

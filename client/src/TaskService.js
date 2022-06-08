@@ -1,36 +1,21 @@
-// Handle all requests. Will reference this from the component
 import axios from "axios";
 
 const url = "/api/tasks";
 
-class TaskService {
-  // Get Tasks
-  static getTasks() {
-    return new Promise((resolve, reject) => {
-      try {
-        const res = await axios.get(url);
-        const data = res.data;
-        resolve(
-          data.map((post) => ({
-            ...post,
-            // createdAt: new Date(post.createdAt),
-          }))
-        );
-      } catch (err) {
-        reject(err);
-      }
-    });
-  }
+export const getTasks = async () => {
+  return axios.get(url).then((response) => {
+    return response.data;
+  });
+};
 
-  // Create Task
-  static insertTask(task) {
-    return axios.post(url, task);
-  }
+export const addTask = async (task) => {
+  return await axios.post(url, task).then((res) => {
+    return res;
+  });
+};
 
-  // Delete Task
-  static deleteTask(id) {
-    return axios.delete(`${url}/${id}`);
-  }
-}
-
-export default TaskService;
+export const deleteTask = async (id) => {
+  return await axios.delete(`${url}/${id}`).then((res) => {
+    return res;
+  });
+};
