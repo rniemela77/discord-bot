@@ -29,14 +29,15 @@ module.exports = function (client, prefix) {
       let taskKey = args.join(" ").split("[").join("").split("]");
 
       let newTask = {};
-      newTask[taskKey[0]] = taskKey[1].trim();
+      newTask.name = taskKey[0];
+      newTask.description = taskKey[1].trim();
 
       const success = await taskApi.addTask(newTask).then((res) => {
         return res;
       });
 
       if (success) {
-        message.reply("Task added.");
+        message.reply("Task added." + newTask.name + newTask.description);
       } else {
         message.reply("There was an error adding the task.");
       }

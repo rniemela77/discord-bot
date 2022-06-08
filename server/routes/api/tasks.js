@@ -3,16 +3,20 @@ const router = express.Router();
 
 let taskList = [
   {
-    task1: "hello",
+    name: "first task",
+    description: "this is the first task",
   },
   {
-    task2: "tkasks",
+    name: "second task",
+    description: "this is the second task",
   },
   {
-    task3: "dfssdf",
+    name: "third task",
+    description: "this is the third task",
   },
   {
-    task4: "sdfsdf",
+    name: "fourt task",
+    description: "this is the fourt task",
   },
 ];
 
