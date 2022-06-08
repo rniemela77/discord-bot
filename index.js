@@ -10,16 +10,10 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
 
 // Serve `tasks.js` file on route '/api/tasks'
 const tasks = require("./server/routes/api/tasks");
 app.use("/api/tasks", tasks);
-
-// Serve static assets if in production
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "/server/public/index.html"));
-});
 
 // Handle production
 if (process.env.NODE_ENV === "production") {
@@ -28,7 +22,7 @@ if (process.env.NODE_ENV === "production") {
   // Static folder
   app.use(express.static(__dirname + "/server/public/"));
 
-  // Handle SPA
+  // Handle SPA frontend
   app.get(/.*/, (req, res) =>
     res.sendFile(__dirname + "/server/public/index.html")
   );
@@ -41,7 +35,8 @@ app.listen(port, function () {
 });
 
 // Initialize bot
-const sunbot = require("./sunbot/setup.js");
+const sunbot = require("./sunbot/index.js");
+// Make the bot go online
 sunbot().login();
 
 // const accountSid = "AC59e92976399298f4bb18dfd3c09bce3d";
