@@ -22,13 +22,13 @@ let taskList = [
 
 // Get Tasks
 router.get("/", async (req, res) => {
-  console.log("Express: Getting tasks");
+  console.log("(server) retrieving from database");
   res.send(taskList);
 });
 
 // Add Task
 router.post("/", async (req, res) => {
-  console.log("Express: Posting task");
+  console.log("(server) adding to database");
   taskList.push(req.body);
   res.status(201).send();
 });

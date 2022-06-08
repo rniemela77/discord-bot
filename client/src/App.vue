@@ -3,15 +3,13 @@ import { ref, onMounted } from "vue";
 import TaskService from "./TaskService";
 const tasks = ref([]);
 
+const getTasks = async () => {
+  const response = await TaskService.getTasks();
+  tasks.value = response;
+};
+
 onMounted(async () => {
-  setInterval(async () => {
-    try {
-      tasks.value = await TaskService.getTasks();
-      console.log(tasks.value);
-    } catch (err) {
-      err.value = err.message;
-    }
-  }, 5000);
+  getTasks();
 });
 
 const taskName = ref("");
@@ -27,6 +25,7 @@ const addTask = async () => {
     await TaskService.insertTask(task);
     taskName.value = "";
     taskDescription.value = "";
+    getTasks();
   } catch (err) {
     err.value = err.message;
   }
@@ -40,6 +39,7 @@ const addTask = async () => {
   <input type="text" v-model="taskName" placeholder="task name" />
   <input type="text" v-model="taskDescription" placeholder="task description" />
   <button @click="addTask">Add task</button>
+  <button @click="getTasks">Get tasks</button>
 </template>
 
 <style>

@@ -37,7 +37,7 @@ module.exports = function (client, prefix) {
       });
 
       if (success) {
-        message.reply("Task added." + newTask.name + newTask.description);
+        message.reply(`Task added.`);
       } else {
         message.reply("There was an error adding the task.");
       }
