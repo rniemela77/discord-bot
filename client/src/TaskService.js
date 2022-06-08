@@ -6,7 +6,7 @@ const url = "/api/tasks";
 class TaskService {
   // Get Tasks
   static getTasks() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       try {
         const res = await axios.get(url);
         const data = res.data;

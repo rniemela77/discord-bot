@@ -32,15 +32,11 @@ cd client && npm run dev
 
 ## TODO:
 
-- Have API return error statuses if required fields are not filled out
-- Determine what functions are redundant. (.addTask()?)
-- Fix frontend task object when adding new task
 - Trigger discord message when task is added (have function like sunbot.addedTask())
 - Set up MongoDB
 - Re-enable twillio commands
 - Separate out the twillio commands into a separate file
 - Determine if I need to keep Procfile
-- Handle API fail errors on the backend, frontend, and discord
 - Make heroku run deploy script
 - Use package like Concurrently to create a npm dev script
 - consider using gzip. app.use(compression()) is a good idea
