@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const axios = require("axios");
 
 let taskList = [
   {
@@ -39,6 +40,11 @@ router.post("/", async (req, res) => {
 
   console.log("(server) added to database");
   taskList.push(task);
+  const url = process.env.DISCORD_WEBHOOK_URL;
+  axios.post(url, {
+    content: `Task added: ${task.name} - ${task.description}`,
+  });
+
   res.status(201).send();
 });
 

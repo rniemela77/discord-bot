@@ -29,10 +29,12 @@ cd client && npm run dev
 - Allow discord bot to modify the server "database", and have frontend display the changes
 - Allow creating tasks on frontend
 - Added deploy script
+- Added discord webhook. Whenever a task is added, it will send a message to the webhook
 
 ## TODO:
 
-- Trigger discord message when task is added (have function like sunbot.addedTask())
+- Add webhook key to heroku settings
+- Add fields to the task. (Username, date, taskAddedFrom...)
 - Set up MongoDB
 - Re-enable twillio commands
 - Separate out the twillio commands into a separate file
