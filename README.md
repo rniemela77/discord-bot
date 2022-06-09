@@ -29,12 +29,13 @@ cd client && npm run dev
 - Allow discord bot to modify the server "database", and have frontend display the changes
 - Allow creating tasks on frontend
 - Added deploy script
-- Added discord webhook. Whenever a task is added, it will send a message to the webhook
+- Added discord webhook. Whenever a push is made to /api/tasks, discord bot will send a message to the webhook.
 
 ## TODO:
 
-- Add webhook key to heroku settings
-- Add fields to the task. (Username, date, taskAddedFrom...)
+- Build up front-end
+- Create a login system on the frontend
+- Create login logic on the backend
 - Set up MongoDB
 - Re-enable twillio commands
 - Separate out the twillio commands into a separate file
