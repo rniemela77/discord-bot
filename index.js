@@ -16,6 +16,10 @@ app.use(bodyParser.json());
 const tasks = require("./server/routes/api/tasks");
 app.use("/api/tasks", tasks);
 
+// Server `users.js` file on route '/api/users'
+const users = require("./server/routes/api/users");
+app.use("/api/users", users);
+
 // Handle production
 if (process.env.NODE_ENV === "production") {
   console.log("App started in production mode");

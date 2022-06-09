@@ -30,12 +30,12 @@ cd client && npm run dev
 - Allow creating tasks on frontend
 - Added deploy script
 - Added discord webhook. Whenever a push is made to /api/tasks, discord bot will send a message to the webhook.
+- Created basic authentication for the web server.
 
 ## TODO:
 
 - Build up front-end
-- Create a login system on the frontend
-- Create login logic on the backend
+- Make sure errors are handled properly for all requests
 - Set up MongoDB
 - Re-enable twillio commands
 - Separate out the twillio commands into a separate file

@@ -38,14 +38,16 @@ router.post("/", async (req, res) => {
     return res.status(400).send("Invalid task. Missing name or description.");
   }
 
-  console.log("(server) added to database");
   taskList.push(task);
+
+  // Send message to discord channel saying task was created
   const url = process.env.DISCORD_WEBHOOK_URL;
   axios.post(url, {
     content: `Task added: ${task.name} - ${task.description}`,
   });
 
   res.status(201).send();
+  console.log("(server) added to database");
 });
 
 module.exports = router;

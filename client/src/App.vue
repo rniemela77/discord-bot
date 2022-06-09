@@ -1,49 +1,27 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import * as TaskService from "./TaskService";
-const tasks = ref([]);
+import LoginPage from "./components/login/LoginPage.vue";
+import TaskPage from "./components/task/TaskPage.vue";
 
-const getTasks = async () => {
-  const response = await TaskService.getTasks();
-  tasks.value = response;
-};
-
-onMounted(async () => {
-  getTasks();
-});
-
-const taskName = ref("");
-const taskDescription = ref("");
-
-const addTask = async () => {
-  const task = {
-    name: taskName.value.trim(),
-    description: taskDescription.value.trim(),
-  };
-
-  try {
-    await TaskService.addTask(task);
-    taskName.value = "";
-    taskDescription.value = "";
-    getTasks();
-  } catch (err) {
-    err.value = err.message;
-  }
-};
+import { useUserStore } from "./stores/user";
+const userStore = useUserStore();
 </script>
 
 <template>
-  <h1>Vue frontend</h1>
-  <div v-for="task in tasks" :key="task">
-    {{ task.name }} --- {{ task.description }}
-  </div>
+  <main>
+    <span v-if="userStore.isLoggedIn">Welcome {{ userStore.username }}.</span>
 
-  <input type="text" v-model="taskName" placeholder="task name" />
-  <input type="text" v-model="taskDescription" placeholder="task description" />
-  <button @click="addTask">Add task</button>
-  <button @click="getTasks">Get tasks</button>
+    <LoginPage v-if="!userStore.isLoggedIn" />
+
+    <TaskPage v-else />
+  </main>
 </template>
 
 <style>
 @import "./assets/base.css";
+main {
+  padding: 4rem;
+  background: #ffffffb9;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
 </style>

@@ -3,7 +3,7 @@ import axios from "axios";
 const url = "/api/tasks";
 
 export const getTasks = async () => {
-  return axios.get(url).then((response) => {
+  return await axios.get(url).then((response) => {
     return response.data;
   });
 };
