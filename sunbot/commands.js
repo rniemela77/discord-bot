@@ -22,7 +22,7 @@ module.exports = function (client, prefix) {
           // return each task as a string
           let str = "";
           res.forEach((task) => {
-            str += `${task.name} - ${task.description}\n`;
+            str += `${task.name} - ${task.description} @ ${task.date} ${task.time}\n`;
           });
           return str;
         })

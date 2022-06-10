@@ -14,11 +14,15 @@ const getTasks = async () => {
 // Add a task
 const taskName = ref("");
 const taskDescription = ref("");
+const taskDate = ref("");
+const taskTime = ref("");
 
 const addTask = async () => {
   const task = {
     name: taskName.value.trim(),
     description: taskDescription.value.trim(),
+    date: taskDate.value,
+    time: taskTime.value,
   };
 
   try {
@@ -45,6 +49,7 @@ onMounted(async () => {
       id="taskName"
       v-model="taskName"
       placeholder="task name"
+      required
     />
 
     <label for="taskDescription">Task Description</label>
@@ -53,7 +58,12 @@ onMounted(async () => {
       id="taskDescription"
       v-model="taskDescription"
       placeholder="task description"
+      required
     />
+
+    <label for="taskTime">I will report on the task status at:</label>
+    <input type="date" id="taskDate" v-model="taskDate" required />
+    <input type="time" id="taskTime" v-model="taskTime" required />
 
     <button type="submit">Add Task</button>
     <button @click="getTasks">Get tasks</button>
