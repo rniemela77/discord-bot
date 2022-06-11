@@ -17,25 +17,39 @@ const notifyDeadline = (task) => {
   });
 };
 
-// every minute, check if the task is due
+// Get date in YYYY-MM-DD format
+const getCurrentDate = () => {
+  const date = new Date();
+  const currentDate = new Date(
+    date.getTime() - date.getTimezoneOffset() * 60000
+  )
+    .toISOString()
+    .split("T")[0];
+  return currentDate;
+};
+
+// Get time in HH:MM format
+const getCurrentTime = () => {
+  const date = new Date();
+  const hours = addZero(date.getHours());
+  const minutes = addZero(date.getMinutes());
+
+  const currentTime = `${hours}:${minutes}`;
+
+  return currentTime;
+};
+
+// every minute, check if the task is due. If so, notify the user.
 setInterval(() => {
   taskList.data.forEach((task) => {
-    const date = new Date();
-    const currentDate = new Date(
-      date.getTime() - date.getTimezoneOffset() * 60000
-    )
-      .toISOString()
-      .split("T")[0];
-    const currentTime = `${date.getHours()}:${addZero(date.getMinutes())}`;
-
     if (
-      task.date === currentDate &&
-      task.time === currentTime &&
+      task.date === getCurrentDate() &&
+      task.time === getCurrentTime() &&
       !task.completed
     ) {
-      // make task completed
+      // set task as completed
       task.completed = true;
       notifyDeadline(task);
     }
   });
-}, 5000);
+}, 60000);

@@ -39,6 +39,7 @@ cd client && npm run dev
 - Make sure errors are handled properly for all requests
 - Set up MongoDB
 - Re-enable twillio commands
+- Split tasks into multiple collections. AllTasks, UnfinishedTasks, FinishedTasks. Only show unfinished tasks in frontend, and only iterate on that collection to see if a user should be notified.
 - Separate out the twillio commands into a separate file
 - Determine if I need to keep Procfile
 - Make heroku run deploy script
