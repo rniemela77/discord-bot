@@ -35,6 +35,9 @@ cd client && npm run dev
 
 ## TODO:
 
+- Only show user tasks they created on the frontend
+- Store tasks in tasks.js on the frontend
+- allow users to add users to their task list
 - Clean up front end. Possibly make radio buttons instead of a dropdown.
 - Make sure errors are handled properly for all requests
 - Set up MongoDB
