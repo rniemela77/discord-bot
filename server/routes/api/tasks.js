@@ -2,33 +2,6 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 
-let taskList = [
-  {
-    name: "first task",
-    description: "this is the first task",
-    date: "2020-01-01",
-    time: "12:00",
-  },
-  {
-    name: "second task",
-    description: "this is the second task",
-    date: "2020-01-01",
-    time: "12:00",
-  },
-  {
-    name: "third task",
-    description: "this is the third task",
-    date: "2020-01-01",
-    time: "12:00",
-  },
-  {
-    name: "fourt task",
-    description: "this is the fourt task",
-    date: "2020-01-01",
-    time: "12:00",
-  },
-];
-
 // Get Tasks
 router.get("/", async (req, res) => {
   console.log("(server) retrieving from database");

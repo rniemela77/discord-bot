@@ -31,10 +31,12 @@ cd client && npm run dev
 - Added deploy script
 - Added discord webhook. Whenever a push is made to /api/tasks, discord bot will send a message to the webhook.
 - Created basic authentication for the web server.
+- Created a function that notifies the discord bot when a task is due.
 
 ## TODO:
 
-- Build up front-end
+- Clean up front end. Possibly make radio buttons instead of a dropdown.
+- Have tasks move from 'unfinished' to 'finished' when they are due. Only check 'unfinished' tasks
 - Make sure errors are handled properly for all requests
 - Set up MongoDB
 - Re-enable twillio commands

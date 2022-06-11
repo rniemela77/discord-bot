@@ -44,6 +44,8 @@ const sunbot = require("./sunbot/index.js");
 // Make the bot go online
 sunbot().login();
 
+require("./server/tasks/deadlines.js");
+
 // const accountSid = "AC59e92976399298f4bb18dfd3c09bce3d";
 // const authToken = "96631abdcf3e223bf00979e202cfc410";
 // const tclient = require("twilio")(accountSid, authToken);
