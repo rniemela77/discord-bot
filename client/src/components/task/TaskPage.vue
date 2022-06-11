@@ -3,6 +3,9 @@ import { ref, onMounted } from "vue";
 
 import * as TaskService from "@/TaskService";
 
+import { useUserStore } from "@/stores/user";
+const userStore = useUserStore();
+
 const tasks = ref([]);
 
 // Get tasks
@@ -23,6 +26,7 @@ const addTask = async () => {
     description: taskDescription.value.trim(),
     date: taskDate.value,
     time: taskTime.value,
+    taskCreator: userStore.username,
   };
 
   try {
@@ -72,6 +76,7 @@ onMounted(async () => {
       <li v-for="task in tasks" :key="task">
         <span>{{ task.name }}</span>
         <span>{{ task.description }}</span>
+        <span>--{{ task.completed }}</span>
       </li>
     </ul>
   </form>

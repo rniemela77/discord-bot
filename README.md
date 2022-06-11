@@ -36,7 +36,6 @@ cd client && npm run dev
 ## TODO:
 
 - Clean up front end. Possibly make radio buttons instead of a dropdown.
-- Have tasks move from 'unfinished' to 'finished' when they are due. Only check 'unfinished' tasks
 - Make sure errors are handled properly for all requests
 - Set up MongoDB
 - Re-enable twillio commands
