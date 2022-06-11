@@ -26,7 +26,7 @@ const addTask = async () => {
     description: taskDescription.value.trim(),
     date: taskDate.value,
     time: taskTime.value,
-    taskCreator: userStore.username,
+    createdBy: userStore.username,
   };
 
   try {

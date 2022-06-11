@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
     description: req.body.description.trim(),
     date: req.body.date,
     time: req.body.time,
-    taskCreator: req.body.taskCreator,
+    createdBy: req.body.createdBy,
     completed: false,
   };
 
@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
   // Send message to discord channel saying task was created
   const url = process.env.DISCORD_WEBHOOK_URL;
   axios.post(url, {
-    content: `Task added: ${task.name} - ${task.description} @ ${task.date} - ${task.time} - ${task.taskCreator}`,
+    content: `Task added: ${task.name} - ${task.description} @ ${task.date} - ${task.time} - ${task.createdBy}`,
   });
 
   res.status(201).send();

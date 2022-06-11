@@ -4,7 +4,7 @@ exports.data = [
     description: "this is the first task",
     date: "2022-06-10",
     time: "22:19",
-    taskCreator: "admin",
+    createdBy: "admin",
     completed: false,
   },
   {
@@ -12,7 +12,7 @@ exports.data = [
     description: "this is the second task",
     date: "2020-01-01",
     time: "12:00",
-    taskCreator: "rob",
+    createdBy: "rob",
     completed: false,
   },
   {
@@ -20,7 +20,7 @@ exports.data = [
     description: "this is the third task",
     date: "2020-01-01",
     time: "12:00",
-    taskCreator: "rob",
+    createdBy: "rob",
     completed: false,
   },
   {
@@ -28,7 +28,7 @@ exports.data = [
     description: "this is the fourt task",
     date: "2022-06-10",
     time: "23:09",
-    taskCreator: "admin",
+    createdBy: "admin",
     completed: false,
   },
 ];
