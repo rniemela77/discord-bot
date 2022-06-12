@@ -9,6 +9,16 @@ router.get("/", async (req, res) => {
   res.send(taskList.data);
 });
 
+router.put("/:id/complete", async (req, res) => {
+  const id = req.params.id;
+  const task = taskList.data.find((task) => task.id.toString() === id);
+  if (!task) {
+    return res.status(400).send("Task does not exist.");
+  }
+  task.completed = true;
+  res.send(task);
+});
+
 // Add Task
 router.post("/", async (req, res) => {
   const task = {

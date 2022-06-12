@@ -15,6 +15,20 @@ export const useTaskStore = defineStore({
         this.tasks = response.data;
       });
     },
+    completeTask(id) {
+      axios.put(`${url}/${id}/complete`).then((res) => {
+        if (res.status === 200) {
+          this.tasks = this.tasks.map((task) => {
+            if (task.id === id) {
+              task.completed = true;
+            }
+            return task;
+          });
+        } else {
+          console.log("Error completing task");
+        }
+      });
+    },
     addTask(task) {
       axios
         .post(url, task)
