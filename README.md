@@ -39,11 +39,12 @@ cd client && npm run dev
 
 ## TODO:
 
+- allow users to add other users to their watch list (checkbox select users?)
 - Allow users to create accounts
 - Allow users to upload or set avatar
 - Allow users to enter their discord acc info and have it saved in the database
+- Figure out how to DM users from the discord bot
 - Only fetch tasks that are due today or in the future (server side)
-- allow users to add other users to their watch list (checkbox select users?)
 - Clean up front end. Possibly make radio buttons instead of a dropdown.
 - Make sure errors are handled properly for all requests
 - Set up MongoDB
