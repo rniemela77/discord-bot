@@ -8,6 +8,11 @@ const users = [
     password: "admin",
     firstName: "Admin",
   },
+  {
+    username: "rob",
+    password: "rob",
+    firstName: "Rob",
+  },
 ];
 
 router.post("/", async (req, res) => {
