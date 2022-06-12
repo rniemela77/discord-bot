@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 
-import * as UserService from "@/UserService";
+import axios from "axios";
+
+const url = "/api/users";
 
 export const useUserStore = defineStore({
   id: "user",
@@ -10,16 +12,12 @@ export const useUserStore = defineStore({
   }),
   actions: {
     login(user) {
-      return UserService.login(user).then((response) => {
-        if (response.status === 200) {
+      axios.post(url, user).then((res) => {
+        if (res.status === 200) {
           this.isLoggedIn = true;
           this.username = user.username;
         }
       });
-    },
-    logout: ({ state }) => {
-      state.username = "";
-      state.isLoggedIn = false;
     },
   },
 });

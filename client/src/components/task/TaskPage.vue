@@ -1,18 +1,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
-import * as TaskService from "@/TaskService";
-
 import { useUserStore } from "@/stores/user";
+import { useTaskStore } from "@/stores/tasks";
 const userStore = useUserStore();
-
-const tasks = ref([]);
-
-// Get tasks
-const getTasks = async () => {
-  const response = await TaskService.getTasks();
-  tasks.value = response;
-};
+const taskStore = useTaskStore();
 
 // Add a task
 const taskName = ref("");
@@ -28,19 +20,20 @@ const addTask = async () => {
     time: taskTime.value,
     createdBy: userStore.username,
   };
+  console.log(task);
 
   try {
-    await TaskService.addTask(task);
+    await taskStore.addTask(task);
     taskName.value = "";
     taskDescription.value = "";
-    getTasks();
+    await taskStore.getTasks();
   } catch (err) {
     err.value = err.message;
   }
 };
 
 onMounted(async () => {
-  getTasks();
+  taskStore.getTasks();
 });
 </script>
 
@@ -70,16 +63,17 @@ onMounted(async () => {
     <input type="time" id="taskTime" v-model="taskTime" required />
 
     <button type="submit">Add Task</button>
-    <button @click="getTasks">Get tasks</button>
-
-    <ul>
-      <li v-for="task in tasks" :key="task">
-        <span>{{ task.name }}</span>
-        <span>{{ task.description }}</span>
-        <span>--{{ task.completed }}</span>
-      </li>
-    </ul>
   </form>
+  <button @click="taskStore.getTasks()">Get tasks</button>
+
+  <ul>
+    <li v-for="task in taskStore.tasks" :key="task">
+      <span>{{ task.id }}</span>
+      <span>{{ task.name }}</span>
+      <span>{{ task.description }}</span>
+      <span>--{{ task.completed }}</span>
+    </li>
+  </ul>
 </template>
 
 <style scoped>
