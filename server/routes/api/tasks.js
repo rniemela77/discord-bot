@@ -4,12 +4,16 @@ const discordWebhook = require("../../../sunbot/webhook");
 
 const taskList = require("../../tasks/db.js");
 
-// Get Tasks
-router.get("/", async (req, res) => {
-  res.send(taskList.data);
+// Get Tasks by username
+router.get("/:username", (req, res) => {
+  const userTasks = taskList.data.filter((task) => {
+    return task.createdBy === req.params.username;
+  });
+
+  res.send(userTasks);
 });
 
-router.put("/:id/complete", async (req, res) => {
+router.put("/:id/complete", (req, res) => {
   const id = req.params.id;
   const task = taskList.data.find((task) => task.id.toString() === id);
   if (!task) {
@@ -20,7 +24,7 @@ router.put("/:id/complete", async (req, res) => {
 });
 
 // Add Task
-router.post("/", async (req, res) => {
+router.post("/", (req, res) => {
   const task = {
     id: taskList.id + 1,
     name: req.body.name.trim(),
@@ -45,7 +49,7 @@ router.post("/", async (req, res) => {
 
 router.delete(
   "/:id",
-  async (req, res) => {
+  (req, res) => {
     const id = req.params.id;
     taskList.data = taskList.data.filter((task) => task.id.toString() !== id);
     res.status(200).send();

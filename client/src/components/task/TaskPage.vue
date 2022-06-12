@@ -12,6 +12,10 @@ const taskDescription = ref("");
 const taskDate = ref("");
 const taskTime = ref("");
 
+const getTasks = async () => {
+  await taskStore.getTasksByUser(userStore.username);
+};
+
 const addTask = async () => {
   const task = {
     name: taskName.value.trim(),
@@ -26,7 +30,7 @@ const addTask = async () => {
     await taskStore.addTask(task);
     taskName.value = "";
     taskDescription.value = "";
-    await taskStore.getTasks();
+    await getTasks();
   } catch (err) {
     err.value = err.message;
   }
@@ -35,7 +39,7 @@ const addTask = async () => {
 const deleteTask = async (id) => {
   try {
     await taskStore.deleteTask(id);
-    await taskStore.getTasks();
+    await getTasks();
   } catch (err) {
     err.value = err.message;
   }
@@ -43,14 +47,14 @@ const deleteTask = async (id) => {
 const completeTask = async (id) => {
   try {
     await taskStore.completeTask(id);
-    await taskStore.getTasks();
+    await getTasks();
   } catch (err) {
     err.value = err.message;
   }
 };
 
 onMounted(async () => {
-  taskStore.getTasks();
+  getTasks();
 });
 </script>
 
@@ -81,7 +85,7 @@ onMounted(async () => {
 
     <button type="submit">Add Task</button>
   </form>
-  <button @click="taskStore.getTasks()">Get tasks</button>
+  <button @click="getTasks()">Get tasks</button>
 
   <ul>
     <li v-for="task in taskStore.tasks" :key="task">

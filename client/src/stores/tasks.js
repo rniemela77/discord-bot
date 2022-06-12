@@ -10,8 +10,8 @@ export const useTaskStore = defineStore({
     tasks: [],
   }),
   actions: {
-    getTasks() {
-      axios.get(url).then((response) => {
+    getTasksByUser(username) {
+      axios.get(`${url}/${username}`).then((response) => {
         this.tasks = response.data;
       });
     },
