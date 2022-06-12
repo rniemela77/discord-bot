@@ -32,17 +32,23 @@ cd client && npm run dev
 - Added discord webhook. Whenever a push is made to /api/tasks, discord bot will send a message to the webhook.
 - Created basic authentication for the web server.
 - Created a function that notifies the discord bot when a task is due.
+- Allow users to complete tasks
+- Allow users to delete tasks
+- Only fetch tasks that are created by the user
+- Fetch tasks that the user is "watching"
 
 ## TODO:
 
-- Only show user tasks they created on the frontend
-- Store tasks in tasks.js on the frontend
-- allow users to add users to their task list
+- Allow users to create accounts
+- Allow users to upload or set avatar
+- Allow users to enter their discord acc info and have it saved in the database
+- Only fetch tasks that are due today or in the future (server side)
+- allow users to add other users to their watch list (checkbox select users?)
 - Clean up front end. Possibly make radio buttons instead of a dropdown.
 - Make sure errors are handled properly for all requests
 - Set up MongoDB
-- Re-enable twillio commands
 - Split tasks into multiple collections. AllTasks, UnfinishedTasks, FinishedTasks. Only show unfinished tasks in frontend, and only iterate on that collection to see if a user should be notified.
+- Re-enable twillio commands
 - Separate out the twillio commands into a separate file
 - Determine if I need to keep Procfile
 - Make heroku run deploy script
