@@ -52,6 +52,7 @@ cd client && npm run dev
 - Re-enable twillio commands
 - Separate out the twillio commands into a separate file
 - Determine if I need to keep Procfile
+- Add session/cookie storage to frontend
 - Make heroku run deploy script
 - Use package like Concurrently to create a npm dev script
 - consider using gzip. app.use(compression()) is a good idea

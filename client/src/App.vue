@@ -1,18 +1,32 @@
 <script setup>
+import { ref } from "vue";
+
 import LoginPage from "./components/login/LoginPage.vue";
-import TaskPage from "./components/task/TaskPage.vue";
+import ViewTasks from "./components/task/ViewTasks.vue";
+import CreateTask from "./components/task/CreateTask.vue";
 
 import { useUserStore } from "./stores/user";
 const userStore = useUserStore();
+
+const creatingTask = ref(false);
 </script>
 
 <template>
   <main>
-    <span v-if="userStore.isLoggedIn">Welcome {{ userStore.username }}.</span>
-
     <LoginPage v-if="!userStore.isLoggedIn" />
 
-    <TaskPage v-else />
+    <div v-else>
+      <h1>Welcome {{ userStore.username }}.</h1>
+
+      <button @click="creatingTask = !creatingTask">
+        <span v-if="creatingTask">Back to Tasks</span>
+        <span v-else>Create Task</span>
+      </button>
+
+      <CreateTask v-if="creatingTask" />
+
+      <ViewTasks v-else />
+    </div>
   </main>
 </template>
 
