@@ -1,6 +1,6 @@
 const taskList = require("./db");
 
-const discordWebhook = require("../../sunbot/webhook");
+const discordWebhook = require("../discord/webhook");
 
 const addZero = (i) => {
   if (i < 10) {

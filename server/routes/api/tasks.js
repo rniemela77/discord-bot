@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const discordWebhook = require("../../../sunbot/webhook");
+const discordWebhook = require("../../discord/webhook");
 
 const taskList = require("../../tasks/db.js");
 
