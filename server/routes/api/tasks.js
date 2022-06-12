@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
 // Add Task
 router.post("/", async (req, res) => {
   const task = {
+    id: taskList.id + 1,
     name: req.body.name.trim(),
     description: req.body.description.trim(),
     date: req.body.date,
@@ -33,6 +34,19 @@ router.post("/", async (req, res) => {
   });
 
   res.status(201).send();
+  taskList.id += 1;
 });
+
+router.delete(
+  "/:id",
+  async (req, res) => {
+    const id = req.params.id;
+    taskList.data = taskList.data.filter((task) => task.id.toString() !== id);
+    res.status(200).send();
+  },
+  (err) => {
+    console.log(err);
+  }
+);
 
 module.exports = router;

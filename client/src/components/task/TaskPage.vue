@@ -32,6 +32,15 @@ const addTask = async () => {
   }
 };
 
+const deleteTask = async (id) => {
+  try {
+    await taskStore.deleteTask(id);
+    await taskStore.getTasks();
+  } catch (err) {
+    err.value = err.message;
+  }
+};
+
 onMounted(async () => {
   taskStore.getTasks();
 });
@@ -72,6 +81,7 @@ onMounted(async () => {
       <span>{{ task.name }}</span>
       <span>{{ task.description }}</span>
       <span>--{{ task.completed }}</span>
+      <button @click="deleteTask(task.id)">x</button>
     </li>
   </ul>
 </template>

@@ -29,8 +29,7 @@ export const useTaskStore = defineStore({
       axios
         .delete(`${url}/${id}`)
         .then((response) => {
-          console.log(response.data);
-          this.tasks = this.tasks.filter((task) => task.id !== id);
+          return response;
         })
         .catch((error) => {
           console.log(error);
