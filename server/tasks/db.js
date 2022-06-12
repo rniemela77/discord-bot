@@ -29,7 +29,7 @@ exports.data = [
     time: "12:00",
     createdBy: "rob",
     completed: false,
-    watchedBy: [],
+    watchedBy: ["joe", "jane", "admin"],
   },
   {
     id: 4,
@@ -39,6 +39,6 @@ exports.data = [
     time: "23:09",
     createdBy: "admin",
     completed: false,
-    watchedBy: [],
+    watchedBy: ["rob", "joe", "jane", "admin"],
   },
 ];

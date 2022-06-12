@@ -13,8 +13,19 @@ const users = [
     password: "rob",
     firstName: "Rob",
   },
+  {
+    username: "joe",
+    password: "joe",
+    firstName: "Joe",
+  },
+  {
+    username: "jane",
+    password: "jane",
+    firstName: "Jane",
+  },
 ];
 
+// Log in
 router.post("/", async (req, res) => {
   const user = {
     username: req.body.username.trim(),
@@ -35,6 +46,13 @@ router.post("/", async (req, res) => {
   }
 
   res.status(200).send();
+});
+
+// Get all users
+router.get("/", async (req, res) => {
+  console.log("Get all users");
+  const usernames = users.map((u) => u.username);
+  res.send(usernames);
 });
 
 module.exports = router;

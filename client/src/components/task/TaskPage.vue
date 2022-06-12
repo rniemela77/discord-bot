@@ -57,6 +57,7 @@ const completeTask = async (id) => {
 };
 
 onMounted(async () => {
+  userStore.getAllUsers();
   getTasks();
   getWatchedTasks();
 });
@@ -110,6 +111,13 @@ onMounted(async () => {
       <span>{{ task.name }}</span>
       <span>{{ task.description }}</span>
       <span>--{{ task.completed }}</span>
+    </li>
+  </ul>
+
+  <h2>All users</h2>
+  <ul>
+    <li v-for="user in userStore.allUsers" :key="user">
+      <span>{{ user }}</span>
     </li>
   </ul>
 </template>

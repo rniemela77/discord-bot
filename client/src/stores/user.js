@@ -9,6 +9,7 @@ export const useUserStore = defineStore({
   state: () => ({
     username: "",
     isLoggedIn: false,
+    allUsers: [],
   }),
   actions: {
     login(user) {
@@ -17,6 +18,11 @@ export const useUserStore = defineStore({
           this.isLoggedIn = true;
           this.username = user.username;
         }
+      });
+    },
+    getAllUsers() {
+      axios.get(url).then((res) => {
+        this.allUsers = res.data;
       });
     },
   },
