@@ -15,6 +15,9 @@ const taskTime = ref("");
 const getTasks = async () => {
   await taskStore.getTasksByUser(userStore.username);
 };
+const getWatchedTasks = async () => {
+  await taskStore.getWatchedTasks(userStore.username);
+};
 
 const addTask = async () => {
   const task = {
@@ -55,6 +58,7 @@ const completeTask = async (id) => {
 
 onMounted(async () => {
   getTasks();
+  getWatchedTasks();
 });
 </script>
 
@@ -87,6 +91,7 @@ onMounted(async () => {
   </form>
   <button @click="getTasks()">Get tasks</button>
 
+  <h2>My tasks</h2>
   <ul>
     <li v-for="task in taskStore.tasks" :key="task">
       <span>{{ task.id }}</span>
@@ -95,6 +100,16 @@ onMounted(async () => {
       <span>--{{ task.completed }}</span>
       <button @click="completeTask(task.id)">Complete</button>
       <button @click="deleteTask(task.id)">x</button>
+    </li>
+  </ul>
+
+  <h2>Watching tasks</h2>
+  <ul>
+    <li v-for="task in taskStore.tasksWatching" :key="task">
+      <span>{{ task.id }}</span>
+      <span>{{ task.name }}</span>
+      <span>{{ task.description }}</span>
+      <span>--{{ task.completed }}</span>
     </li>
   </ul>
 </template>

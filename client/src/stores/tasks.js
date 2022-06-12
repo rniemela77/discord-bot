@@ -8,11 +8,17 @@ export const useTaskStore = defineStore({
   id: "task",
   state: () => ({
     tasks: [],
+    tasksWatching: [],
   }),
   actions: {
     getTasksByUser(username) {
       axios.get(`${url}/${username}`).then((response) => {
         this.tasks = response.data;
+      });
+    },
+    getWatchedTasks(username) {
+      axios.get(`${url}/watchedBy/${username}`).then((response) => {
+        this.tasksWatching = response.data;
       });
     },
     completeTask(id) {

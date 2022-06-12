@@ -13,6 +13,15 @@ router.get("/:username", (req, res) => {
   res.send(userTasks);
 });
 
+// Get tasks watched by username
+router.get("/watchedBy/:username", (req, res) => {
+  const userTasks = taskList.data.filter((task) => {
+    return task.watchedBy.includes(req.params.username);
+  });
+
+  res.send(userTasks);
+});
+
 router.put("/:id/complete", (req, res) => {
   const id = req.params.id;
   const task = taskList.data.find((task) => task.id.toString() === id);
