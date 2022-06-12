@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const axios = require("axios");
+const discordWebhook = require("../../../sunbot/webhook");
 
 const taskList = require("../../tasks/db.js");
 
@@ -37,11 +37,7 @@ router.post("/", async (req, res) => {
 
   taskList.data.push(task);
 
-  // Send message to discord channel saying task was created
-  const url = process.env.DISCORD_WEBHOOK_URL;
-  axios.post(url, {
-    content: `Task added: ${task.name} - ${task.description} @ ${task.date} - ${task.time} - ${task.createdBy}`,
-  });
+  discordWebhook.taskAdded(task);
 
   res.status(201).send();
   taskList.id += 1;

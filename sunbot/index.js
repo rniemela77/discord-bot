@@ -25,10 +25,8 @@ module.exports = function () {
   // Set events
   require("./events.js")(client, channelId);
 
-  // Function to start bot
-  module.login = function () {
-    client.login(botToken);
-  };
+  // Log in to Discord
+  client.login(botToken);
 
   return module;
 };

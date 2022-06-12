@@ -1,20 +1,12 @@
 const taskList = require("./db");
 
-const axios = require("axios");
-
-const url = process.env.DISCORD_WEBHOOK_URL;
+const discordWebhook = require("../../sunbot/webhook");
 
 const addZero = (i) => {
   if (i < 10) {
     i = "0" + i;
   }
   return i;
-};
-
-const notifyDeadline = (task) => {
-  axios.post(url, {
-    content: `Task due: ${task.name} - ${task.description} @ ${task.date} - ${task.time}`,
-  });
 };
 
 // Get date in YYYY-MM-DD format
@@ -49,7 +41,7 @@ setInterval(() => {
     ) {
       // set task as completed
       task.completed = true;
-      notifyDeadline(task);
+      discordWebhook.notifyDeadline(task);
     }
   });
 }, 60000);
