@@ -21,7 +21,10 @@ const toggleCreatingTask = () => {
     <LoginPage v-if="!userStore.isLoggedIn" />
 
     <div v-else>
-      <h1>Welcome {{ userStore.username }}.</h1>
+      <h1>
+        Welcome {{ userStore.username }}.
+        <button @click="userStore.logout()">Logout</button>
+      </h1>
 
       <button @click="toggleCreatingTask">
         <span v-if="creatingTask">Back to Tasks</span>

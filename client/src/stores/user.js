@@ -20,6 +20,10 @@ export const useUserStore = defineStore({
         }
       });
     },
+    logout() {
+      this.isLoggedIn = false;
+      this.username = "";
+    },
     getAllUsers() {
       axios.get(url).then((res) => {
         this.allUsers = res.data;
