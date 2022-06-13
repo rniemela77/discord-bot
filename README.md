@@ -36,10 +36,10 @@ cd client && npm run dev
 - Allow users to delete tasks
 - Only fetch tasks that are created by the user
 - Fetch tasks that the user is "watching"
+- Allow users to select other users as task watchers
 
 ## TODO:
 
-- allow users to add other users to their watch list (checkbox select users?)
 - Allow users to create accounts
 - Allow users to upload or set avatar
 - Allow users to enter their discord acc info and have it saved in the database
