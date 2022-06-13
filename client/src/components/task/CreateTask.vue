@@ -11,6 +11,7 @@ const taskName = ref("");
 const taskDescription = ref("");
 const taskDate = ref("");
 const taskTime = ref("");
+const taskWatchers = ref([]);
 
 const addTask = async () => {
   const task = {
@@ -19,8 +20,8 @@ const addTask = async () => {
     date: taskDate.value,
     time: taskTime.value,
     createdBy: userStore.username,
+    watchedBy: taskWatchers.value,
   };
-  console.log(task);
 
   try {
     await taskStore.addTask(task);
@@ -62,10 +63,16 @@ onMounted(async () => {
     <input type="date" id="taskDate" v-model="taskDate" required />
     <input type="time" id="taskTime" v-model="taskTime" required />
 
-    <h3>All users</h3>
+    <h3>Set task watchers</h3>
     <ul>
       <li v-for="user in userStore.allUsers" :key="user">
-        <span>{{ user }}</span>
+        <input
+          type="checkbox"
+          v-model="taskWatchers"
+          :value="user"
+          :id="user"
+        />
+        <label :for="user"> {{ user }}</label>
       </li>
     </ul>
 
@@ -74,7 +81,7 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-input {
+input:not([type="checkbox"]) {
   display: block;
 }
 </style>

@@ -47,6 +47,7 @@ onMounted(async () => {
       <span>{{ task.name }}</span>
       <span>{{ task.description }}</span>
       <span>--{{ task.completed }}</span>
+      <small>{{ task.watchedBy }}</small>
       <button @click="completeTask(task.id)">Complete</button>
       <button @click="deleteTask(task.id)">x</button>
     </li>

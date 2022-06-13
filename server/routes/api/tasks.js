@@ -41,6 +41,7 @@ router.post("/", (req, res) => {
     date: req.body.date,
     time: req.body.time,
     createdBy: req.body.createdBy,
+    watchedBy: req.body.watchedBy,
     completed: false,
   };
 
