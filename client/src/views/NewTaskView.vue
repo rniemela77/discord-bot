@@ -1,14 +1,13 @@
 <script setup>
 import CheckboxInput from "../components/global/CheckboxInput.vue";
 
-import { onMounted, ref, defineEmits } from "vue";
+import { onMounted, ref } from "vue";
+import router from "../router";
 
 import { useUserStore } from "@/stores/user";
 import { useTaskStore } from "@/stores/tasks";
 const userStore = useUserStore();
 const taskStore = useTaskStore();
-
-const emit = defineEmits(["close"]);
 
 // Add a task
 const taskName = ref("");
@@ -18,7 +17,6 @@ const taskTime = ref("");
 const taskWatchers = ref([]);
 
 const setWatchers = async (user, isPicked) => {
-  console.log("setWatchers", user, isPicked);
   if (isPicked) {
     taskWatchers.value.push(user);
   } else {
@@ -26,7 +24,6 @@ const setWatchers = async (user, isPicked) => {
       (watcher) => watcher !== user
     );
   }
-  console.log(taskWatchers.value);
 };
 
 const addTask = async () => {
@@ -41,7 +38,7 @@ const addTask = async () => {
 
   try {
     await taskStore.addTask(task);
-    emit("close");
+    router.push("/");
   } catch (err) {
     err.value = err.message;
   }
