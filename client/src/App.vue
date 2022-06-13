@@ -9,6 +9,11 @@ import { useUserStore } from "./stores/user";
 const userStore = useUserStore();
 
 const creatingTask = ref(false);
+
+// toggle creatingTask
+const toggleCreatingTask = () => {
+  creatingTask.value = !creatingTask.value;
+};
 </script>
 
 <template>
@@ -18,12 +23,12 @@ const creatingTask = ref(false);
     <div v-else>
       <h1>Welcome {{ userStore.username }}.</h1>
 
-      <button @click="creatingTask = !creatingTask">
+      <button @click="toggleCreatingTask">
         <span v-if="creatingTask">Back to Tasks</span>
         <span v-else>Create Task</span>
       </button>
 
-      <CreateTask v-if="creatingTask" />
+      <CreateTask v-if="creatingTask" @close="toggleCreatingTask" />
 
       <ViewTasks v-else />
     </div>

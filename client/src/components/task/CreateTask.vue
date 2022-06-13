@@ -1,10 +1,12 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, defineEmits } from "vue";
 
 import { useUserStore } from "@/stores/user";
 import { useTaskStore } from "@/stores/tasks";
 const userStore = useUserStore();
 const taskStore = useTaskStore();
+
+const emit = defineEmits(["close"]);
 
 // Add a task
 const taskName = ref("");
@@ -25,9 +27,7 @@ const addTask = async () => {
 
   try {
     await taskStore.addTask(task);
-    taskName.value = "";
-    taskDescription.value = "";
-    await taskStore.getTasksByUser(userStore.username);
+    emit("close");
   } catch (err) {
     err.value = err.message;
   }
@@ -39,45 +39,47 @@ onMounted(async () => {
 </script>
 
 <template>
-  <h2>Create Task</h2>
-  <form v-on:submit.prevent="addTask">
-    <label for="taskName">Task Name</label>
-    <input
-      type="text"
-      id="taskName"
-      v-model="taskName"
-      placeholder="task name"
-      required
-    />
+  <div>
+    <h2>Create Task</h2>
+    <form v-on:submit.prevent="addTask">
+      <label for="taskName">Task Name</label>
+      <input
+        type="text"
+        id="taskName"
+        v-model="taskName"
+        placeholder="task name"
+        required
+      />
 
-    <label for="taskDescription">Task Description</label>
-    <input
-      type="text"
-      id="taskDescription"
-      v-model="taskDescription"
-      placeholder="task description"
-      required
-    />
+      <label for="taskDescription">Task Description</label>
+      <input
+        type="text"
+        id="taskDescription"
+        v-model="taskDescription"
+        placeholder="task description"
+        required
+      />
 
-    <label for="taskTime">I will report on the task status at:</label>
-    <input type="date" id="taskDate" v-model="taskDate" required />
-    <input type="time" id="taskTime" v-model="taskTime" required />
+      <label for="taskTime">I will report on the task status at:</label>
+      <input type="date" id="taskDate" v-model="taskDate" required />
+      <input type="time" id="taskTime" v-model="taskTime" required />
 
-    <h3>Set task watchers</h3>
-    <ul>
-      <li v-for="user in userStore.allUsers" :key="user">
-        <input
-          type="checkbox"
-          v-model="taskWatchers"
-          :value="user"
-          :id="user"
-        />
-        <label :for="user"> {{ user }}</label>
-      </li>
-    </ul>
+      <h3>Set task watchers</h3>
+      <ul>
+        <li v-for="user in userStore.allUsers" :key="user">
+          <input
+            type="checkbox"
+            v-model="taskWatchers"
+            :value="user"
+            :id="user"
+          />
+          <label :for="user"> {{ user }}</label>
+        </li>
+      </ul>
 
-    <button type="submit">Add Task</button>
-  </form>
+      <button type="submit">Add Task</button>
+    </form>
+  </div>
 </template>
 
 <style scoped>
