@@ -5,6 +5,7 @@ import { onMounted } from "vue";
 
 import { useUserStore } from "@/stores/user";
 import { useTaskStore } from "@/stores/tasks";
+import router from "../../router";
 const userStore = useUserStore();
 const taskStore = useTaskStore();
 
@@ -15,6 +16,10 @@ const getWatchedTasks = async () => {
   await taskStore.getWatchedTasks(userStore.username);
 };
 
+const newTask = async () => {
+  // go to newtaskview router
+  await router.push("/newtask");
+};
 const deleteTask = async (id) => {
   try {
     await taskStore.deleteTask(id);
@@ -42,7 +47,11 @@ onMounted(async () => {
   <div>
     <button @click="getTasks()">Get tasks</button>
 
-    <h3>My Tasks</h3>
+    <div class="row">
+      <h3>My Tasks</h3>
+      <button @click="newTask()">New task</button>
+    </div>
+
     <div v-for="task in taskStore.tasks" :key="task">
       <TaskRow
         :task="task"

@@ -1,4 +1,6 @@
 <script setup>
+import CheckboxInput from "../components/global/CheckboxInput.vue";
+
 import { onMounted, ref, defineEmits } from "vue";
 
 import { useUserStore } from "@/stores/user";
@@ -14,6 +16,18 @@ const taskDescription = ref("");
 const taskDate = ref("");
 const taskTime = ref("");
 const taskWatchers = ref([]);
+
+const setWatchers = async (user, isPicked) => {
+  console.log("setWatchers", user, isPicked);
+  if (isPicked) {
+    taskWatchers.value.push(user);
+  } else {
+    taskWatchers.value = taskWatchers.value.filter(
+      (watcher) => watcher !== user
+    );
+  }
+  console.log(taskWatchers.value);
+};
 
 const addTask = async () => {
   const task = {
@@ -66,13 +80,11 @@ onMounted(async () => {
 
       <h3>Set task watchers</h3>
       <div v-for="user in userStore.allUsers" :key="user">
-        <input
-          type="checkbox"
-          v-model="taskWatchers"
+        <CheckboxInput
           :value="user"
-          :id="user"
+          :text="user"
+          @select="(isPicked) => setWatchers(user, isPicked)"
         />
-        <label :for="user"> {{ user }}</label>
       </div>
 
       <button type="submit">Add Task</button>
