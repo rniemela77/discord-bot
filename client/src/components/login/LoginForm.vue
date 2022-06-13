@@ -1,18 +1,17 @@
 <script setup>
 import { ref } from "vue";
+
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
 
 const username = ref("");
 const password = ref("");
-
-const loggingIn = ref(false);
-
+const isLoggingIn = ref(false);
 const errorMessage = ref("");
 
 const login = async () => {
-  loggingIn.value = true;
+  isLoggingIn.value = true;
 
   try {
     const user = {
@@ -25,15 +24,14 @@ const login = async () => {
     errorMessage.value = err.response.data;
   }
 
-  loggingIn.value = false;
+  isLoggingIn.value = false;
 };
 </script>
 
 <template>
-  <div v-if="loggingIn" class="loading-spinner"></div>
+  <div v-if="isLoggingIn" class="loading-spinner"></div>
 
-  <div :class="['login-page', { 'is-logging-in': loggingIn }]">
-    <h1>Login</h1>
+  <div :class="['login-page', { 'is-logging-in': isLoggingIn }]">
     <form v-on:submit.prevent="login">
       <label for="username">Username</label>
       <input
@@ -41,7 +39,7 @@ const login = async () => {
         id="username"
         v-model="username"
         placeholder="username"
-        :disabled="loggingIn"
+        :disabled="isLoggingIn"
       />
 
       <label for="password">Password</label>
@@ -50,10 +48,10 @@ const login = async () => {
         id="password"
         v-model="password"
         placeholder="password"
-        :disabled="loggingIn"
+        :disabled="isLoggingIn"
       />
 
-      <button type="submit" :disabled="loggingIn">Login</button>
+      <button type="submit" :disabled="isLoggingIn">Login</button>
 
       <span v-if="errorMessage" class="error-message">{{ errorMessage }}</span>
     </form>

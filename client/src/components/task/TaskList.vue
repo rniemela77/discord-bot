@@ -1,4 +1,6 @@
 <script setup>
+import TaskRow from "./TaskRow.vue";
+
 import { onMounted } from "vue";
 
 import { useUserStore } from "@/stores/user";
@@ -37,31 +39,27 @@ onMounted(async () => {
 </script>
 
 <template>
-  <h2>Tasks</h2>
-  <button @click="getTasks()">Get tasks</button>
+  <div>
+    <button @click="getTasks()">Get tasks</button>
 
-  <h3>My tasks</h3>
-  <ul>
-    <li v-for="task in taskStore.tasks" :key="task">
-      <span>{{ task.id }}</span>
-      <span>{{ task.name }}</span>
-      <span>{{ task.description }}</span>
-      <span>--{{ task.completed }}</span>
-      <small>{{ task.watchedBy }}</small>
-      <button @click="completeTask(task.id)">Complete</button>
-      <button @click="deleteTask(task.id)">x</button>
-    </li>
-  </ul>
+    <h3>My Tasks</h3>
+    <div v-for="task in taskStore.tasks" :key="task">
+      <TaskRow
+        :task="task"
+        @complete-task="completeTask(task.id)"
+        @delete-task="deleteTask(task.id)"
+      />
+    </div>
 
-  <h3>Watching tasks</h3>
-  <ul>
-    <li v-for="task in taskStore.tasksWatching" :key="task">
-      <span>{{ task.id }}</span>
-      <span>{{ task.name }}</span>
-      <span>{{ task.description }}</span>
-      <span>--{{ task.completed }}</span>
-    </li>
-  </ul>
+    <h3>Watching Tasks</h3>
+    <div v-for="task in taskStore.tasksWatching" :key="task">
+      <TaskRow
+        :task="task"
+        @complete-task="completeTask(task.id)"
+        @delete-task="deleteTask(task.id)"
+      />
+    </div>
+  </div>
 </template>
 
 <style scoped></style>

@@ -40,6 +40,8 @@ cd client && npm run dev
 
 ## TODO:
 
+- Make /pasttasks route
+- Allow user to enter in task status on clicking "complete"
 - Allow users to create accounts
 - Allow users to upload or set avatar
 - Allow users to enter their discord acc info and have it saved in the database

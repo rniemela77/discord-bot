@@ -1,26 +1,25 @@
 <script setup>
-import { ref } from "vue";
+// import { ref } from "vue";
 
-import LoginPage from "./components/login/LoginPage.vue";
-import ViewTasks from "./components/task/ViewTasks.vue";
-import CreateTask from "./components/task/CreateTask.vue";
+import { RouterView } from "vue-router";
 
-import { useUserStore } from "./stores/user";
-const userStore = useUserStore();
+// import ViewTasks from "./components/task/ViewTasks.vue";
+// import CreateTask from "./components/task/CreateTask.vue";
 
-const creatingTask = ref(false);
+// import { useUserStore } from "./stores/user";
+// const userStore = useUserStore();
+
+// const creatingTask = ref(false);
 
 // toggle creatingTask
-const toggleCreatingTask = () => {
-  creatingTask.value = !creatingTask.value;
-};
+// const toggleCreatingTask = () => {
+// creatingTask.value = !creatingTask.value;
+// };
 </script>
 
 <template>
   <main>
-    <LoginPage v-if="!userStore.isLoggedIn" />
-
-    <div v-else>
+    <!-- <div v-else>
       <h1>
         Welcome {{ userStore.username }}.
         <button @click="userStore.logout()">Logout</button>
@@ -34,7 +33,13 @@ const toggleCreatingTask = () => {
       <CreateTask v-if="creatingTask" @close="toggleCreatingTask" />
 
       <ViewTasks v-else />
-    </div>
+    </div> -->
+
+    <RouterLink to="/">Home</RouterLink>
+    <RouterLink to="/about">About</RouterLink>
+    <RouterLink to="/tasks">Tasks</RouterLink>
+
+    <RouterView />
   </main>
 </template>
 

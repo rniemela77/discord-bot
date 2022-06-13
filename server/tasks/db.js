@@ -39,6 +39,6 @@ exports.data = [
     time: "23:09",
     createdBy: "admin",
     completed: false,
-    watchedBy: ["rob", "joe", "jane", "admin"],
+    watchedBy: ["rob", "joe", "jane"],
   },
 ];
