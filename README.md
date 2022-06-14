@@ -37,24 +37,33 @@ cd client && npm run dev
 - Only fetch tasks that are created by the user
 - Fetch tasks that the user is "watching"
 - Allow users to select other users as task watchers
+- Allow users to create accounts
 
 ## TODO:
 
-- Make /pasttasks route
-- Allow user to enter in task status on clicking "complete"
-- Allow users to create accounts
-- Allow users to upload or set avatar
-- Allow users to enter their discord acc info and have it saved in the database
-- Figure out how to DM users from the discord bot
-- Only fetch tasks that are due today or in the future (server side)
-- Clean up front end. Possibly make radio buttons instead of a dropdown.
-- Make sure errors are handled properly for all requests
-- Set up MongoDB
-- Split tasks into multiple collections. AllTasks, UnfinishedTasks, FinishedTasks. Only show unfinished tasks in frontend, and only iterate on that collection to see if a user should be notified.
-- Re-enable twillio commands
-- Separate out the twillio commands into a separate file
-- Determine if I need to keep Procfile
-- Add session/cookie storage to frontend
-- Make heroku run deploy script
-- Use package like Concurrently to create a npm dev script
+- server/frontend: handle all edge/error cases for logging in
+- server/frontend: handle all edge/error cases for creating a task
+- frontend: create form component so no need to duplicate CSS/loadingspinner
+- frontend: when an API request is made that will be reflected in the UI (creating a task for instance), consider directly changing the store/state to create a snappier experience. Figure out how to handle the API failures.
+- server: Figure out how to DM users from the discord bot
+- frontend/server: allow users to set discord account name to profile
+- server: send message to DB user discord name when task is due
+- frontend: Show modal when user completes a task. (Enter in message)
+- frontend/server: allow users to upload/set avatar
+- server/frontend: Split tasks into "current" and "past" tasks
+- frontend: Simplify/improve the UI
+- server: Set up MongoDB
+- server: Re-enable twillio, place in Twillio folder
+- build: Determine if I need to keep Procfile
+- frontend: add session/cookie storage, make user not have to login
+- heroku: add deploy/build scripts
+- build:Use package like Concurrently to create a npm dev script
 - consider using gzip. app.use(compression()) is a good idea
+
+## Future plans
+
+- Mobile push notifications, web push notifications?
+- Daily morning check-in with discord channel
+- Set weekly and daily goals. Maybe do global messages for weekly goals, so it doesn't spam the channel.
+- Allow users to rate how difficult a goal might be, then ask to rate how rewarding it actually was.
+- Notify user to set an intention each morning. "I want to be more X today". Maybe create a prompt/template for them to set an intention. Write 5 things that they would do if they were 5% more X today. (4 pillars of self esteem)
