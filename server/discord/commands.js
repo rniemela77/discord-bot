@@ -1,4 +1,4 @@
-const taskApi = require("../server/axios");
+const taskApi = require("../axios");
 
 module.exports = function (client, prefix) {
   client.on("messageCreate", async (message) => {
