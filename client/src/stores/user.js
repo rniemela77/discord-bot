@@ -33,12 +33,25 @@ export const useUserStore = defineStore({
         });
     },
     login(user) {
-      axios.post(url, user).then((res) => {
-        if (res.status === 200) {
-          this.isLoggedIn = true;
-          this.username = user.username;
-        }
-      });
+      return axios
+        .post(url, user)
+        .then((res) => {
+          if (res.status === 200) {
+            this.isLoggedIn = true;
+            this.username = user.username;
+          } else {
+            throw new Error(
+              "Received a response with status code other than 200"
+            );
+          }
+        })
+        .catch((err) => {
+          if (err.response) {
+            throw new Error(err.response.data);
+          } else {
+            throw new Error(err.message);
+          }
+        });
     },
     logout() {
       this.isLoggedIn = false;

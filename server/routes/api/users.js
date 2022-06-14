@@ -11,16 +11,16 @@ router.post("/", async (req, res) => {
   };
 
   if (!user.username || !user.password) {
-    return res.status(400).send("Invalid user. Missing username or password.");
+    return res.status(400).send("Invalid user. Missing username or password");
   }
 
   const userExists = userlist.users.find((u) => u.username === user.username);
   if (!userExists) {
-    return res.status(400).send("Invalid user. User does not exist.");
+    return res.status(400).send("Username or password incorrect");
   }
 
   if (user.password !== userExists.password) {
-    return res.status(400).send("Invalid user. Wrong password.");
+    return res.status(400).send("Username or password incorrect");
   }
 
   res.status(200).send();

@@ -14,14 +14,22 @@ const login = async () => {
   isLoggingIn.value = true;
 
   try {
+    if (!username.value || !password.value) {
+      throw new Error("Username or password missing");
+    }
+
     const user = {
       username: username.value,
       password: password.value,
     };
 
-    await userStore.login(user);
+    await userStore.login(user).catch((err) => {
+      throw err;
+    });
   } catch (err) {
-    errorMessage.value = err.response.data;
+    errorMessage.value = err.message;
+    isLoggingIn.value = false;
+    return;
   }
 
   isLoggingIn.value = false;
@@ -40,15 +48,17 @@ const login = async () => {
         v-model="username"
         placeholder="username"
         :disabled="isLoggingIn"
+        required
       />
 
       <label for="password">Password</label>
       <input
-        type="text"
+        type="password"
         id="password"
         v-model="password"
         placeholder="password"
         :disabled="isLoggingIn"
+        required
       />
 
       <button type="submit" :disabled="isLoggingIn">Login</button>
