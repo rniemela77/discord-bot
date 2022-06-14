@@ -4,7 +4,6 @@ require("dotenv").config();
 // initialize server
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 const bodyParser = require("body-parser");
 const app = express();
 
@@ -19,6 +18,10 @@ app.use("/api/tasks", tasks);
 // Server `users.js` file on route '/api/users'
 const users = require("./server/routes/api/users");
 app.use("/api/users", users);
+
+// Server `signup.js` file on route '/api/signup'
+const signup = require("./server/routes/api/signup");
+app.use("/api/signup", signup);
 
 // Handle production
 if (process.env.NODE_ENV === "production") {
