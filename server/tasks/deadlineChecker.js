@@ -1,4 +1,4 @@
-const taskList = require("./db");
+const taskList = require("../../database/tasks.js");
 
 const discordWebhook = require("../discord/webhook");
 

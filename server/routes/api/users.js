@@ -1,29 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const axios = require("axios");
 
-const users = [
-  {
-    username: "admin",
-    password: "admin",
-    firstName: "Admin",
-  },
-  {
-    username: "rob",
-    password: "rob",
-    firstName: "Rob",
-  },
-  {
-    username: "joe",
-    password: "joe",
-    firstName: "Joe",
-  },
-  {
-    username: "jane",
-    password: "jane",
-    firstName: "Jane",
-  },
-];
+const userlist = require("../../../database/users.js");
 
 // Log in
 router.post("/", async (req, res) => {
@@ -36,7 +14,7 @@ router.post("/", async (req, res) => {
     return res.status(400).send("Invalid user. Missing username or password.");
   }
 
-  const userExists = users.find((u) => u.username === user.username);
+  const userExists = userlist.users.find((u) => u.username === user.username);
   if (!userExists) {
     return res.status(400).send("Invalid user. User does not exist.");
   }
@@ -51,7 +29,7 @@ router.post("/", async (req, res) => {
 // Get all users
 router.get("/", async (req, res) => {
   console.log("Get all users");
-  const usernames = users.map((u) => u.username);
+  const usernames = userlist.users.map((u) => u.username);
   res.send(usernames);
 });
 

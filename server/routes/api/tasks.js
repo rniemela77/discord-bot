@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const discordWebhook = require("../../discord/webhook");
 
-const taskList = require("../../tasks/db.js");
+const taskList = require("../../../database/tasks.js");
 
 // Get Tasks by username
 router.get("/:username", (req, res) => {
