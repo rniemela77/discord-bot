@@ -41,17 +41,16 @@ cd client && npm run dev
 
 ## TODO:
 
+- server: send message to DB user discord name when task is due
 - server/frontend: handle all edge/error cases for creating a task
 - frontend: create form component so no need to duplicate CSS/loadingspinner
 - frontend: when an API request is made that will be reflected in the UI (creating a task for instance), consider directly changing the store/state to create a snappier experience. Figure out how to handle the API failures.
-- server: Figure out how to DM users from the discord bot
-- frontend/server: allow users to set discord account name to profile
-- server: send message to DB user discord name when task is due
 - frontend: Show modal when user completes a task. (Enter in message)
 - frontend/server: allow users to upload/set avatar
 - server/frontend: Split tasks into "current" and "past" tasks
 - frontend: Simplify/improve the UI
 - server: Set up MongoDB
+- server: export/import functions the same everywhere. (exports.module?)
 - server: Re-enable twillio, place in Twillio folder
 - build: Determine if I need to keep Procfile
 - frontend: add session/cookie storage, make user not have to login
