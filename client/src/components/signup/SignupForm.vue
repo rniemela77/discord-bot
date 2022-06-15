@@ -68,8 +68,9 @@ const signup = async () => {
         type="text"
         id="username"
         v-model="username"
-        placeholder="username"
+        placeholder="Username"
         :disabled="loading"
+        required
       />
 
       <label for="password">Password</label>
@@ -77,8 +78,9 @@ const signup = async () => {
         type="password"
         id="password"
         v-model="password"
-        placeholder="password"
+        placeholder="Password"
         :disabled="loading"
+        required
       />
 
       <label for="repeatPassword">Re-enter Password</label>
@@ -86,8 +88,9 @@ const signup = async () => {
         type="password"
         id="repeatPassword"
         v-model="repeatPassword"
-        placeholder="re-enter password"
+        placeholder="Re-enter password"
         :disabled="loading"
+        required
       />
 
       <button type="submit" :disabled="loading">Create Account</button>

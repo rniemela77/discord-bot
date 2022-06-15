@@ -46,7 +46,7 @@ const login = async () => {
         type="text"
         id="username"
         v-model="username"
-        placeholder="username"
+        placeholder="Username"
         :disabled="isLoggingIn"
         required
       />
@@ -56,7 +56,7 @@ const login = async () => {
         type="password"
         id="password"
         v-model="password"
-        placeholder="password"
+        placeholder="Password"
         :disabled="isLoggingIn"
         required
       />
