@@ -1,4 +1,6 @@
 <script setup>
+import DiscordIdModal from "./DiscordIdModal.vue";
+
 import { ref } from "vue";
 import { useUserStore } from "@/stores/user";
 import router from "../../router";
@@ -8,38 +10,45 @@ const userStore = useUserStore();
 const username = ref("");
 const password = ref("");
 const repeatPassword = ref("");
+const discordUserId = ref("");
 const loading = ref(false);
 const errorMessage = ref("");
+
+const showDiscordIdModal = ref(false);
 
 const signup = async () => {
   errorMessage.value = "";
   loading.value = true;
 
   try {
+    if (discordUserId.value.length !== 18) {
+      throw new Error("Invalid Discord User ID.");
+    }
     if (password.value !== repeatPassword.value) {
-      throw new Error("Passwords do not match");
+      throw new Error("Passwords do not match.");
     }
     if (username.value.length < 3) {
-      throw new Error("Username must be at least 3 characters long");
+      throw new Error("Username must be at least 3 characters long.");
     }
     if (password.value.length < 6) {
-      throw new Error("Password must be at least 6 characters long");
+      throw new Error("Password must be at least 6 characters long.");
     }
     if (password.value.length > 100) {
-      throw new Error("Password must be less than 100 characters long");
+      throw new Error("Password must be less than 100 characters long.");
     }
     if (username.value.length > 100) {
-      throw new Error("Username must be less than 100 characters long");
+      throw new Error("Username must be less than 100 characters long.");
     }
     if (!/^[a-zA-Z0-9_]+$/.test(username.value)) {
       throw new Error(
-        "Username must use only letters, numbers, and underscores"
+        "Username must use only letters, numbers, and underscores."
       );
     }
 
     const user = {
       username: username.value,
       password: password.value,
+      discordUserId: discordUserId.value,
     };
 
     await userStore
@@ -93,10 +102,30 @@ const signup = async () => {
         required
       />
 
-      <button type="submit" :disabled="loading">Create Account</button>
+      <label for="discordUserId">
+        Discord User ID
+        <button @click.prevent="showDiscordIdModal = true">How?</button>
+      </label>
+      <input
+        type="text"
+        id="discordUserId"
+        v-model="discordUserId"
+        placeholder="Discord User ID"
+        :disabled="loading"
+        required
+      />
+
+      <button class="btn-submit" type="submit" :disabled="loading">
+        Create Account
+      </button>
 
       <span v-if="errorMessage" class="error-message">{{ errorMessage }}</span>
     </form>
+
+    <DiscordIdModal
+      v-if="showDiscordIdModal"
+      @show-discord-id-modal="showDiscordIdModal = false"
+    />
   </div>
 </template>
 
@@ -128,11 +157,13 @@ const signup = async () => {
 input {
   display: block;
 }
-button {
+.btn-submit {
   display: block;
   width: 100%;
   padding: 1rem;
   margin-top: 1rem;
+}
+button {
 }
 .error-message {
   color: red;

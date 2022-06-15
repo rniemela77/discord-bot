@@ -13,7 +13,10 @@ module.exports = function (client, prefix) {
         "`!help` - Shows this message.\n`!addtask [task name] task description` - Add a task. | eg: !addtask [study math] spend one hour studying\n`!gettasks` - Shows all tasks."
       );
     }
-
+    // Get user ID
+    else if (command === "userid") {
+      message.author.send(`Your User ID is \n\`${message.author.id}\``);
+    }
     // Get tasks
     else if (command === "gettasks") {
       const tasks = await taskApi
