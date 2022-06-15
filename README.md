@@ -41,7 +41,6 @@ cd client && npm run dev
 
 ## TODO:
 
-- server/frontend: handle all edge/error cases for logging in
 - server/frontend: handle all edge/error cases for creating a task
 - frontend: create form component so no need to duplicate CSS/loadingspinner
 - frontend: when an API request is made that will be reflected in the UI (creating a task for instance), consider directly changing the store/state to create a snappier experience. Figure out how to handle the API failures.
