@@ -1,40 +1,9 @@
 <script setup>
-// import { ref } from "vue";
-
 import { RouterView } from "vue-router";
-
-// import ViewTasks from "./components/task/ViewTasks.vue";
-// import CreateTask from "./components/task/CreateTask.vue";
-
-// import { useUserStore } from "./stores/user";
-// const userStore = useUserStore();
-
-// const creatingTask = ref(false);
-
-// toggle creatingTask
-// const toggleCreatingTask = () => {
-// creatingTask.value = !creatingTask.value;
-// };
 </script>
 
 <template>
   <main>
-    <!-- <div v-else>
-      <h1>
-        Welcome {{ userStore.username }}.
-        <button @click="userStore.logout()">Logout</button>
-      </h1>
-
-      <button @click="toggleCreatingTask">
-        <span v-if="creatingTask">Back to Tasks</span>
-        <span v-else>Create Task</span>
-      </button>
-
-      <CreateTask v-if="creatingTask" @close="toggleCreatingTask" />
-
-      <ViewTasks v-else />
-    </div> -->
-
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
     <RouterLink to="/signup">Sign Up</RouterLink>
