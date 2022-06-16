@@ -35,7 +35,7 @@ module.exports = function (client, channelId) {
     if (arr.length <= 1) {
       return `[${arr[0]}]`;
     }
-    return `[${arr.slice(0, arr.length - 1).join("], [")}] and [${
+    return `[${arr.slice(0, arr.length - 1).join("], [")}], and [${
       arr[arr.length - 1]
     }]`;
   }
@@ -58,7 +58,12 @@ module.exports = function (client, channelId) {
 
         const isOrAre = watchedBy.length > 1 ? "are" : "is";
 
-        const message = `\`\`\`ini\nHey [${createdBy}]! How did this task go?\n\n[${name}] ${description}\n\n${watchedByString} ${isOrAre} awaiting your status update at the link below.\n\`\`\`\nhttps://www.localhost:3000/`;
+        const isAwaitingMsg =
+          watchedBy.length > 0
+            ? `\n${watchedByString} ${isOrAre} awaiting your status update at the link below.`
+            : "";
+
+        const message = `\`\`\`ini\nHey [${createdBy}]! How did this task go?\n\n[${name}] ${description}\n${isAwaitingMsg}\n\`\`\`\nhttps://www.localhost:3000/`;
 
         client.users
           .fetch(discordUserId)

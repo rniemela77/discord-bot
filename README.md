@@ -41,7 +41,6 @@ cd client && npm run dev
 
 ## TODO:
 
-- frontend: use paths /tasks, /new. make buttons reflect these changes.
 - Allow users to not set watchers. If no watchers are set, don't display the watcher message when the task is due.
 - frontend: Show modal when user completes a task. (Enter in message)
 - frontend/server: allow users to upload/set avatar
