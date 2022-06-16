@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "@/views/HomeView.vue";
+import ErrorView from "@/views/ErrorView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,7 +12,10 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/signup",
+      path: "/:catchAll(.*)*",
+      name: "ErrorView",
+      component: ErrorView,
+    },
     {
       path: "/sign-up",
       name: "signup",
