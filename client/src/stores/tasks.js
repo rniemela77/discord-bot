@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-
 import axios from "axios";
 
 const url = "/api/tasks";
@@ -12,9 +11,18 @@ export const useTaskStore = defineStore({
   }),
   actions: {
     getTasksByUser(username) {
-      axios.get(`${url}/${username}`).then((response) => {
-        this.tasks = response.data;
-      });
+      return axios
+        .get(`${url}/${username}`)
+        .then((response) => {
+          this.tasks = response.data;
+        })
+        .catch((err) => {
+          if (err.response) {
+            throw new Error(err.response.data);
+          } else {
+            throw new Error(err.message);
+          }
+        });
     },
     getWatchedTasks(username) {
       axios.get(`${url}/watchedBy/${username}`).then((response) => {

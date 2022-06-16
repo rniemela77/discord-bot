@@ -1,9 +1,10 @@
 <script setup>
 import DiscordIdModal from "./DiscordIdModal.vue";
+import FormTemplate from "@/components/global/FormTemplate.vue";
 
 import { ref } from "vue";
 import { useUserStore } from "@/stores/user";
-import router from "../../router";
+import router from "@/router";
 
 const userStore = useUserStore();
 
@@ -11,14 +12,14 @@ const username = ref("");
 const password = ref("");
 const repeatPassword = ref("");
 const discordUserId = ref("");
-const loading = ref(false);
+const formStatus = ref("initial");
 const errorMessage = ref("");
 
 const showDiscordIdModal = ref(false);
 
 const signup = async () => {
+  formStatus.value = "sending";
   errorMessage.value = "";
-  loading.value = true;
 
   try {
     if (discordUserId.value.length !== 18) {
@@ -61,16 +62,14 @@ const signup = async () => {
       });
   } catch (err) {
     errorMessage.value = err.message;
-    loading.value = false;
+    formStatus.value = "initial";
     return;
   }
 };
 </script>
 
 <template>
-  <div v-if="loading" class="loading-spinner"></div>
-
-  <div :class="['signup-page', { 'is-logging-in': loading }]">
+  <FormTemplate :status="formStatus">
     <form v-on:submit.prevent="signup">
       <label for="username">Username</label>
       <input
@@ -78,7 +77,7 @@ const signup = async () => {
         id="username"
         v-model="username"
         placeholder="Username"
-        :disabled="loading"
+        :disabled="formStatus === 'sending'"
         required
       />
 
@@ -88,7 +87,7 @@ const signup = async () => {
         id="password"
         v-model="password"
         placeholder="Password"
-        :disabled="loading"
+        :disabled="formStatus === 'sending'"
         required
       />
 
@@ -98,24 +97,33 @@ const signup = async () => {
         id="repeatPassword"
         v-model="repeatPassword"
         placeholder="Re-enter password"
-        :disabled="loading"
+        :disabled="formStatus === 'sending'"
         required
       />
 
       <label for="discordUserId">
         Discord User ID
-        <button @click.prevent="showDiscordIdModal = true">How?</button>
+        <button
+          @click.prevent="showDiscordIdModal = true"
+          :disabled="formStatus === 'sending'"
+        >
+          How?
+        </button>
       </label>
       <input
         type="text"
         id="discordUserId"
         v-model="discordUserId"
         placeholder="Discord User ID"
-        :disabled="loading"
+        :disabled="formStatus === 'sending'"
         required
       />
 
-      <button class="btn-submit" type="submit" :disabled="loading">
+      <button
+        class="btn-submit"
+        type="submit"
+        :disabled="formStatus === 'sending'"
+      >
         Create Account
       </button>
 
@@ -126,14 +134,14 @@ const signup = async () => {
       v-if="showDiscordIdModal"
       @show-discord-id-modal="showDiscordIdModal = false"
     />
-  </div>
+  </FormTemplate>
 </template>
 
 <style scoped>
 .is-logging-in {
   opacity: 0.5;
 }
-.loading-spinner {
+.formStatus-spinner {
   border: 5px solid #f3f3f3; /* Light grey */
   border-top: 5px solid #3498db; /* Blue */
   border-radius: 50%;

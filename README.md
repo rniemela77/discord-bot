@@ -41,7 +41,10 @@ cd client && npm run dev
 
 ## TODO:
 
+- Do not render own account in watchers selection
+- fix bot !gettasks
 - use paths /tasks, /add-task. make buttons reflect these changes.
+- use camel case for all paths
 - Fix error handling for task creation
 - Allow users to not set watchers. If no watchers are set, don't display the watcher message when the task is due.
 - fix 3+ watchers due message. [1, 2, 3] and [4]
@@ -63,6 +66,7 @@ cd client && npm run dev
 - consider using gzip. app.use(compression()) is a good idea
 - fix title/description
 - add a favicon
+- put deleted tasks in own collection
 
 ## Future plans
 

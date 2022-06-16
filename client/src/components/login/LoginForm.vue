@@ -1,17 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import FormTemplate from "@/components/global/FormTemplate.vue";
 
+import { ref } from "vue";
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
 
 const username = ref("");
 const password = ref("");
-const isLoggingIn = ref(false);
 const errorMessage = ref("");
+const formStatus = ref("initial"); // initial, sending, success, error
 
 const login = async () => {
-  isLoggingIn.value = true;
+  formStatus.value = "sending";
 
   try {
     if (!username.value || !password.value) {
@@ -28,18 +29,16 @@ const login = async () => {
     });
   } catch (err) {
     errorMessage.value = err.message;
-    isLoggingIn.value = false;
+    formStatus.value = "initial";
     return;
   }
 
-  isLoggingIn.value = false;
+  formStatus.value = "success";
 };
 </script>
 
 <template>
-  <div v-if="isLoggingIn" class="loading-spinner"></div>
-
-  <div :class="['login-page', { 'is-logging-in': isLoggingIn }]">
+  <FormTemplate :status="formStatus">
     <form v-on:submit.prevent="login">
       <label for="username">Username</label>
       <input
@@ -47,7 +46,7 @@ const login = async () => {
         id="username"
         v-model="username"
         placeholder="Username"
-        :disabled="isLoggingIn"
+        :disabled="formStatus === 'sending'"
         required
       />
 
@@ -57,15 +56,15 @@ const login = async () => {
         id="password"
         v-model="password"
         placeholder="Password"
-        :disabled="isLoggingIn"
+        :disabled="formStatus === 'sending'"
         required
       />
 
-      <button type="submit" :disabled="isLoggingIn">Login</button>
+      <button type="submit" :disabled="formStatus === 'sending'">Login</button>
 
       <span v-if="errorMessage" class="error-message">{{ errorMessage }}</span>
     </form>
-  </div>
+  </FormTemplate>
 </template>
 
 <style scoped>

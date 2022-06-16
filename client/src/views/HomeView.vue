@@ -1,13 +1,13 @@
 <script setup>
-import LoginForm from "../components/login/LoginForm.vue";
-import TaskList from "../components/task/TaskList.vue";
+import LoginForm from "@/components/login/LoginForm.vue";
+import TaskList from "@/components/task/TaskList.vue";
 
 import { useUserStore } from "@/stores/user";
 const userStore = useUserStore();
 </script>
 
 <template>
-  <div v-if="!userStore.isLoggedIn">
+  <div v-if="!userStore.username">
     <h1>Login</h1>
     <LoginForm />
     <div class="center">

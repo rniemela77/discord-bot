@@ -1,16 +1,13 @@
 import { defineStore } from "pinia";
-
 import axios from "axios";
 
 const url = "/api/users";
-
 const signupUrl = "/api/signup";
 
 export const useUserStore = defineStore({
   id: "user",
   state: () => ({
     username: "",
-    isLoggedIn: false,
     allUsers: [],
   }),
   actions: {
@@ -37,7 +34,6 @@ export const useUserStore = defineStore({
         .post(url, user)
         .then((res) => {
           if (res.status === 200) {
-            this.isLoggedIn = true;
             this.username = user.username;
           } else {
             throw new Error(
@@ -54,13 +50,21 @@ export const useUserStore = defineStore({
         });
     },
     logout() {
-      this.isLoggedIn = false;
       this.username = "";
     },
     getAllUsers() {
-      axios.get(url).then((res) => {
-        this.allUsers = res.data;
-      });
+      return axios
+        .get(url)
+        .then((res) => {
+          this.allUsers = res.data;
+        })
+        .catch((err) => {
+          if (err.response) {
+            throw new Error(err.response.data);
+          } else {
+            throw new Error(err.message);
+          }
+        });
     },
   },
 });

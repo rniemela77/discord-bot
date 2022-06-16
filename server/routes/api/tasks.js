@@ -10,7 +10,11 @@ router.get("/:username", (req, res) => {
     return task.createdBy === req.params.username;
   });
 
-  res.send(userTasks);
+  if (userTasks.length === 0) {
+    res.status(200).send([]);
+  } else {
+    res.status(200).send(userTasks);
+  }
 });
 
 // Get tasks watched by username
@@ -19,17 +23,22 @@ router.get("/watchedBy/:username", (req, res) => {
     return task.watchedBy.includes(req.params.username);
   });
 
-  res.send(userTasks);
+  if (userTasks.length === 0) {
+    res.status(200).send([]);
+  } else {
+    res.status(200).send(userTasks);
+  }
 });
 
 router.put("/:id/complete", (req, res) => {
   const id = req.params.id;
   const task = taskList.data.find((task) => task.id.toString() === id);
   if (!task) {
-    return res.status(400).send("Task does not exist.");
+    res.status(404).send("Task not found");
+  } else {
+    task.completed = true;
+    res.status(200).send("Task completed");
   }
-  task.completed = true;
-  res.send(task);
 });
 
 // Add Task
@@ -47,13 +56,19 @@ router.post("/", (req, res) => {
 
   if (!task.name || !task.description) {
     return res.status(400).send("Invalid task. Missing name or description.");
+  } else if (!task.date || !task.time) {
+    return res.status(400).send("Invalid task. Missing date or time.");
+  } else if (!task.createdBy) {
+    return res
+      .status(400)
+      .send("Invalid task. Missing createdBy or watchedBy.");
   }
 
   taskList.data.push(task);
 
   discordWebhook.taskAdded(task);
 
-  res.status(201).send();
+  res.status(201).send("Task added successfully");
   taskList.id += 1;
 });
 
@@ -62,7 +77,8 @@ router.delete(
   (req, res) => {
     const id = req.params.id;
     taskList.data = taskList.data.filter((task) => task.id.toString() !== id);
-    res.status(200).send();
+
+    res.status(200).send("Task deleted");
   },
   (err) => {
     console.log(err);
