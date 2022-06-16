@@ -59,64 +59,61 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
-    <h2>Create Task</h2>
-    <FormTemplate :status="formStatus">
-      <form v-on:submit.prevent="addTask">
-        <label for="taskName">Task Name</label>
-        <input
-          type="text"
-          id="taskName"
-          v-model="taskName"
-          placeholder="Task Name"
-          :disabled="formStatus === 'sending'"
-          required
-        />
+  <FormTemplate :status="formStatus">
+    <form v-on:submit.prevent="addTask">
+      <label for="taskName">Task Name</label>
+      <input
+        type="text"
+        id="taskName"
+        v-model="taskName"
+        placeholder="Task Name"
+        :disabled="formStatus === 'sending'"
+        required
+      />
 
-        <label for="taskDescription">Task Description</label>
-        <input
-          type="text"
-          id="taskDescription"
-          v-model="taskDescription"
-          placeholder="Task Description"
-          :disabled="formStatus === 'sending'"
-          required
-        />
+      <label for="taskDescription">Task Description</label>
+      <input
+        type="text"
+        id="taskDescription"
+        v-model="taskDescription"
+        placeholder="Task Description"
+        :disabled="formStatus === 'sending'"
+        required
+      />
 
-        <label>I will report on the task status at:</label>
-        <input
-          type="date"
-          id="taskDate"
-          v-model="taskDate"
-          :disabled="formStatus === 'sending'"
-          required
-        />
-        <input
-          type="time"
-          id="taskTime"
-          v-model="taskTime"
-          :disabled="formStatus === 'sending'"
-          required
-        />
+      <label>I will report on the task status at:</label>
+      <input
+        type="date"
+        id="taskDate"
+        v-model="taskDate"
+        :disabled="formStatus === 'sending'"
+        required
+      />
+      <input
+        type="time"
+        id="taskTime"
+        v-model="taskTime"
+        :disabled="formStatus === 'sending'"
+        required
+      />
 
-        <h3>Set task watchers</h3>
-        <div v-for="user in displayWatchersList" :key="user">
-          <input
-            type="checkbox"
-            v-model="taskWatchers"
-            :disabled="formStatus === 'sending'"
-            :value="user"
-            :id="user"
-          />
-          <label :for="user">{{ user }}</label>
-        </div>
+      <h3>Set task watchers</h3>
+      <div v-for="user in displayWatchersList" :key="user">
+        <input
+          type="checkbox"
+          v-model="taskWatchers"
+          :disabled="formStatus === 'sending'"
+          :value="user"
+          :id="user"
+        />
+        <label :for="user">{{ user }}</label>
+      </div>
 
-        <button :disabled="formStatus === 'sending'" type="submit">
-          Add Task
-        </button>
-      </form>
-    </FormTemplate>
-  </div>
+      <button :disabled="formStatus === 'sending'" type="submit">
+        Add Task
+      </button>
+    </form>
+  </FormTemplate>
 </template>
 
 <style scoped></style>
