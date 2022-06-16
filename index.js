@@ -15,13 +15,13 @@ app.use(bodyParser.json());
 const tasks = require("./server/routes/api/tasks");
 app.use("/api/tasks", tasks);
 
-// Server `users.js` file on route '/api/users'
+// Serve `users.js` file on route '/api/users'
 const users = require("./server/routes/api/users");
 app.use("/api/users", users);
 
-// Server `signup.js` file on route '/api/signup'
+// Serve `signup.js` file on route '/api/sign-up'
 const signup = require("./server/routes/api/signup");
-app.use("/api/signup", signup);
+app.use("/api/sign-up", signup);
 
 // Handle production
 if (process.env.NODE_ENV === "production") {

@@ -9,6 +9,6 @@ import LoginForm from "@/components/login/LoginForm.vue";
 
   <div class="center">
     <p><small>or</small></p>
-    <RouterLink to="/signup">Sign Up</RouterLink>
+    <RouterLink to="/sign-up">Sign Up</RouterLink>
   </div>
 </template>

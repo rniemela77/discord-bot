@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 
 const url = "/api/users";
-const signupUrl = "/api/signup";
+const signupUrl = "/api/sign-up";
 
 export const useUserStore = defineStore({
   id: "user",
