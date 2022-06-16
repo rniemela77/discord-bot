@@ -31,6 +31,15 @@ module.exports = function (client, channelId) {
     return currentTime;
   };
 
+  function listStrings(arr) {
+    if (arr.length <= 1) {
+      return `[${arr[0]}]`;
+    }
+    return `[${arr.slice(0, arr.length - 1).join(", ")}] and [${
+      arr[arr.length - 1]
+    }]`;
+  }
+
   const checkForDeadlines = () => {
     taskList.data.forEach((task) => {
       if (
@@ -44,7 +53,12 @@ module.exports = function (client, channelId) {
           (u) => u.username === createdBy
         ).discordUserId;
 
-        const message = `Hey [${createdBy}]! Your followers want to know how the task went.\`\`\`ini\n[${name}]\n${description}\nWatchers: ${watchedBy}\n\`\`\`Visit https://www.localhost:3000/ to share your results.`;
+        // comma separated list of users watching task plus and
+        const watchedByString = listStrings(watchedBy);
+
+        const isOrAre = watchedBy.length > 1 ? "are" : "is";
+
+        const message = `\`\`\`ini\nHey [${createdBy}]! How did this task go?\n\n[${name}] ${description}\n\n${watchedByString} ${isOrAre} awaiting your status update at the link below.\n\`\`\`\nhttps://www.localhost:3000/`;
 
         client.users
           .fetch(discordUserId)
