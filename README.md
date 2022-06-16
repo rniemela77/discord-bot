@@ -41,12 +41,12 @@ cd client && npm run dev
 
 ## TODO:
 
-- Do not render own account in watchers selection
-- fix bot !gettasks
-- use paths /tasks, /add-task. make buttons reflect these changes.
-- use camel case for all paths
+- server/discord: fix bot !gettasks
+- frontend: make logout send them to login screen
+- frontend: add profile editing screen
+- frontend: use paths /tasks, /new. make buttons reflect these changes.
 - Allow users to not set watchers. If no watchers are set, don't display the watcher message when the task is due.
-- fix 3+ watchers due message. [1, 2, 3] and [4]
+- server/discord: fix 3+ watchers due message. [1, 2, 3] and [4]
 - frontend: when an API request is made that will be reflected in the UI (creating a task for instance), consider directly changing the store/state to create a snappier experience. Figure out how to handle the API failures.
 - frontend: Show modal when user completes a task. (Enter in message)
 - frontend/server: allow users to upload/set avatar
@@ -56,14 +56,15 @@ cd client && npm run dev
 - server: export/import functions the same everywhere. (exports.module?)
 - server: Re-enable twillio, place in Twillio folder
 - build: Determine if I need to keep Procfile
-- Look into cron jobs for deadlines/scheduling
+- server: Look into cron jobs for deadlines/scheduling
+- frontend: add screen that shows main tasks for all users. show users avatar, progress, etc.
 - frontend: add session/cookie storage, make user not have to login
 - heroku: add deploy/build scripts
 - build:Use package like Concurrently to create a npm dev script
 - consider using gzip. app.use(compression()) is a good idea
-- fix title/description
-- add a favicon
-- put deleted tasks in own collection
+- frontend: fix title/description
+- frontend: add a favicon
+- server: put deleted tasks in own collection
 
 ## Future plans
 

@@ -1,7 +1,7 @@
 <script setup>
 import FormTemplate from "@/components/global/FormTemplate.vue";
 
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useUserStore } from "@/stores/user";
 import { useTaskStore } from "@/stores/tasks";
 import router from "@/router";
@@ -16,6 +16,12 @@ const taskDate = ref("");
 const taskTime = ref("");
 const taskWatchers = ref([]);
 const formStatus = ref("initial");
+
+const displayWatchersList = computed(() => {
+  return userStore.allUsers.filter((user) => {
+    return user !== userStore.username;
+  });
+});
 
 const addTask = async () => {
   formStatus.value = "sending";
@@ -94,7 +100,7 @@ onMounted(async () => {
         />
 
         <h3>Set task watchers</h3>
-        <div v-for="user in userStore.allUsers" :key="user">
+        <div v-for="user in displayWatchersList" :key="user">
           <input
             type="checkbox"
             v-model="taskWatchers"
@@ -102,7 +108,7 @@ onMounted(async () => {
             :value="user"
             :id="user"
           />
-          <label :for="user"> {{ user }}</label>
+          <label :for="user">{{ user }}</label>
         </div>
 
         <button :disabled="formStatus === 'sending'" type="submit">
