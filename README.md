@@ -41,7 +41,6 @@ cd client && npm run dev
 
 ## TODO:
 
-- server/discord: fix bot !gettasks
 - frontend: make logout send them to login screen
 - frontend: add profile editing screen
 - frontend: use paths /tasks, /new. make buttons reflect these changes.

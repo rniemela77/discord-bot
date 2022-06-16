@@ -4,6 +4,16 @@ const discordWebhook = require("../../discord/webhook");
 
 const taskList = require("../../../database/tasks.js");
 
+// Get all tasks
+router.get("/", async (req, res) => {
+  const tasks = taskList.data;
+  if (!tasks || tasks.length === 0) {
+    res.status(500).send("There was an error getting the tasks.");
+  } else {
+    res.status(200).send(tasks);
+  }
+});
+
 // Get Tasks by username
 router.get("/:username", (req, res) => {
   const userTasks = taskList.data.filter((task) => {
