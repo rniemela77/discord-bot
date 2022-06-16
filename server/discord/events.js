@@ -74,7 +74,7 @@ module.exports = function (client, channelId) {
   };
 
   client.on("ready", () => {
-    setInterval(checkForDeadlines, 3000);
+    setInterval(checkForDeadlines, 60000);
   });
 
   return module;
