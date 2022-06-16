@@ -61,7 +61,7 @@ module.exports = function (client, channelId) {
         const isAwaitingMsg =
           watchedBy.length > 0
             ? `\n${watchedByString} ${isOrAre} awaiting your status update at the link below.`
-            : "";
+            : "Complete the task by clicking the link below.";
 
         const message = `\`\`\`ini\nHey [${createdBy}]! How did this task go?\n\n[${name}] ${description}\n${isAwaitingMsg}\n\`\`\`\nhttps://www.localhost:3000/`;
 
