@@ -41,6 +41,10 @@ cd client && npm run dev
 
 ## TODO:
 
+- use paths /tasks, /add-task. make buttons reflect these changes.
+- Fix error handling for task creation
+- Allow users to not set watchers. If no watchers are set, don't display the watcher message when the task is due.
+- fix 3+ watchers due message. [1, 2, 3] and [4]
 - server/frontend: handle all edge/error cases for creating a task
 - frontend: create form component so no need to duplicate CSS/loadingspinner
 - frontend: when an API request is made that will be reflected in the UI (creating a task for instance), consider directly changing the store/state to create a snappier experience. Figure out how to handle the API failures.
