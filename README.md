@@ -41,16 +41,14 @@ cd client && npm run dev
 
 ## TODO:
 
-- frontend: make logout send them to login screen
-- frontend: add profile editing screen
 - frontend: use paths /tasks, /new. make buttons reflect these changes.
 - Allow users to not set watchers. If no watchers are set, don't display the watcher message when the task is due.
-- server/discord: fix 3+ watchers due message. [1, 2, 3] and [4]
-- frontend: when an API request is made that will be reflected in the UI (creating a task for instance), consider directly changing the store/state to create a snappier experience. Figure out how to handle the API failures.
 - frontend: Show modal when user completes a task. (Enter in message)
 - frontend/server: allow users to upload/set avatar
-- server/frontend: Split tasks into "current" and "past" tasks
+- server/frontend: Split tasks into "current", "past", "deleted"...
+- frontend: when an API request is made that will be reflected in the UI (creating a task for instance), consider directly changing the store/state to create a snappier experience. Figure out how to handle the API failures.
 - frontend: Simplify/improve the UI
+- frontend: develop profile screen. (What to add?)
 - server: Set up MongoDB
 - server: export/import functions the same everywhere. (exports.module?)
 - server: Re-enable twillio, place in Twillio folder
@@ -63,7 +61,6 @@ cd client && npm run dev
 - consider using gzip. app.use(compression()) is a good idea
 - frontend: fix title/description
 - frontend: add a favicon
-- server: put deleted tasks in own collection
 
 ## Future plans
 
