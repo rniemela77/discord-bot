@@ -10,6 +10,10 @@ export const useTaskStore = defineStore({
     tasksWatching: [],
   }),
   actions: {
+    clearTasks() {
+      this.tasks = [];
+      this.tasksWatching = [];
+    },
     getTasksByUser(username) {
       return axios
         .get(`${url}/${username}`)
