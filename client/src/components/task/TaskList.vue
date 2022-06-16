@@ -21,9 +21,7 @@ const getWatchedTasks = async () => {
 };
 
 const newTask = async () => {
-  await router.push("/newtask").catch((err) => {
-    console.error(err);
-  });
+  router.push("/new");
 };
 const deleteTask = async (id) => {
   try {
