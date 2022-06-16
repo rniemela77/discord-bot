@@ -2,6 +2,7 @@
 import FormTemplate from "@/components/global/FormTemplate.vue";
 
 import { ref } from "vue";
+import router from "@/router";
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
@@ -24,16 +25,19 @@ const login = async () => {
       password: password.value,
     };
 
-    await userStore.login(user).catch((err) => {
-      throw err;
-    });
+    await userStore
+      .login(user)
+      .then(() => {
+        router.push("/");
+      })
+      .catch((err) => {
+        throw err;
+      });
   } catch (err) {
     errorMessage.value = err.message;
     formStatus.value = "initial";
     return;
   }
-
-  formStatus.value = "success";
 };
 </script>
 

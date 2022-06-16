@@ -30,18 +30,19 @@ const addTask = async () => {
   };
 
   try {
-    await taskStore.addTask(task);
-    emit("close");
-    await taskStore.addTask(task).catch((err) => {
-      console.error(err);
-    });
+    await taskStore
+      .addTask(task)
+      .then(() => {
+        router.push("/");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   } catch (err) {
     err.value = err.message;
     formStatus.value = "initial";
+    return;
   }
-
-  formStatus.value = "success";
-  router.push("/");
 };
 
 onMounted(async () => {

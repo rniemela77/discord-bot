@@ -1,5 +1,18 @@
 <script setup>
+import { onMounted } from "vue";
+import router from "@/router";
 import { RouterView } from "vue-router";
+import { useUserStore } from "@/stores/user";
+
+const userStore = useUserStore();
+
+onMounted(() => {
+  if (userStore.username) {
+    router.push("/");
+  } else {
+    router.push("/login");
+  }
+});
 </script>
 
 <template>
