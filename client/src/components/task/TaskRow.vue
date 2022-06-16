@@ -11,15 +11,6 @@ defineProps({
     required: true,
   },
 });
-
-function listStrings(arr) {
-  if (arr.length <= 1) {
-    return `[${arr[0]}]`;
-  }
-  return `[${arr.slice(0, arr.length - 1).join(", ")}] and [${
-    arr[arr.length - 1]
-  }]`;
-}
 </script>
 
 <template>
@@ -27,9 +18,12 @@ function listStrings(arr) {
     <b>{{ task.name }}</b>
     <p>{{ task.description }}</p>
     <p><b>Due:</b> {{ task.date }} @ {{ task.time }}</p>
-    <p v-if="task.watchedBy.length > 0">
-      <b>Watchers:</b>
-      {{ listStrings(task.watchedBy) }}
+    <p>
+      <b>Watchers: </b>
+      <span v-if="task.watchedBy.length > 0">{{
+        task.watchedBy.join(", ")
+      }}</span>
+      <span v-else>None</span>
     </p>
 
     <div v-if="userStore.username === task.createdBy">
