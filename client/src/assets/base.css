@@ -24,3 +24,16 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.center {
+  text-align: center;
+}
+.center p {
+  margin: 0.5rem;
+}
+.center a {
+  padding: 0.5rem;
+}
+.center a:hover {
+  background: #fafafa;
+}
