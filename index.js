@@ -44,6 +44,3 @@ app.listen(port, function () {
 
 // Initialize bot
 require("./server/discord/index.js");
-
-// Automatically check if tasks are due and send a message to the user
-require("./server/tasks/deadlineChecker.js");
