@@ -47,24 +47,29 @@ module.exports = function (client, channelId) {
         task.time === getCurrentTime() &&
         !task.completed
       ) {
-        const { name, description, watchedBy, createdBy } = task;
+        const { name, description, watchedBy, createdBy, id } = task;
 
+        // Get the user's discord ID so we can PM them
         const discordUserId = userList.users.find(
           (u) => u.username === createdBy
         ).discordUserId;
 
-        // comma separated list of users watching task plus and
+        // Get list of users who have watched the task
         const watchedByString = listStrings(watchedBy);
-
         const isOrAre = watchedBy.length > 1 ? "are" : "is";
-
         const isAwaitingMsg =
           watchedBy.length > 0
             ? `\n${watchedByString} ${isOrAre} awaiting your status update at the link below.`
             : "Complete the task by clicking the link below.";
 
-        const message = `\`\`\`ini\nHey [${createdBy}]! How did this task go?\n\n[${name}] ${description}\n${isAwaitingMsg}\n\`\`\`\nhttps://www.localhost:3000/`;
+        // Get task link
+        const siteUrl = process.env.SITE_URL;
+        const taskLink = `${siteUrl}/task/${id}`;
 
+        // Format message
+        const message = `\`\`\`ini\nHey [${createdBy}]! How did this task go?\n\n[${name}] ${description}\n${isAwaitingMsg}\n\`\`\`\n${taskLink}`;
+
+        // Send private message to user
         client.users
           .fetch(discordUserId)
           .then((user) => {
