@@ -35,18 +35,6 @@ const deleteTask = async (id) => {
     err.value = err.message;
   }
 };
-const completeTask = async (id) => {
-  try {
-    await taskStore.completeTask(id).catch((err) => {
-      console.error(err);
-    });
-    await getTasks().catch((err) => {
-      console.error(err);
-    });
-  } catch (err) {
-    err.value = err.message;
-  }
-};
 
 onMounted(async () => {
   await getTasks().catch((err) => {

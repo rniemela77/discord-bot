@@ -41,10 +41,11 @@ cd client && npm run dev
 
 ## TODO:
 
-- Allow users to not set watchers. If no watchers are set, don't display the watcher message when the task is due.
-- frontend: Show modal when user completes a task. (Enter in message)
+- frontend/server: add username to URL paths.
+- frontend: use base components for inputs (textarea, text, checkbox, radio...)
+- frontend: disallow users from viewing tasks that aren't theirs. (use nav guard script)
+- server: send specific task URL to user when due
 - frontend/server: allow users to upload/set avatar
-- server/frontend: Split tasks into "current", "past", "deleted"...
 - frontend: when an API request is made that will be reflected in the UI (creating a task for instance), consider directly changing the store/state to create a snappier experience. Figure out how to handle the API failures.
 - frontend: Simplify/improve the UI
 - frontend: develop profile screen. (What to add?)
@@ -53,6 +54,7 @@ cd client && npm run dev
 - server: Re-enable twillio, place in Twillio folder
 - build: Determine if I need to keep Procfile
 - server: Look into cron jobs for deadlines/scheduling
+- server/frontend: Split tasks into "current", "past", "deleted"...
 - frontend: add screen that shows main tasks for all users. show users avatar, progress, etc.
 - frontend: add session/cookie storage, make user not have to login
 - heroku: add deploy/build scripts

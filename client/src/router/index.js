@@ -41,11 +41,11 @@ const router = createRouter({
       name: "login",
       component: () => import("@/views/LoginView.vue"),
     },
-    // {
-    //   path: "/item/:id",
-    //   name: "item",
-    //   component: () => import("../views/ItemView.vue"),
-    // },
+    {
+      path: "/task/:id",
+      name: "task",
+      component: () => import("@/views/TaskView.vue"),
+    },
   ],
 });
 

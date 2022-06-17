@@ -40,13 +40,17 @@ router.get("/watchedBy/:username", (req, res) => {
   }
 });
 
-router.put("/:id/complete", (req, res) => {
-  const id = req.params.id;
-  const task = taskList.data.find((task) => task.id.toString() === id);
+// Set task status
+router.post("/complete/:id", (req, res) => {
+  const taskId = req.params.id;
+  const taskStatus = req.body;
+
+  const task = taskList.data.find((task) => task.id.toString() === taskId);
+
   if (!task) {
     res.status(404).send("Task not found");
   } else {
-    task.completed = true;
+    task.status = taskStatus;
     res.status(200).send("Task completed");
   }
 });

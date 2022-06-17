@@ -42,20 +42,11 @@ export const useTaskStore = defineStore({
           }
         });
     },
-    completeTask(id) {
+    completeTask(id, task) {
       return axios
-        .put(`${url}/${id}/complete`)
+        .post(`${url}/complete/${id}`, task)
         .then((res) => {
-          if (res.status === 200) {
-            this.tasks = this.tasks.map((task) => {
-              if (task.id === id) {
-                task.completed = true;
-              }
-              return task;
-            });
-          } else {
-            console.log("Error completing task");
-          }
+          return res.data;
         })
         .catch((err) => {
           if (err.response) {

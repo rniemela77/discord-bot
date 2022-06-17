@@ -3,7 +3,7 @@ import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
 
-const emit = defineEmits(["complete-task", "delete-task"]);
+const emit = defineEmits(["delete-task"]);
 
 defineProps({
   task: {
@@ -27,7 +27,7 @@ defineProps({
     </p>
 
     <div v-if="userStore.username === task.createdBy">
-      <button @click="emit('complete-task')">Complete</button>
+      <RouterLink :to="`/task/${task.id}`">Complete</RouterLink>
       <button @click="emit('delete-task')">x</button>
     </div>
   </div>
