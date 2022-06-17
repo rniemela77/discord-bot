@@ -124,8 +124,8 @@ module.exports = function (client, channelId) {
   };
 
   client.on("ready", () => {
-    setInterval(checkForDeadlines, 60000);
-    setInterval(checkForStatus, 60000);
+    setInterval(checkForDeadlines, 1000);
+    setInterval(checkForStatus, 1000);
   });
 
   return module;

@@ -33,16 +33,6 @@ exports.data = [
     watchedBy: ["joe", "jane"],
     status: null,
   },
-  // {
-  //   id: 4,
-  //   name: "fourt task",
-  //   description: "this is the fourt task",
-  //   date: "2022-06-10",
-  //   time: "23:09",
-  //   createdBy: "admin",
-  //   completed: false,
-  //   watchedBy: ["rob", "joe", "jane"],
-  // },
 ];
 
 exports.ready = [
