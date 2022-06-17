@@ -71,6 +71,7 @@ cd client && npm run dev
 - consider using gzip. app.use(compression()) is a good idea
 - frontend: fix title/description
 - frontend: add a favicon
+- server/frontend: check for deadlines/status every 5 minute interval. make user on frontend only able to select times in 5 minute intervals. (maybe do 30min?)
 
 ## Future plans
 
