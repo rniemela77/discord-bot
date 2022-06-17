@@ -44,3 +44,19 @@ exports.data = [
   //   watchedBy: ["rob", "joe", "jane"],
   // },
 ];
+
+exports.ready = [
+  {
+    id: 4,
+    name: "meal prep",
+    description: "cook chicken and veggies",
+    date: "2020-01-01",
+    time: "12:00",
+    createdBy: "rob",
+    completed: false,
+    watchedBy: ["admin"],
+    status: "cooking completed! delicious.",
+  },
+];
+
+exports.done = [];

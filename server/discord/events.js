@@ -74,17 +74,58 @@ module.exports = function (client, channelId) {
           .fetch(discordUserId)
           .then((user) => {
             user.send(message);
-            task.completed = true;
           })
           .catch((err) => {
             console.log(err);
           });
+
+        // move task to ready
+        taskList.ready.push(task);
+        // remove task from data
+        taskList.data.splice(taskList.data.indexOf(task), 1);
       }
+    });
+  };
+
+  const checkForStatus = () => {
+    taskList.ready.forEach((task) => {
+      // Get the user's discord ID so we can PM them
+      const discordUserId = userList.users.find(
+        (u) => u.username === task.createdBy
+      ).discordUserId;
+
+      // Get all task watchers and their discord IDs
+      let watchers = [];
+      task.watchedBy.forEach((watcher) => {
+        watchers.push({
+          username: watcher,
+          discordUserId: userList.users.find((u) => u.username === watcher)
+            .discordUserId,
+        });
+      });
+
+      // send a message to each watcher
+      watchers.forEach((watcher) => {
+        client.users
+          .fetch(watcher.discordUserId)
+          .then((user) => {
+            user.send(
+              `\`\`\`ini\nHey [${watcher.username}], we have received an update on [${task.createdBy}]'s task:\n\n[${task.name}] ${task.description}\n\n"${task.status}"\n\`\`\`\nGive them feedback with the command: \`\`!t${task.id} let's go!!!\`\``
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+      // move this task from ready to done
+      taskList.done.push(task);
+      taskList.ready = taskList.ready.filter((t) => t.id !== task.id);
     });
   };
 
   client.on("ready", () => {
     setInterval(checkForDeadlines, 60000);
+    setInterval(checkForStatus, 60000);
   });
 
   return module;
