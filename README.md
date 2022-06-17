@@ -41,6 +41,7 @@ cd client && npm run dev
 
 ## TODO:
 
+- frontend: add way for watchers to send feedback once task creator has completed the task
 - frontend/server: add username to URL paths.
 - frontend: use base components for inputs (textarea, text, checkbox, radio...)
 - frontend: disallow users from viewing tasks that aren't theirs. (use nav guard script)
@@ -52,6 +53,7 @@ cd client && npm run dev
 - server: Set up MongoDB
 - server: export/import functions the same everywhere. (exports.module?)
 - server: Re-enable twillio, place in Twillio folder
+- heroku: add SITE_URL=... to heroku secret keys
 - build: Determine if I need to keep Procfile
 - server: Look into cron jobs for deadlines/scheduling
 - server/frontend: Split tasks into "current", "past", "deleted"...
