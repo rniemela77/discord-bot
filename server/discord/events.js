@@ -1,4 +1,4 @@
-const taskList = require("../../database/tasks.js");
+const tasks = require("../../database/tasks.js");
 const userList = require("../../database/users.js");
 
 module.exports = function (client, channelId) {
@@ -41,7 +41,7 @@ module.exports = function (client, channelId) {
   }
 
   const checkForDeadlines = () => {
-    taskList.data.forEach((task) => {
+    tasks.todo.forEach((task) => {
       if (
         task.date === getCurrentDate() &&
         task.time === getCurrentTime() &&
@@ -69,6 +69,10 @@ module.exports = function (client, channelId) {
         // Format message
         const message = `\`\`\`ini\nHey [${createdBy}]! How did this task go?\n\n[${name}] ${description}\n${isAwaitingMsg}\n\`\`\`\n${taskLink}`;
 
+        // Move task from todo to ready
+        tasks.ready.push(task);
+        tasks.todo.splice(tasks.todo.indexOf(task), 1);
+
         // Send private message to user
         client.users
           .fetch(discordUserId)
@@ -78,17 +82,12 @@ module.exports = function (client, channelId) {
           .catch((err) => {
             console.log(err);
           });
-
-        // move task to ready
-        taskList.ready.push(task);
-        // remove task from data
-        taskList.data.splice(taskList.data.indexOf(task), 1);
       }
     });
   };
 
   const checkForStatus = () => {
-    taskList.ready.forEach((task) => {
+    tasks.ready.forEach((task) => {
       // Get the user's discord ID so we can PM them
       const discordUserId = userList.users.find(
         (u) => u.username === task.createdBy
@@ -104,6 +103,10 @@ module.exports = function (client, channelId) {
         });
       });
 
+      // Move task from ready to done
+      tasks.done.push(task);
+      tasks.ready = tasks.ready.filter((t) => t.id !== task.id);
+
       // send a message to each watcher
       watchers.forEach((watcher) => {
         client.users
@@ -117,15 +120,12 @@ module.exports = function (client, channelId) {
             console.log(err);
           });
       });
-      // move this task from ready to done
-      taskList.done.push(task);
-      taskList.ready = taskList.ready.filter((t) => t.id !== task.id);
     });
   };
 
   client.on("ready", () => {
-    setInterval(checkForDeadlines, 1000);
-    setInterval(checkForStatus, 1000);
+    setInterval(checkForDeadlines, 3000);
+    setInterval(checkForStatus, 3000);
   });
 
   return module;

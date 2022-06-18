@@ -6,7 +6,7 @@ const taskList = require("../../../database/tasks.js");
 
 // Get all tasks
 router.get("/", async (req, res) => {
-  const tasks = taskList.data;
+  const tasks = taskList.todo;
   if (!tasks || tasks.length === 0) {
     res.status(500).send("There was an error getting the tasks.");
   } else {
@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 
 // Get Tasks by username
 router.get("/:username", (req, res) => {
-  const userTasks = taskList.data.filter((task) => {
+  const userTasks = taskList.todo.filter((task) => {
     return task.createdBy === req.params.username;
   });
 
@@ -29,7 +29,7 @@ router.get("/:username", (req, res) => {
 
 // Get tasks watched by username
 router.get("/watchedBy/:username", (req, res) => {
-  const userTasks = taskList.data.filter((task) => {
+  const userTasks = taskList.todo.filter((task) => {
     return task.watchedBy.includes(req.params.username);
   });
 
@@ -45,11 +45,17 @@ router.post("/complete/:id", (req, res) => {
   const taskId = req.params.id;
   const taskStatus = req.body;
 
-  const task = taskList.data.find((task) => task.id.toString() === taskId);
+  const task = taskList.todo.find((task) => task.id.toString() === taskId);
 
   if (!task) {
     res.status(404).send("Task not found");
   } else {
+    // add task to ready
+    taskList.ready.push(task);
+
+    // remove task from todo
+    taskList.todo.splice(taskList.todo.indexOf(task), 1);
+
     task.status = taskStatus;
     res.status(200).send("Task completed");
   }
@@ -78,7 +84,7 @@ router.post("/", (req, res) => {
       .send("Invalid task. Missing createdBy or watchedBy.");
   }
 
-  taskList.data.push(task);
+  taskList.todo.push(task);
 
   discordWebhook.taskAdded(task);
 
@@ -90,7 +96,7 @@ router.delete(
   "/:id",
   (req, res) => {
     const id = req.params.id;
-    taskList.data = taskList.data.filter((task) => task.id.toString() !== id);
+    taskList.todo = taskList.todo.filter((task) => task.id.toString() !== id);
 
     res.status(200).send("Task deleted");
   },

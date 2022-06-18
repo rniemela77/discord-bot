@@ -43,6 +43,7 @@ cd client && npm run dev
 
 - server: when a task is completed, move it from 'tasks' to 'ready'. TEST FOR THIS!
 - server: remove 'completed' field
+- server: figure out what to do when a watcher/userid is not correct.
 - server: rename tasks.data to tasks.todo
 - frontend/discord/server: create link for user to send task feedback to task completer. create page on frontend to allow this.
 - discord/server: allow users to type a command like '!t4 lets go' to easily send feedback. (how to add emoji?)

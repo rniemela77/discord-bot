@@ -1,6 +1,7 @@
 exports.id = 4;
 
-exports.data = [
+// Unfinished tasks
+exports.todo = [
   {
     id: 1,
     name: "first task",
@@ -35,6 +36,7 @@ exports.data = [
   },
 ];
 
+// Tasks awaiting completion
 exports.ready = [
   {
     id: 4,
@@ -49,4 +51,5 @@ exports.ready = [
   },
 ];
 
+// Finished tasks
 exports.done = [];
