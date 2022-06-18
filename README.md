@@ -41,19 +41,16 @@ cd client && npm run dev
 
 ## TODO:
 
-- server: when a task is completed, move it from 'tasks' to 'ready'. TEST FOR THIS!
-- server: remove 'completed' field
-- server: figure out what to do when a watcher/userid is not correct.
-- server: rename tasks.data to tasks.todo
 - frontend/discord/server: create link for user to send task feedback to task completer. create page on frontend to allow this.
 - discord/server: allow users to type a command like '!t4 lets go' to easily send feedback. (how to add emoji?)
-- frontend: add common keywords for quickly setting task name. "meal prep", "exercise", "study", "meditate"...
 - frontend: add common times. "tonight", "tomorrow morning", "tomorrow afternoon", "tomorrow night"...
+- frontend: add common keywords for quickly setting task name. "meal prep", "exercise", "study", "meditate"...
 - frontend: let users select their "wake up" and "sleep" times. they won't be notified until they wake up. the 'wake up call' will ask what their intentions for the day are. 'sleep' alarm will check up on how they did.
+- frontend: don't remove recently completed tasks from task list. (show 3 most recent tasks?)
+- server: figure out what to do when a watcher/userid is not correct. (right now it does not cause problems.)
 - frontend/server: add username to URL paths.
 - frontend: use base components for inputs (textarea, text, checkbox, radio...)
 - frontend: disallow users from viewing tasks that aren't theirs. (use nav guard script)
-- server: send specific task URL to user when due
 - frontend/server: allow users to upload/set avatar
 - frontend: when an API request is made that will be reflected in the UI (creating a task for instance), consider directly changing the store/state to create a snappier experience. Figure out how to handle the API failures.
 - frontend: Simplify/improve the UI
@@ -61,7 +58,6 @@ cd client && npm run dev
 - server: Set up MongoDB
 - server: export/import functions the same everywhere. (exports.module?)
 - server: Re-enable twillio, place in Twillio folder
-- heroku: add SITE_URL=... to heroku secret keys
 - build: Determine if I need to keep Procfile
 - server: Look into cron jobs for deadlines/scheduling
 - server/frontend: Split tasks into "current", "past", "deleted"...
@@ -73,6 +69,7 @@ cd client && npm run dev
 - frontend: fix title/description
 - frontend: add a favicon
 - server/frontend: check for deadlines/status every 5 minute interval. make user on frontend only able to select times in 5 minute intervals. (maybe do 30min?)
+- frontend: add some measurements on progress goals. averages, etc
 
 ## Future plans
 
