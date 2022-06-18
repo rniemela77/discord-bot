@@ -71,7 +71,7 @@ router.post("/", (req, res) => {
     time: req.body.time,
     createdBy: req.body.createdBy,
     watchedBy: req.body.watchedBy,
-    completed: false,
+    status: null,
   };
 
   if (!task.name || !task.description) {

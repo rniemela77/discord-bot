@@ -42,11 +42,7 @@ module.exports = function (client, channelId) {
 
   const checkForDeadlines = () => {
     tasks.todo.forEach((task) => {
-      if (
-        task.date === getCurrentDate() &&
-        task.time === getCurrentTime() &&
-        !task.completed
-      ) {
+      if (task.date === getCurrentDate() && task.time === getCurrentTime()) {
         const { name, description, watchedBy, createdBy, id } = task;
 
         // Get the user's discord ID so we can PM them
@@ -124,8 +120,8 @@ module.exports = function (client, channelId) {
   };
 
   client.on("ready", () => {
-    setInterval(checkForDeadlines, 3000);
-    setInterval(checkForStatus, 3000);
+    setInterval(checkForDeadlines, 60000);
+    setInterval(checkForStatus, 60000);
   });
 
   return module;
