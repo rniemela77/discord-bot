@@ -19,9 +19,6 @@ exports.client = new Discord.Client({
 // Set commands
 require("./commands.js");
 
-// Set events
-require("./events.js");
-
 // General bot methods
 require("./functions.js");
 

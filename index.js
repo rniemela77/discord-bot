@@ -44,3 +44,6 @@ app.listen(port, function () {
 
 // Initialize bot
 require("./server/discord/index.js");
+
+// Check if tasks are due
+require("./server/utilities/tasks.js");

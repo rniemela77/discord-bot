@@ -41,6 +41,8 @@ cd client && npm run dev
 
 ## TODO:
 
+- process: add lucidchart of how everything works
+
 - frontend/discord/server: create link for user to send task feedback to task completer. create page on frontend to allow this.
 - discord/server: allow users to type a command like '!t4 lets go' to easily send feedback. (how to add emoji?)
 - frontend: add common times. "tonight", "tomorrow morning", "tomorrow afternoon", "tomorrow night"...
