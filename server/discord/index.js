@@ -1,11 +1,11 @@
 // Bot settings
 const Discord = require("discord.js");
 const botToken = process.env.BOT_TOKEN;
-const prefix = "!";
+exports.prefix = "!";
 const channelId = process.env.CHANNEL_ID;
 
 // Create bot client
-const client = new Discord.Client({
+exports.client = new Discord.Client({
   intents: [
     "GUILDS",
     "GUILD_MESSAGES",
@@ -17,15 +17,13 @@ const client = new Discord.Client({
 });
 
 // Set commands
-require("./commands.js")(client, prefix);
+require("./commands.js");
 
 // Set events
-require("./events.js")(client, channelId);
+require("./events.js");
 
 // General bot methods
 require("./functions.js");
 
 // Log in to Discord
-client.login(botToken);
-
-exports.client = client;
+this.client.login(botToken);

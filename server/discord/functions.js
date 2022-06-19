@@ -1,6 +1,6 @@
 const { client } = require("./index.js");
 
-const messageUser = async (userId, message) => {
+exports.messageUser = async (userId, message) => {
   const user = await client.users.fetch(userId);
   user.send(message);
 };
@@ -23,5 +23,3 @@ const messageUser = async (userId, message) => {
 //   });
 // };
 */
-
-exports.messageUser = messageUser;
