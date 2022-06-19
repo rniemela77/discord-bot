@@ -42,9 +42,9 @@ export const useTaskStore = defineStore({
           }
         });
     },
-    completeTask(id, task) {
+    completeTask(id, taskStatus) {
       return axios
-        .post(`${url}/complete/${id}`, task)
+        .post(`${url}/complete/${id}`, { status: taskStatus })
         .then((res) => {
           return res.data;
         })

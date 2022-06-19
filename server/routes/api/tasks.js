@@ -5,6 +5,7 @@ const { getDiscordIdFromUsername } = require("../../utilities/users");
 const { messageUser } = require("../../discord/functions.js");
 
 const taskList = require("../../../database/tasks.js");
+const { notifyWatchers } = require("../../utilities/tasks");
 
 // Get all tasks
 router.get("/", async (req, res) => {
@@ -50,16 +51,17 @@ router.post("/complete/:id", (req, res) => {
   // Get task by id
   const task = taskList.todo.find((task) => task.id.toString() === taskId);
 
-  if (!task) {
-    res.status(404).send("Task not found");
-  } else {
-    // move task from todo[] to due[]
-    taskList.due.push(task);
-    taskList.todo.splice(taskList.todo.indexOf(task), 1);
+  if (!task) return res.status(404).send("Task not found");
 
-    task.status = taskStatus;
-    res.status(200).send("Task completed");
-  }
+  taskList.todo.splice(taskList.todo.indexOf(task), 1);
+
+  // add the task to the due list with the added status
+  task.status = taskStatus.status;
+  taskList.due.push(task);
+
+  notifyWatchers(task);
+
+  res.status(200).send("Task completed");
 });
 
 // Add Task

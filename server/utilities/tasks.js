@@ -9,9 +9,6 @@ client.on("ready", async () => {
     tasks.todo.forEach((task) => {
       checkIfDue(task);
     });
-    tasks.due.forEach((task) => {
-      notifyWatchers(task);
-    });
   }, 3000);
 });
 
@@ -57,7 +54,7 @@ const checkIfDue = async (task) => {
   await messageUser(discordUserId, message);
 };
 
-const notifyWatchers = async (task) => {
+exports.notifyWatchers = async (task) => {
   // Get the discord IDs for all the task watchers
   let watcherIds = [];
   task.watchedBy.forEach((watcher) => {
