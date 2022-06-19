@@ -1,8 +1,14 @@
 const { client } = require("./index.js");
 
 exports.messageUser = async (userId, message) => {
-  const user = await client.users.fetch(userId);
-  user.send(message);
+  await client.users
+    .fetch(userId)
+    .then((user) => {
+      user.send(message);
+    })
+    .catch((err) => {
+      console.log("messageUser() error:" + err.message + ". userId:" + userId);
+    });
 };
 
 /*
