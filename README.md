@@ -49,6 +49,7 @@ cd client && npm run dev
 - frontend: add common keywords for quickly setting task name. "meal prep", "exercise", "study", "meditate"...
 - frontend: let users select their "wake up" and "sleep" times. they won't be notified until they wake up. the 'wake up call' will ask what their intentions for the day are. 'sleep' alarm will check up on how they did.
 - frontend: don't remove recently completed tasks from task list. (show 3 most recent tasks?)
+- frontend: add page transitions
 - server: figure out what to do when a watcher/userid is not correct. (right now it does not cause problems.)
 - frontend/server: add username to URL paths.
 - frontend: use base components for inputs (textarea, text, checkbox, radio...)
