@@ -65,8 +65,8 @@ const checkForDeadlines = () => {
       // Format message
       const message = `\`\`\`ini\nHey [${createdBy}]! How did this task go?\n\n[${name}] ${description}\n${isAwaitingMsg}\n\`\`\`\n${taskLink}`;
 
-      // Move task from todo to ready
-      tasks.ready.push(task);
+      // Move task from todo to due
+      tasks.due.push(task);
       tasks.todo.splice(tasks.todo.indexOf(task), 1);
 
       // Send private message to user
@@ -83,7 +83,7 @@ const checkForDeadlines = () => {
 };
 
 const checkForStatus = () => {
-  tasks.ready.forEach((task) => {
+  tasks.due.forEach((task) => {
     // Get the user's discord ID so we can PM them
     const discordUserId = userList.users.find(
       (u) => u.username === task.createdBy
@@ -99,9 +99,9 @@ const checkForStatus = () => {
       });
     });
 
-    // Move task from ready to done
+    // Move task from due to done
     tasks.done.push(task);
-    tasks.ready = tasks.ready.filter((t) => t.id !== task.id);
+    tasks.due = tasks.due.filter((t) => t.id !== task.id);
 
     // send a message to each watcher
     watchers.forEach((watcher) => {

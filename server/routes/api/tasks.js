@@ -47,15 +47,14 @@ router.post("/complete/:id", (req, res) => {
   const taskId = req.params.id;
   const taskStatus = req.body;
 
+  // Get task by id
   const task = taskList.todo.find((task) => task.id.toString() === taskId);
 
   if (!task) {
     res.status(404).send("Task not found");
   } else {
-    // add task to ready
-    taskList.ready.push(task);
-
-    // remove task from todo
+    // move task from todo[] to due[]
+    taskList.due.push(task);
     taskList.todo.splice(taskList.todo.indexOf(task), 1);
 
     task.status = taskStatus;
@@ -85,9 +84,8 @@ router.post("/", async (req, res) => {
   }
 
   taskList.todo.push(task);
-
-  res.status(201).send("Task added successfully");
   taskList.id += 1;
+  res.status(201).send("Task added successfully");
 
   // Message all watchers
   await Promise.all(

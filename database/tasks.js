@@ -35,17 +35,17 @@ exports.todo = [
 ];
 
 // Tasks awaiting completion
-exports.ready = [
-  {
-    id: 4,
-    name: "meal prep",
-    description: "cook chicken and veggies",
-    date: "2020-01-01",
-    time: "12:00",
-    createdBy: "rob",
-    watchedBy: ["admin"],
-    status: "cooking completed! delicious.",
-  },
+exports.due = [
+  // {
+  //   id: 4,
+  //   name: "meal prep",
+  //   description: "cook chicken and veggies",
+  //   date: "2020-01-01",
+  //   time: "12:00",
+  //   createdBy: "rob",
+  //   watchedBy: ["admin"],
+  //   status: "cooking completed! delicious.",
+  // },
 ];
 
 // Finished tasks
