@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const discordWebhook = require("../../discord/webhook");
+const { getDiscordIdFromUsername } = require("../../utilities/users");
+const { messageUser } = require("../../discord/functions.js");
 
 const taskList = require("../../../database/tasks.js");
 
@@ -62,7 +64,7 @@ router.post("/complete/:id", (req, res) => {
 });
 
 // Add Task
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const task = {
     id: taskList.id + 1,
     name: req.body.name.trim(),
@@ -79,17 +81,24 @@ router.post("/", (req, res) => {
   } else if (!task.date || !task.time) {
     return res.status(400).send("Invalid task. Missing date or time.");
   } else if (!task.createdBy) {
-    return res
-      .status(400)
-      .send("Invalid task. Missing createdBy or watchedBy.");
+    return res.status(400).send("Invalid task. Missing createdBy.");
   }
 
   taskList.todo.push(task);
 
-  discordWebhook.taskAdded(task);
-
   res.status(201).send("Task added successfully");
   taskList.id += 1;
+
+  // Message all watchers
+  await Promise.all(
+    task.watchedBy.map(async (username) => {
+      const discordId = getDiscordIdFromUsername(username);
+
+      if (discordId) {
+        await messageUser(discordId, "task created");
+      }
+    })
+  );
 });
 
 router.delete(

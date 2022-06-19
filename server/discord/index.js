@@ -22,5 +22,10 @@ require("./commands.js")(client, prefix);
 // Set events
 require("./events.js")(client, channelId);
 
+// General bot methods
+require("./functions.js");
+
 // Log in to Discord
 client.login(botToken);
+
+exports.client = client;
