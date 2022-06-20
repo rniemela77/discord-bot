@@ -1,9 +1,12 @@
 <script setup>
+import { onMounted } from "vue";
 import router from "@/router";
 import { RouterView } from "vue-router";
 import { useUserStore } from "@/stores/user";
+import { useTaskStore } from "@/stores/tasks";
 
 const userStore = useUserStore();
+const taskStore = useTaskStore();
 
 router.beforeEach(async (to, from) => {
   if (
@@ -15,6 +18,13 @@ router.beforeEach(async (to, from) => {
     // redirect the user to the login page
     return { name: "login" };
   }
+});
+
+// When app mounts, get all tasks for the user
+onMounted(async () => {
+  await taskStore.getAllTasksForUser(userStore.username).catch((err) => {
+    console.error(err);
+  });
 });
 </script>
 

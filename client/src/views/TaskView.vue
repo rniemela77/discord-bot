@@ -1,7 +1,7 @@
 <script setup>
 import FormTemplate from "@/components/global/FormTemplate.vue";
 
-import { onMounted, computed, ref } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { useTaskStore } from "@/stores/tasks";
@@ -16,7 +16,8 @@ const formStatus = ref("initial");
 const conclusion = ref("");
 
 const task = computed(() => {
-  return taskStore.allTasks.find((task) => task.id === taskId.value);
+  const allTasks = [...taskStore.tasks, ...taskStore.tasksWatching];
+  return allTasks.find((task) => task.id === taskId.value);
 });
 
 const isMyTask = computed(() => {
@@ -41,16 +42,6 @@ const completeTask = async () => {
   formStatus.value = "success";
   router.push("/");
 };
-
-// Todo: maybe put this in a composable, in app.vue, or trigger each route
-onMounted(async () => {
-  await taskStore.getTasksByUser(userStore.username).catch((err) => {
-    console.error(err);
-  });
-  await taskStore.getWatchedTasks(userStore.username).catch((err) => {
-    console.error(err);
-  });
-});
 </script>
 
 <template>
@@ -77,5 +68,11 @@ onMounted(async () => {
       </form>
     </FormTemplate>
   </div>
-  <div v-else>No task found</div>
+  <div v-else>
+    <h2>Task not found.</h2>
+    <small>
+      Either a task by this ID does not exist, or you are not set as a watcher
+      by the task creator.
+    </small>
+  </div>
 </template>

@@ -28,7 +28,6 @@ router.post("/", async (req, res) => {
 
 // Get all users
 router.get("/", async (req, res) => {
-  console.log("Get all users");
   const usernames = userlist.users.map((u) => u.username);
   res.send(usernames);
 });

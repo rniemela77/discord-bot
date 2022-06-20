@@ -42,7 +42,9 @@ cd client && npm run dev
 ## TODO:
 
 - process: add lucidchart of how everything works
-
+- frontend/server: consider putting all tasks in one array and using a filter to show only tasks that are assigned to the user
+- frontend: try to move task-completion logic to the view/page.
+- server/frontend: turn /complete/id into a 'put', since we are modifying a current task.
 - frontend: add v-if to necessary fields. (taskView)
 - server: handle trimming text in API functions
 - frontend/discord/server: create link for user to send task feedback to task completer. create page on frontend to allow this.

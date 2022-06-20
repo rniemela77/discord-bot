@@ -6,37 +6,20 @@ const url = "/api/tasks";
 export const useTaskStore = defineStore({
   id: "task",
   state: () => ({
-    allTasks: [],
     tasks: [],
     tasksWatching: [],
   }),
   actions: {
     clearTasks() {
-      this.allTasks = [];
       this.tasks = [];
       this.tasksWatching = [];
     },
-    getTasksByUser(username) {
+    getAllTasksForUser(username) {
       return axios
-        .get(`${url}/${username}`)
-        .then((response) => {
-          this.tasks = response.data;
-          this.allTasks = [...this.tasks, ...this.tasksWatching];
-        })
-        .catch((err) => {
-          if (err.response) {
-            throw new Error(err.response.data);
-          } else {
-            throw new Error(err.message);
-          }
-        });
-    },
-    getWatchedTasks(username) {
-      return axios
-        .get(`${url}/watchedBy/${username}`)
-        .then((response) => {
-          this.tasksWatching = response.data;
-          this.allTasks = [...this.tasks, ...this.tasksWatching];
+        .get(`${url}?user=${username}`)
+        .then((res) => {
+          this.tasks = res.data.userTasks;
+          this.tasksWatching = res.data.userWatchingTasks;
         })
         .catch((err) => {
           if (err.response) {

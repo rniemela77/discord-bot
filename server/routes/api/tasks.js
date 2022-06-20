@@ -7,25 +7,22 @@ const { messageUser } = require("../../discord/functions.js");
 const taskList = require("../../../database/tasks.js");
 const { notifyWatchers } = require("../../utilities/tasks");
 
-// Get all tasks
+// Get all tasks FOR user
 router.get("/", async (req, res) => {
-  const tasks = taskList.tasks;
-  if (!tasks || tasks.length === 0) {
-    res.status(500).send("There was an error getting the tasks.");
+  const { user } = req.query;
+
+  // Return tasks created by user, and tasks watched by user
+  let tasks = {};
+  tasks.userTasks = taskList.tasks.filter((task) => task.createdBy === user);
+  tasks.userWatchingTasks = taskList.tasks.filter((task) =>
+    task.watchedBy.includes(user)
+  );
+
+  if (tasks.userTasks.length === 0 && tasks.userWatchingTasks.length === 0) {
+    res.status(500).send("No tasks returned.");
   } else {
     res.status(200).send(tasks);
   }
-});
-
-// Get Tasks by username
-router.get("/:username", (req, res) => {
-  const tasks = taskList.tasks.filter((task) => {
-    return task.createdBy === req.params.username;
-  });
-
-  if (tasks.length < 1) return res.status(200).send([]);
-
-  res.status(200).send(tasks);
 });
 
 // Get tasks watched by username
