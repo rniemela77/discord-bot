@@ -22,35 +22,45 @@ router.get("/:username", (req, res) => {
   const todoTasks = taskList.todo.filter((task) => {
     return task.createdBy === req.params.username;
   });
-  const dueTasks = taskList.due
-    .filter((task) => {
-      return task.createdBy === req.params.username;
-    })
-    .sort((a, b) => {
-      return a.date > b.date ? 1 : -1;
-    })
-    .sort((a, b) => {
-      return a.time > b.time ? 1 : -1;
-    });
+  const dueTasks = taskList.due.filter((task) => {
+    return task.createdBy === req.params.username;
+  });
+  const doneTasks = taskList.done.filter((task) => {
+    return task.createdBy === req.params.username;
+  });
 
-  const tasks = todoTasks.concat(dueTasks);
+  const allTasks = {
+    todo: todoTasks,
+    due: dueTasks,
+    done: doneTasks,
+  };
 
-  if (!tasks.length) return res.status(200).send([]);
+  if (allTasks.length < 1) return res.status(200).send([]);
 
-  res.status(200).send(tasks);
+  res.status(200).send(allTasks);
 });
 
 // Get tasks watched by username
 router.get("/watchedBy/:username", (req, res) => {
-  const userTasks = taskList.todo.filter((task) => {
-    return task.watchedBy.includes(req.params.username);
+  const todoTasks = taskList.todo.filter((task) => {
+    return task.createdBy === req.params.username;
+  });
+  const dueTasks = taskList.due.filter((task) => {
+    return task.createdBy === req.params.username;
+  });
+  const doneTasks = taskList.done.filter((task) => {
+    return task.createdBy === req.params.username;
   });
 
-  if (userTasks.length === 0) {
-    res.status(200).send([]);
-  } else {
-    res.status(200).send(userTasks);
-  }
+  const allTasks = {
+    todo: todoTasks,
+    due: dueTasks,
+    done: doneTasks,
+  };
+
+  if (allTasks.length < 1) return res.status(200).send([]);
+
+  res.status(200).send(allTasks);
 });
 
 // Set task status

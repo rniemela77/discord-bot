@@ -6,8 +6,14 @@ const url = "/api/tasks";
 export const useTaskStore = defineStore({
   id: "task",
   state: () => ({
-    tasks: [],
-    tasksWatching: [],
+    todo: [],
+    due: [],
+    done: [],
+    tasksWatching: {
+      todo: [],
+      due: [],
+      done: [],
+    },
   }),
   actions: {
     clearTasks() {
@@ -18,7 +24,11 @@ export const useTaskStore = defineStore({
       return axios
         .get(`${url}/${username}`)
         .then((response) => {
-          this.tasks = response.data;
+          const allTasks = response.data;
+
+          this.todo = allTasks.todo;
+          this.due = allTasks.due;
+          this.done = allTasks.done;
         })
         .catch((err) => {
           if (err.response) {
@@ -32,7 +42,11 @@ export const useTaskStore = defineStore({
       return axios
         .get(`${url}/watchedBy/${username}`)
         .then((response) => {
-          this.tasksWatching = response.data;
+          const allTasks = response.data;
+
+          this.tasksWatching.todo = allTasks.todo;
+          this.tasksWatching.due = allTasks.due;
+          this.tasksWatching.done = allTasks.done;
         })
         .catch((err) => {
           if (err.response) {

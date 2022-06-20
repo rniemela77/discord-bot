@@ -55,26 +55,78 @@ onMounted(async () => {
       <button @click="newTask()">New task</button>
     </div>
 
-    <div v-for="task in taskStore.tasks" :key="task">
+    <h4>Todo:</h4>
+    <div v-for="task in taskStore.todo" :key="task">
       <TaskRow
         :task="task"
         @complete-task="completeTask(task.id)"
         @delete-task="deleteTask(task.id)"
       />
     </div>
-    <small v-if="taskStore.tasks.length === 0">No tasks created yet</small>
+    <small v-if="taskStore.todo.length === 0">No tasks todo</small>
+    <hr />
+
+    <h4>Due:</h4>
+    <div v-for="task in taskStore.due" :key="task">
+      <TaskRow
+        :task="task"
+        @complete-task="completeTask(task.id)"
+        @delete-task="deleteTask(task.id)"
+      />
+    </div>
+    <small v-if="taskStore.due.length === 0">No tasks due</small>
+    <hr />
+
+    <h4>Done:</h4>
+    <div v-for="task in taskStore.done" :key="task">
+      <TaskRow
+        :task="task"
+        @complete-task="completeTask(task.id)"
+        @delete-task="deleteTask(task.id)"
+      />
+    </div>
+    <small v-if="taskStore.done.length === 0">No tasks created yet</small>
+    <hr />
 
     <h3>Watching Tasks</h3>
-    <div v-for="task in taskStore.tasksWatching" :key="task">
+    <h4>Todo tasks</h4>
+    <div v-for="task in taskStore.tasksWatching.todo" :key="task">
       <TaskRow
         :task="task"
         @complete-task="completeTask(task.id)"
         @delete-task="deleteTask(task.id)"
       />
     </div>
-    <small v-if="taskStore.tasksWatching.length === 0">
+    <small v-if="taskStore.tasksWatching.todo.length === 0">
       No tasks being watched
     </small>
+    <hr />
+
+    <h4>Due tasks</h4>
+    <div v-for="task in taskStore.tasksWatching.due" :key="task">
+      <TaskRow
+        :task="task"
+        @complete-task="completeTask(task.id)"
+        @delete-task="deleteTask(task.id)"
+      />
+    </div>
+    <small v-if="taskStore.tasksWatching.due.length === 0">
+      No tasks being watched
+    </small>
+    <hr />
+
+    <h4>Done tasks</h4>
+    <div v-for="task in taskStore.tasksWatching.done" :key="task">
+      <TaskRow
+        :task="task"
+        @complete-task="completeTask(task.id)"
+        @delete-task="deleteTask(task.id)"
+      />
+    </div>
+    <small v-if="taskStore.tasksWatching.done.length === 0">
+      No tasks being watched
+    </small>
+    <hr />
   </div>
 </template>
 
