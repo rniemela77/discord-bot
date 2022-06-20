@@ -19,15 +19,25 @@ router.get("/", async (req, res) => {
 
 // Get Tasks by username
 router.get("/:username", (req, res) => {
-  const userTasks = taskList.todo.filter((task) => {
+  const todoTasks = taskList.todo.filter((task) => {
     return task.createdBy === req.params.username;
   });
+  const dueTasks = taskList.due
+    .filter((task) => {
+      return task.createdBy === req.params.username;
+    })
+    .sort((a, b) => {
+      return a.date > b.date ? 1 : -1;
+    })
+    .sort((a, b) => {
+      return a.time > b.time ? 1 : -1;
+    });
 
-  if (userTasks.length === 0) {
-    res.status(200).send([]);
-  } else {
-    res.status(200).send(userTasks);
-  }
+  const tasks = todoTasks.concat(dueTasks);
+
+  if (!tasks.length) return res.status(200).send([]);
+
+  res.status(200).send(tasks);
 });
 
 // Get tasks watched by username
