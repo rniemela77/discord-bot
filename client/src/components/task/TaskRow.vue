@@ -1,11 +1,19 @@
 <script setup>
+import { computed } from "vue";
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
 
 const emit = defineEmits(["delete-task"]);
 
-defineProps({
+const displayUsername = computed(() => {
+  if (props.task.createdBy !== userStore.username) {
+    return props.task.createdBy;
+  }
+  return "";
+});
+
+const props = defineProps({
   task: {
     type: Object,
     required: true,
@@ -15,6 +23,7 @@ defineProps({
 
 <template>
   <div class="task">
+    <b v-if="displayUsername">{{ displayUsername }}<br /></b>
     <b>{{ task.name }}</b>
     <p>{{ task.description }}</p>
     <p><b>Due:</b> {{ task.date }} @ {{ task.time }}</p>

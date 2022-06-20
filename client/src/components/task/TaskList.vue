@@ -68,11 +68,7 @@ onMounted(async () => {
 
     <h3>Watching Tasks</h3>
     <div v-for="task in taskStore.tasksWatching" :key="task">
-      <TaskRow
-        :task="task"
-        @complete-task="completeTask(task.id)"
-        @delete-task="deleteTask(task.id)"
-      />
+      <TaskRow :task="task" @delete-task="deleteTask(task.id)" />
     </div>
     <small v-if="taskStore.tasksWatching.length === 0">
       No tasks being watched
