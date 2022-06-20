@@ -43,6 +43,7 @@ cd client && npm run dev
 
 - process: add lucidchart of how everything works
 
+- frontend: add v-if to necessary fields. (taskView)
 - server: handle trimming text in API functions
 - frontend/discord/server: create link for user to send task feedback to task completer. create page on frontend to allow this.
 - discord/server: allow users to type a command like '!t4 lets go' to easily send feedback. (how to add emoji?)

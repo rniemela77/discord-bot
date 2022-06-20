@@ -31,7 +31,7 @@ router.get("/:username", (req, res) => {
 // Get tasks watched by username
 router.get("/watchedBy/:username", (req, res) => {
   const tasks = taskList.tasks.filter((task) => {
-    return task.createdBy === req.params.username;
+    return task.watchedBy.includes(req.params.username);
   });
 
   if (tasks.length < 1) return res.status(200).send([]);
