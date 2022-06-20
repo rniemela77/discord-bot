@@ -6,14 +6,8 @@ const url = "/api/tasks";
 export const useTaskStore = defineStore({
   id: "task",
   state: () => ({
-    todo: [],
-    due: [],
-    done: [],
-    tasksWatching: {
-      todo: [],
-      due: [],
-      done: [],
-    },
+    tasks: [],
+    tasksWatching: [],
   }),
   actions: {
     clearTasks() {
@@ -24,11 +18,7 @@ export const useTaskStore = defineStore({
       return axios
         .get(`${url}/${username}`)
         .then((response) => {
-          const allTasks = response.data;
-
-          this.todo = allTasks.todo;
-          this.due = allTasks.due;
-          this.done = allTasks.done;
+          this.tasks = response.data;
         })
         .catch((err) => {
           if (err.response) {
@@ -42,11 +32,7 @@ export const useTaskStore = defineStore({
       return axios
         .get(`${url}/watchedBy/${username}`)
         .then((response) => {
-          const allTasks = response.data;
-
-          this.tasksWatching.todo = allTasks.todo;
-          this.tasksWatching.due = allTasks.due;
-          this.tasksWatching.done = allTasks.done;
+          this.tasksWatching = response.data;
         })
         .catch((err) => {
           if (err.response) {
@@ -56,9 +42,9 @@ export const useTaskStore = defineStore({
           }
         });
     },
-    completeTask(id, taskStatus) {
+    completeTask(id, conclusion) {
       return axios
-        .post(`${url}/complete/${id}`, { status: taskStatus })
+        .post(`${url}/complete/${id}`, { text: conclusion })
         .then((res) => {
           return res.data;
         })

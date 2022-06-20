@@ -9,7 +9,7 @@ const { notifyWatchers } = require("../../utilities/tasks");
 
 // Get all tasks
 router.get("/", async (req, res) => {
-  const tasks = taskList.todo;
+  const tasks = taskList.tasks;
   if (!tasks || tasks.length === 0) {
     res.status(500).send("There was an error getting the tasks.");
   } else {
@@ -19,65 +19,38 @@ router.get("/", async (req, res) => {
 
 // Get Tasks by username
 router.get("/:username", (req, res) => {
-  const todoTasks = taskList.todo.filter((task) => {
-    return task.createdBy === req.params.username;
-  });
-  const dueTasks = taskList.due.filter((task) => {
-    return task.createdBy === req.params.username;
-  });
-  const doneTasks = taskList.done.filter((task) => {
+  const tasks = taskList.tasks.filter((task) => {
     return task.createdBy === req.params.username;
   });
 
-  const allTasks = {
-    todo: todoTasks,
-    due: dueTasks,
-    done: doneTasks,
-  };
+  if (tasks.length < 1) return res.status(200).send([]);
 
-  if (allTasks.length < 1) return res.status(200).send([]);
-
-  res.status(200).send(allTasks);
+  res.status(200).send(tasks);
 });
 
 // Get tasks watched by username
 router.get("/watchedBy/:username", (req, res) => {
-  const todoTasks = taskList.todo.filter((task) => {
-    return task.createdBy === req.params.username;
-  });
-  const dueTasks = taskList.due.filter((task) => {
-    return task.createdBy === req.params.username;
-  });
-  const doneTasks = taskList.done.filter((task) => {
+  const tasks = taskList.tasks.filter((task) => {
     return task.createdBy === req.params.username;
   });
 
-  const allTasks = {
-    todo: todoTasks,
-    due: dueTasks,
-    done: doneTasks,
-  };
+  if (tasks.length < 1) return res.status(200).send([]);
 
-  if (allTasks.length < 1) return res.status(200).send([]);
-
-  res.status(200).send(allTasks);
+  res.status(200).send(tasks);
 });
 
 // Set task status
 router.post("/complete/:id", (req, res) => {
   const taskId = req.params.id;
-  const taskStatus = req.body;
+  const conclusion = req.body;
 
   // Get task by id
-  const task = taskList.todo.find((task) => task.id.toString() === taskId);
+  const task = taskList.tasks.find((task) => task.id.toString() === taskId);
 
   if (!task) return res.status(404).send("Task not found");
 
-  taskList.todo.splice(taskList.todo.indexOf(task), 1);
-
   // add the task to the due list with the added status
-  task.status = taskStatus.status;
-  taskList.due.push(task);
+  task.conclusion = conclusion.text;
 
   notifyWatchers(task);
 
@@ -94,7 +67,7 @@ router.post("/", async (req, res) => {
     time: req.body.time,
     createdBy: req.body.createdBy,
     watchedBy: req.body.watchedBy,
-    status: null,
+    conclusion: "",
   };
 
   if (!task.name || !task.description) {
@@ -105,7 +78,7 @@ router.post("/", async (req, res) => {
     return res.status(400).send("Invalid task. Missing createdBy.");
   }
 
-  taskList.todo.push(task);
+  taskList.tasks.push(task);
   taskList.id += 1;
   res.status(201).send("Task added successfully");
 
@@ -114,6 +87,7 @@ router.post("/", async (req, res) => {
     task.watchedBy.map(async (username) => {
       const discordId = getDiscordIdFromUsername(username);
 
+      // TODO: write a better message here. provide link to comment on task.
       if (discordId) {
         await messageUser(discordId, "task created");
       }
@@ -125,7 +99,7 @@ router.delete(
   "/:id",
   (req, res) => {
     const id = req.params.id;
-    taskList.todo = taskList.todo.filter((task) => task.id.toString() !== id);
+    taskList.tasks = taskList.tasks.filter((task) => task.id.toString() !== id);
 
     res.status(200).send("Task deleted");
   },

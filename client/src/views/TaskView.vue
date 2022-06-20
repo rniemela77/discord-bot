@@ -13,7 +13,7 @@ const userStore = useUserStore();
 
 const taskId = ref(Number(route.params.id));
 const formStatus = ref("initial");
-const taskStatus = ref("");
+const conclusion = ref("");
 
 const task = computed(() => {
   return taskStore.tasks.find((task) => task.id === taskId.value);
@@ -24,7 +24,7 @@ const completeTask = async () => {
 
   try {
     await taskStore
-      .completeTask(taskId.value, taskStatus.value)
+      .completeTask(taskId.value, conclusion.value)
       .catch((err) => {
         console.error(err);
       });
@@ -55,11 +55,11 @@ onMounted(async () => {
 
     <FormTemplate :status="formStatus">
       <form v-on:submit.prevent="completeTask">
-        <label for="status">Status</label>
+        <label for="conclusion">Conclusion</label>
         <textarea
           type="text"
-          id="status"
-          v-model="taskStatus"
+          id="conclusion"
+          v-model="conclusion"
           placeholder="Tell your watchers what you've done"
           :disabled="formStatus === 'sending'"
           required
