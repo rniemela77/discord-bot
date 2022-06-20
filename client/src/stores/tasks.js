@@ -6,11 +6,13 @@ const url = "/api/tasks";
 export const useTaskStore = defineStore({
   id: "task",
   state: () => ({
+    allTasks: [],
     tasks: [],
     tasksWatching: [],
   }),
   actions: {
     clearTasks() {
+      this.allTasks = [];
       this.tasks = [];
       this.tasksWatching = [];
     },
@@ -19,6 +21,7 @@ export const useTaskStore = defineStore({
         .get(`${url}/${username}`)
         .then((response) => {
           this.tasks = response.data;
+          this.allTasks = [...this.tasks, ...this.tasksWatching];
         })
         .catch((err) => {
           if (err.response) {
@@ -33,6 +36,7 @@ export const useTaskStore = defineStore({
         .get(`${url}/watchedBy/${username}`)
         .then((response) => {
           this.tasksWatching = response.data;
+          this.allTasks = [...this.tasks, ...this.tasksWatching];
         })
         .catch((err) => {
           if (err.response) {

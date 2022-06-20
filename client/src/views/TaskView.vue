@@ -16,7 +16,11 @@ const formStatus = ref("initial");
 const conclusion = ref("");
 
 const task = computed(() => {
-  return taskStore.tasks.find((task) => task.id === taskId.value);
+  return taskStore.allTasks.find((task) => task.id === taskId.value);
+});
+
+const isMyTask = computed(() => {
+  return task.value.createdBy === userStore.username;
 });
 
 const completeTask = async () => {
@@ -38,8 +42,12 @@ const completeTask = async () => {
   router.push("/");
 };
 
+// Todo: maybe put this in a composable, in app.vue, or trigger each route
 onMounted(async () => {
   await taskStore.getTasksByUser(userStore.username).catch((err) => {
+    console.error(err);
+  });
+  await taskStore.getWatchedTasks(userStore.username).catch((err) => {
     console.error(err);
   });
 });
@@ -47,12 +55,13 @@ onMounted(async () => {
 
 <template>
   <div v-if="task">
+    <h1 v-if="!isMyTask">{{ task.createdBy }}</h1>
     <h2>{{ task.name }}</h2>
     <p>{{ task.description }}</p>
     <p>Watching: {{ task.watchedBy }}</p>
     <p>Due: {{ task.time }} on {{ task.date }}</p>
 
-    <FormTemplate :status="formStatus">
+    <FormTemplate v-if="isMyTask" :status="formStatus">
       <form v-on:submit.prevent="completeTask">
         <label for="conclusion">Conclusion</label>
         <textarea
