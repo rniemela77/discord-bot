@@ -106,7 +106,6 @@ router.post("/", async (req, res) => {
 router.put("/:planId", async (req, res) => {
   const { planId } = req.params;
   const { taskName, isCompleted } = req.body;
-  console.log(planId);
 
   // Find plan in DB
   const plan = plans.find((plan) => plan.id === Number(planId));

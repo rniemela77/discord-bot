@@ -3,16 +3,19 @@ import { computed, ref } from "vue";
 import { useUserStore } from "@/stores/user";
 import { usePlanStore } from "@/stores/plans";
 import { getCurrentDate, getCurrentTime } from "@/utils/index.js";
-import router from "@/router";
 
 const userStore = useUserStore();
 const planStore = usePlanStore();
 
 const isEditing = ref(false);
 
-const toggleEditingMode = () => {
-  isEditing.value = !isEditing.value;
-  if (!isEditing.value) savePlan();
+const toggleEditingMode = async () => {
+  if (isEditing.value) {
+    await savePlan();
+    isEditing.value = false;
+  } else {
+    isEditing.value = !isEditing.value;
+  }
 };
 
 const plan = computed(() => {
@@ -39,7 +42,6 @@ const savePlan = async () => {
     watchedBy: plan.value.watchedBy,
     createdAtDate: getCurrentDate(),
     createdAtTime: getCurrentTime(),
-    // TODO: only add tasks that have content (trim, check if length)
     tasks: [...plan.value.tasks],
   };
 
@@ -48,7 +50,6 @@ const savePlan = async () => {
       .savePlan(newPlan)
       .then(async () => {
         await planStore.getAllPlansForUser(userStore.username);
-        router.push("/");
       })
       .catch((err) => {
         console.error(err);
@@ -59,8 +60,10 @@ const savePlan = async () => {
 };
 
 // Whenever a task is completed, notify the server
-const setTaskCompleted = (taskName, isCompleted) => {
-  planStore.setTaskCompleted(plan.value.id, taskName, isCompleted);
+const setTaskCompleted = async (taskName, isCompleted) => {
+  await planStore.setTaskCompleted(plan.value.id, taskName, isCompleted);
+
+  await planStore.getAllPlansForUser(userStore.username);
 };
 </script>
 
@@ -125,7 +128,7 @@ const setTaskCompleted = (taskName, isCompleted) => {
         {{ isEditing ? "Save" : "Edit" }}
       </button>
 
-      <button @click="addTask">Add Task</button>
+      <button v-if="isEditing" @click="addTask">Add Task</button>
     </div>
 
     <div v-else>
