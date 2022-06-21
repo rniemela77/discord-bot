@@ -118,7 +118,6 @@ router.put("/:planId", async (req, res) => {
   task.completed = isCompleted;
 
   res.status(200).send("Task updated successfully.");
-  console.log(plan, task);
 });
 
 // Get tasks watched by username

@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useUserStore } from "@/stores/user";
 import { usePlanStore } from "@/stores/plans";
 import { getCurrentDate, getCurrentTime } from "@/utils/index.js";
@@ -7,6 +7,13 @@ import router from "@/router";
 
 const userStore = useUserStore();
 const planStore = usePlanStore();
+
+const isEditing = ref(false);
+
+const toggleEditingMode = () => {
+  isEditing.value = !isEditing.value;
+  if (!isEditing.value) savePlan();
+};
 
 const plan = computed(() => {
   return planStore.today;
@@ -63,7 +70,12 @@ const setTaskCompleted = (taskName, isCompleted) => {
     <div v-if="plan.tasks">
       <div v-for="(task, index) in plan.tasks" :key="index">
         <label for="task-name">Task</label>
-        <input type="text" v-model="task.name" id="task-name" />
+        <input
+          type="text"
+          v-model="task.name"
+          id="task-name"
+          :disabled="!isEditing"
+        />
 
         <label for="task-times">Task Times</label>
         <input
@@ -71,18 +83,21 @@ const setTaskCompleted = (taskName, isCompleted) => {
           v-model="task.times"
           value="Morning"
           id="task-times"
+          :disabled="!isEditing"
         />
         <input
           type="checkbox"
           v-model="task.times"
           value="Afternoon"
           id="task-times"
+          :disabled="!isEditing"
         />
         <input
           type="checkbox"
           v-model="task.times"
           value="Evening"
           id="task-times"
+          :disabled="!isEditing"
         />
 
         <label :for="`completed-${index}`">Task Complete</label>
@@ -91,6 +106,7 @@ const setTaskCompleted = (taskName, isCompleted) => {
           v-model="task.completed"
           :id="`completed-${index}`"
           @change="setTaskCompleted(task.name, $event.target.checked)"
+          :disabled="isEditing"
         />
       </div>
 
@@ -101,12 +117,15 @@ const setTaskCompleted = (taskName, isCompleted) => {
           v-model="plan.watchedBy"
           :value="user"
           :id="`watcher-${user}`"
+          :disabled="!isEditing"
         />
       </template>
 
-      <button @click="addTask">Add Task</button>
+      <button @click="toggleEditingMode">
+        {{ isEditing ? "Save" : "Edit" }}
+      </button>
 
-      <button @click="savePlan">Save Plan</button>
+      <button @click="addTask">Add Task</button>
     </div>
 
     <div v-else>
