@@ -6,6 +6,7 @@ const { messageUser } = require("../../discord/functions.js");
 const { plans, id } = require("../../../database/plans.js");
 const { users } = require("../../../database/users.js");
 const { notifyWatchers } = require("../../utilities/plans");
+const SITE_URL = process.env.SITE_URL;
 const {
   getCurrentDate,
   getCurrentTime,
@@ -80,25 +81,25 @@ router.post("/", async (req, res) => {
   const index = plans.findIndex((plan) => plan.id === updatedPlan.id);
   plans[index] = updatedPlan;
 
+  res.status(201).send("Task added successfully.");
+
   // Message all watchers
+  let message = "**Plan** ";
+  message += `${updatedPlan.createdBy} updated their plan for today.\n`;
+  message += `\`\`\`ini`;
+  message += `${updatedPlan.tasks.map((task) => task.name).join(", ")}\n`;
+  message += `\`\`\``;
+  message += `Visit ${SITE_URL} to confirm you will watch this plan.`;
+
   await Promise.all(
     updatedPlan.watchedBy.map(async (username) => {
       const discordId = getDiscordIdFromUsername(username);
 
-      // TODO: write a better message here. provide link to comment on task.
       if (discordId) {
-        await messageUser(
-          discordId,
-          `UPDATE: ${
-            updatedPlan.createdBy
-          } updated their plan for today. \n${updatedPlan.tasks
-            .map((task) => `${task.name} ${task.times.join(" ")}`)
-            .join("\n")}`
-        );
+        await messageUser(discordId, message);
       }
     })
   );
-  return res.status(201).send("Task added successfully.");
 });
 
 // Get tasks watched by username

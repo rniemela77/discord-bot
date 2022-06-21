@@ -27,7 +27,6 @@ ensure dynos are enabled
 
 - process: add lucidchart of how everything works
 
-- server/discord: when discord notifies user, include link
 - server/frontend: complete tasks using /put/. (no need to discord PM on task completion)
 - frontend: change 'save plan' to 'edit plan'
 
