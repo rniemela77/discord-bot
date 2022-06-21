@@ -3,11 +3,12 @@ import { onMounted } from "vue";
 import router from "@/router";
 import { RouterView } from "vue-router";
 import { useUserStore } from "@/stores/user";
-import { useTaskStore } from "@/stores/tasks";
+import { usePlanStore } from "@/stores/plans";
 
 const userStore = useUserStore();
-const taskStore = useTaskStore();
+const planStore = usePlanStore();
 
+// eslint-disable-next-line no-unused-vars
 router.beforeEach(async (to, from) => {
   if (
     !userStore.username &&
@@ -20,9 +21,12 @@ router.beforeEach(async (to, from) => {
   }
 });
 
-// When app mounts, get all tasks for the user
+// When app mounts, get all plans for the user
 onMounted(async () => {
-  await taskStore.getAllTasksForUser(userStore.username).catch((err) => {
+  await planStore.getAllPlansForUser(userStore.username).catch((err) => {
+    console.error(err);
+  });
+  await userStore.getAllUsers().catch((err) => {
     console.error(err);
   });
 });

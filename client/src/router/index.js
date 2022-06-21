@@ -27,9 +27,9 @@ const router = createRouter({
       component: () => import("@/views/AboutView.vue"),
     },
     {
-      path: "/new",
-      name: "newtask",
-      component: () => import("@/views/NewTaskView.vue"),
+      path: "/plans/new",
+      name: "new-plan",
+      component: () => import("@/views/NewPlanView.vue"),
     },
     {
       path: "/profile",
@@ -42,8 +42,8 @@ const router = createRouter({
       component: () => import("@/views/LoginView.vue"),
     },
     {
-      path: "/task/:id",
-      name: "task",
+      path: "/plan/:id",
+      name: "plan",
       component: () => import("@/views/TaskView.vue"),
     },
   ],

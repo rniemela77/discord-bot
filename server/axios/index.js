@@ -6,9 +6,9 @@ const development = "http://localhost:" + process.env.PORT;
 const BASE_URL =
   process.env.NODE_ENV === "production" ? production : development;
 
-const API_URL = `${BASE_URL}/api/tasks`;
+const API_URL = `${BASE_URL}/api/plans`;
 
-// Fetch all tasks
+// Fetch all plans
 const getTasks = async () => {
   return await axios
     .get(API_URL)
@@ -17,13 +17,13 @@ const getTasks = async () => {
     })
     .catch((error) => {
       console.log(error);
-      return "There was an error getting the tasks.";
+      return "There was an error getting the plans.";
     });
 };
 
-// Add a task
-const addTask = async (task) => {
-  return await axios.post(API_URL, task).then(
+// Add a plan
+const addTask = async (plan) => {
+  return await axios.post(API_URL, plan).then(
     (res) => {
       return true;
     },

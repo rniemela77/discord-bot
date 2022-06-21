@@ -11,9 +11,9 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Serve `tasks.js` file on route '/api/tasks'
-const tasks = require("./server/routes/api/tasks");
-app.use("/api/tasks", tasks);
+// Serve `plan.js` file on route '/api/plan'
+const plan = require("./server/routes/api/plans");
+app.use("/api/plans", plan);
 
 // Serve `users.js` file on route '/api/users'
 const users = require("./server/routes/api/users");
@@ -45,5 +45,5 @@ app.listen(port, function () {
 // Initialize bot
 require("./server/discord/index.js");
 
-// Check if tasks are due
-require("./server/utilities/tasks.js");
+// Check if plans are due
+require("./server/utilities/plans.js");

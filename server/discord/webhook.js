@@ -2,27 +2,27 @@ const axios = require("axios");
 
 const url = process.env.DISCORD_WEBHOOK_URL;
 
-// Send message to discord channel saying task was created
-const taskAdded = (task) => {
-  const { name, description, date, time, createdBy } = task;
+// Send message to discord channel saying plan was created
+const planAdded = (plan) => {
+  const { name, description, date, time, createdBy } = plan;
 
-  const message = `Task added: ${name} - ${description} @ ${date} - ${time} - ${createdBy}`;
-
-  axios.post(url, {
-    content: message,
-  });
-};
-
-// Send message to discord channel saying task was completed
-const notifyDeadline = (task) => {
-  const { name, description, date, time, createdBy } = task;
-
-  const message = `Task due: ${name} - ${description} @ ${date} - ${time} - ${createdBy}`;
+  const message = `Plan added: ${name} - ${description} @ ${date} - ${time} - ${createdBy}`;
 
   axios.post(url, {
     content: message,
   });
 };
 
-exports.taskAdded = taskAdded;
+// Send message to discord channel saying plan was completed
+const notifyDeadline = (plan) => {
+  const { name, description, date, time, createdBy } = plan;
+
+  const message = `Plan due: ${name} - ${description} @ ${date} - ${time} - ${createdBy}`;
+
+  axios.post(url, {
+    content: message,
+  });
+};
+
+exports.planAdded = planAdded;
 exports.notifyDeadline = notifyDeadline;

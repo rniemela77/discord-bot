@@ -5,78 +5,57 @@
 Run server locally
 
 ```
-npm run dev
+npm run dev-server
 ```
 
 Run vue frontend locally
 
 ```
-cd client && npm run dev
+npm run dev-client
 ```
 
-## Steps, Notes
+## Deploying
 
-- Created a discord bot using Node.js and Discord.js
-- Created a few commands to interact with the bot
-- Created a twillio account and added Node.js commands to send text messages
-- Created discord bot commands to allow users to trigger twillio commands from discord. (!sendtext [number] [message])
-- Using setInterval, allow users to schedule text messages to be sent at a specific time. (!sendtext [number] [time] [message])
-- Created a web server (Node+Express)
-- Created a basic Vue frontend (no functionality yet)
-- Host the frontend + server on Heroku
-- Get and display the server "database" on the frontend
-- Get and display the server "database" on discord
-- Allow discord bot to modify the server "database", and have frontend display the changes
-- Allow creating tasks on frontend
-- Added deploy script
-- Added discord webhook. Whenever a push is made to /api/tasks, discord bot will send a message to the webhook.
-- Created basic authentication for the web server.
-- Created a function that notifies the discord bot when a task is due.
-- Allow users to complete tasks
-- Allow users to delete tasks
-- Only fetch tasks that are created by the user
-- Fetch tasks that the user is "watching"
-- Allow users to select other users as task watchers
-- Allow users to create accounts
+```
+cd client && npm run build
+```
+
+Push to production branch on github
+ensure dynos are enabled
 
 ## TODO:
 
 - process: add lucidchart of how everything works
-- frontend/server: consider putting all tasks in one array and using a filter to show only tasks that are assigned to the user
-- frontend: try to move task-completion logic to the view/page.
-- server/frontend: turn /complete/id into a 'put', since we are modifying a current task.
-- frontend: add v-if to necessary fields. (taskView)
-- server: handle trimming text in API functions
-- frontend/discord/server: create link for user to send task feedback to task completer. create page on frontend to allow this.
-- discord/server: allow users to type a command like '!t4 lets go' to easily send feedback. (how to add emoji?)
-- frontend: add common times. "tonight", "tomorrow morning", "tomorrow afternoon", "tomorrow night"...
-- frontend: add common keywords for quickly setting task name. "meal prep", "exercise", "study", "meditate"...
+
+- server/discord: when discord notifies user, include link
+- server/frontend: complete tasks using /put/. (no need to discord PM on task completion)
+- frontend: change 'save plan' to 'edit plan'
+
+- frontend/server: allow user to set reminder for a task during day. (reminder will send a custom message on discord at a certain time). remind me: 1. to cross off tasks, or 2. custom reminder text.
+
+- server/frontend: change plan.watchers to [ { name: 'rob', message: 'let's go!' }]
+- frontend: add support button per each user plan being watched. click shows modal. allow sending message, or default message. send PUT request to server.
+- server: receive PUT request, modify plan in db, and discord PM the taskCreator.
+
+- frontend/server: have section in profile where user inputs GOAL(s).
+- frontend/server: on each new day, allow user to write how todays tasks will help them achieve GOAL(s) when they attempt to save/edit/add plan.
+
+- server/frontend: let user set "due" time for each individual day. Have the server check all plans every 10 minutes to see if any plans are due. dueAtTime...
+- frontend: add common keywords for quickly setting task name. "meal prep", "exercise", "study", "meditate"... (this can pop up as a tooltip selector when the user focuses in on the input field for the name)
 - frontend: let users select their "wake up" and "sleep" times. they won't be notified until they wake up. the 'wake up call' will ask what their intentions for the day are. 'sleep' alarm will check up on how they did.
-- frontend: don't remove recently completed tasks from task list. (show 3 most recent tasks?)
 - frontend: add page transitions
-- server: figure out what to do when a watcher/userid is not correct. (right now it does not cause problems.)
-- frontend/server: add username to URL paths.
-- frontend: use base components for inputs (textarea, text, checkbox, radio...)
-- frontend: disallow users from viewing tasks that aren't theirs. (use nav guard script)
-- frontend/server: allow users to upload/set avatar
-- frontend: when an API request is made that will be reflected in the UI (creating a task for instance), consider directly changing the store/state to create a snappier experience. Figure out how to handle the API failures.
-- frontend: Simplify/improve the UI
-- frontend: develop profile screen. (What to add?)
+- frontend: use base components for inputs (form, textarea, text, checkbox, radio...)
+- frontend/server: develop profile screen. allow users to upload/set avatar
 - server: Set up MongoDB
-- server: export/import functions the same everywhere. (exports.module?)
 - server: Re-enable twillio, place in Twillio folder
 - build: Determine if I need to keep Procfile
-- server: Look into cron jobs for deadlines/scheduling
-- server/frontend: Split tasks into "current", "past", "deleted"...
-- frontend: add screen that shows main tasks for all users. show users avatar, progress, etc.
+- frontend: show users avatars
+- frontend: allow light/dark mode. allow user to even choose specific color they prefer? add to sessionstore/cookie
+- frontend: allow users to create plan for next day. create tabs ('yesterday', 'today', 'tomorrow')
 - frontend: add session/cookie storage, make user not have to login
 - heroku: add deploy/build scripts
-- build: Use package like Concurrently to create a npm dev script
-- consider using gzip. app.use(compression()) is a good idea
 - frontend: fix title/description
 - frontend: add a favicon
-- server/frontend: check for deadlines/status every 5 minute interval. make user on frontend only able to select times in 5 minute intervals. (maybe do 30min?)
-- frontend: add some measurements on progress goals. averages, etc
 
 ## Future plans
 
@@ -85,3 +64,10 @@ cd client && npm run dev
 - Set weekly and daily goals. Maybe do global messages for weekly goals, so it doesn't spam the channel.
 - Allow users to rate how difficult a goal might be, then ask to rate how rewarding it actually was.
 - Notify user to set an intention each morning. "I want to be more X today". Maybe create a prompt/template for them to set an intention. Write 5 things that they would do if they were 5% more X today. (4 pillars of self esteem)
+- Add daily motivational message. Allow users to send their own motivational messages. Share users 'stories'? (how their tasks will help them achieve their goals)
+- Add some measurements on progress goals. averages, etc
+- Consider using gzip. app.use(compression()) is a good idea
+- Use package like Concurrently to create a npm dev script
+- Look into cron jobs for deadlines/scheduling
+- Allow each task to have 'priority' level. low, medium, high
+- Show statistics for common goals. like, who else has 'meditate' for their goal today. Or, day streaks.

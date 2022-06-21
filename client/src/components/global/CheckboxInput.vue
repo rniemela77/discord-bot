@@ -23,13 +23,15 @@ const onChange = () => {
 </script>
 
 <template>
-  <input
-    type="checkbox"
-    v-model="checkboxState"
-    :id="checkboxId"
-    @change="onChange"
-  />
-  <label :for="checkboxId">{{ props.text }}</label>
+  <div>
+    <input
+      type="checkbox"
+      v-model="checkboxState"
+      :id="checkboxId"
+      @change="onChange"
+    />
+    <label :for="checkboxId">{{ props.text }}</label>
+  </div>
 </template>
 
 <style scoped>

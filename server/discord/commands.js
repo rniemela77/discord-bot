@@ -1,4 +1,4 @@
-const taskApi = require("../axios");
+const planApi = require("../axios");
 const { client, prefix } = require("./index.js");
 
 client.on("messageCreate", async (message) => {
@@ -11,56 +11,56 @@ client.on("messageCreate", async (message) => {
 
   if (command === "help") {
     message.reply(
-      "`!help` - Shows this message.\n`!addtask [task name] task description` - Add a task. | eg: !addtask [study math] spend one hour studying\n`!gettasks` - Shows all tasks."
+      "`!help` - Shows this message.\n`!addplan [plan name] plan description` - Add a plan. | eg: !addplan [study math] spend one hour studying\n`!getplans` - Shows all plans."
     );
   }
   // Get user ID
   else if (command === "userid") {
     message.author.send(`Your User ID is \n\`${message.author.id}\``);
   }
-  // Get tasks
-  else if (command === "gettasks") {
-    const tasks = await taskApi
-      .getTasks()
+  // Get plans
+  else if (command === "getplans") {
+    const plans = await planApi
+      .getPlans()
       .then((res) => {
-        // return each task as a string
+        // return each plan as a string
         let str = "";
-        res.forEach((task) => {
-          str += `${task.name} - ${task.description} @ ${task.date} ${task.time}\n`;
+        res.forEach((plan) => {
+          str += `${plan.name} - ${plan.description} @ ${plan.date} ${plan.time}\n`;
         });
         return str;
       })
       .catch(() => {
-        return "There was an error getting the tasks.";
+        return "There was an error getting the plans.";
       });
 
-    message.reply(tasks);
+    message.reply(plans);
   }
 
-  // Add task
-  else if (command === "addtask") {
-    // Parse arguments to create a task object
+  // Add plan
+  else if (command === "addplan") {
+    // Parse arguments to create a plan object
     const argsSplit = args.join(" ").split("[").join("").split("]");
-    const task = {
+    const plan = {
       name: argsSplit[0],
       description: argsSplit[1],
     };
 
-    if (!task.name || !task.description || argsSplit.length !== 2) {
+    if (!plan.name || !plan.description || argsSplit.length !== 2) {
       message.reply(
-        "Invalid command. Example: `!addtask [cold shower] take a cold shower`"
+        "Invalid command. Example: `!addplan [cold shower] take a cold shower`"
       );
       return;
     }
 
-    const apiResponse = await taskApi
-      .addTask(task)
+    const apiResponse = await planApi
+      .addPlan(plan)
       .then((res) => {
-        return "Task added.";
+        return "Plan added.";
       })
 
       .catch((error) => {
-        return `There was an error adding the task. ${error}`;
+        return `There was an error adding the plan. ${error}`;
       });
 
     message.reply(apiResponse);

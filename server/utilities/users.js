@@ -1,4 +1,4 @@
-const taskList = require("../../database/tasks.js");
+const planList = require("../../database/plans.js");
 const userList = require("../../database/users.js");
 
 exports.getDiscordIdFromUsername = (username) => {

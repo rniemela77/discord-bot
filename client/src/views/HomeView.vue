@@ -1,15 +1,16 @@
 <script setup>
-import TaskList from "@/components/task/TaskList.vue";
+import PlanList from "@/components/plan/PlanList.vue";
+import TodaysPlan from "@/components/plan/TodaysPlan.vue";
 
 import { useUserStore } from "@/stores/user";
-import { useTaskStore } from "@/stores/tasks";
+import { usePlanStore } from "@/stores/plans";
 import router from "@/router";
 
 const userStore = useUserStore();
-const taskStore = useTaskStore();
+const planStore = usePlanStore();
 
 const logout = () => {
-  taskStore.clearTasks();
+  planStore.clearPlans();
   userStore.logout();
   router.push("/login");
 };
@@ -21,6 +22,10 @@ const logout = () => {
 
     <button @click="logout">Logout</button>
 
-    <TaskList />
+    <h2>Today</h2>
+    <TodaysPlan />
+
+    <h2>Watching</h2>
+    <PlanList :tasks="planStore.watching" />
   </div>
 </template>

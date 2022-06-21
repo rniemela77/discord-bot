@@ -4,8 +4,10 @@ import FormTemplate from "@/components/global/FormTemplate.vue";
 import { ref } from "vue";
 import router from "@/router";
 import { useUserStore } from "@/stores/user";
+import { usePlanStore } from "../../stores/plans";
 
 const userStore = useUserStore();
+const planStore = usePlanStore();
 
 const username = ref("");
 const password = ref("");
@@ -28,6 +30,7 @@ const login = async () => {
     await userStore
       .login(user)
       .then(() => {
+        planStore.getAllPlansForUser(userStore.username);
         router.push("/");
       })
       .catch((err) => {
