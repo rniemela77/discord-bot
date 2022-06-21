@@ -50,6 +50,11 @@ const savePlan = async () => {
     err.value = err.message;
   }
 };
+
+// Whenever a task is completed, notify the server
+const setTaskCompleted = (taskName, isCompleted) => {
+  planStore.setTaskCompleted(plan.value.id, taskName, isCompleted);
+};
 </script>
 
 <template>
@@ -85,6 +90,7 @@ const savePlan = async () => {
           type="checkbox"
           v-model="task.completed"
           :id="`completed-${index}`"
+          @change="setTaskCompleted(task.name, $event.target.checked)"
         />
       </div>
 

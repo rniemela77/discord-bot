@@ -46,6 +46,20 @@ export const usePlanStore = defineStore({
           }
         });
     },
+    setTaskCompleted(planId, taskName, isCompleted) {
+      return axios
+        .put(`${url}/${planId}`, { taskName, isCompleted })
+        .then((response) => {
+          return response;
+        })
+        .catch((err) => {
+          if (err.response) {
+            throw new Error(err.response.data);
+          } else {
+            throw new Error(err.message);
+          }
+        });
+    },
     // confirmWatcher(planId, confirmation) {
     //   return axios
     //     .post(`${url}/confirm/${planId}`, { confirmation })

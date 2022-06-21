@@ -102,6 +102,25 @@ router.post("/", async (req, res) => {
   );
 });
 
+// Update task completed status
+router.put("/:planId", async (req, res) => {
+  const { planId } = req.params;
+  const { taskName, isCompleted } = req.body;
+  console.log(planId);
+
+  // Find plan in DB
+  const plan = plans.find((plan) => plan.id === Number(planId));
+
+  // Find task in plan
+  const task = plan.tasks.find((task) => task.name === taskName);
+
+  // Update task completed status
+  task.completed = isCompleted;
+
+  res.status(200).send("Task updated successfully.");
+  console.log(plan, task);
+});
+
 // Get tasks watched by username
 // router.get("/watchedBy/:username", (req, res) => {
 //   const tasks = plans.tasks.filter((task) => {

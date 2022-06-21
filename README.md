@@ -27,7 +27,6 @@ ensure dynos are enabled
 
 - process: add lucidchart of how everything works
 
-- server/frontend: complete tasks using /put/. (no need to discord PM on task completion)
 - frontend: change 'save plan' to 'edit plan'
 
 - frontend/server: allow user to set reminder for a task during day. (reminder will send a custom message on discord at a certain time). remind me: 1. to cross off tasks, or 2. custom reminder text.
