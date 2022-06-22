@@ -57,8 +57,9 @@ router.post("/", async (req, res) => {
 
   // Only return tasks that have a name
   const filteredTasks = req.body.tasks.filter((task) => task.name);
-  const trimmedTasks = filteredTasks.map((task) => {
+  const trimmedTasks = filteredTasks.map((task, index) => {
     return {
+      id: index,
       name: task.name.trim(),
       times: task.times,
       completed: task.completed,
@@ -105,18 +106,23 @@ router.post("/", async (req, res) => {
 // Update task completed status
 router.put("/:planId", async (req, res) => {
   const { planId } = req.params;
-  const { taskName, isCompleted } = req.body;
+  const { taskId, isCompleted } = req.body;
+  console.log(req.body);
 
   // Find plan in DB
   const plan = plans.find((plan) => plan.id === Number(planId));
 
   // Find task in plan
-  const task = plan.tasks.find((task) => task.name === taskName);
+  const task = plan.tasks.find((task) => task.id === taskId);
 
   // Update task completed status
   task.completed = isCompleted;
 
   res.status(200).send("Task updated successfully.");
+
+  plan.tasks.forEach((task) => {
+    console.log(task);
+  });
 });
 
 // Get tasks watched by username

@@ -30,6 +30,7 @@ const possibleWatchers = computed(() => {
 
 const addTask = () => {
   plan.value.tasks.push({
+    id: plan.value.tasks.length,
     name: "",
     times: [],
     completed: false,
@@ -60,9 +61,8 @@ const savePlan = async () => {
 };
 
 // Whenever a task is completed, notify the server
-const setTaskCompleted = async (taskName, isCompleted) => {
-  await planStore.setTaskCompleted(plan.value.id, taskName, isCompleted);
-
+const setTaskCompleted = async (taskId, isCompleted) => {
+  await planStore.setTaskCompleted(plan.value.id, taskId, isCompleted);
   await planStore.getAllPlansForUser(userStore.username);
 };
 </script>
@@ -108,7 +108,7 @@ const setTaskCompleted = async (taskName, isCompleted) => {
           type="checkbox"
           v-model="task.completed"
           :id="`completed-${index}`"
-          @change="setTaskCompleted(task.name, $event.target.checked)"
+          @change="setTaskCompleted(task.id, $event.target.checked)"
           :disabled="isEditing"
         />
       </div>

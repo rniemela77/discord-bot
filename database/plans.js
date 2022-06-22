@@ -13,8 +13,8 @@ exports.plans = [
     createdBy: "admin",
     watchedBy: ["rob"],
     tasks: [
-      { name: "eat", times: ["Morning"], completed: false },
-      { name: "exercise", times: ["Afternoon"], completed: false },
+      { id: 0, name: "eat", times: ["Morning"], completed: false },
+      { id: 1, name: "exercise", times: ["Afternoon"], completed: false },
     ],
     conclusion: "",
   },
@@ -27,8 +27,8 @@ exports.plans = [
     createdBy: "rob",
     watchedBy: ["admin"],
     tasks: [
-      { name: "task A", times: ["Morning"], completed: false },
-      { name: "task B", times: ["Afternoon"], completed: false },
+      { id: 0, name: "task A", times: ["Morning"], completed: false },
+      { id: 1, name: "task B", times: ["Afternoon"], completed: false },
     ],
     conclusion: "",
   },

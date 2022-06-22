@@ -46,9 +46,9 @@ export const usePlanStore = defineStore({
           }
         });
     },
-    setTaskCompleted(planId, taskName, isCompleted) {
+    setTaskCompleted(planId, taskId, isCompleted) {
       return axios
-        .put(`${url}/${planId}`, { taskName, isCompleted })
+        .put(`${url}/${planId}`, { taskId: taskId, isCompleted: isCompleted })
         .then((response) => {
           return response;
         })

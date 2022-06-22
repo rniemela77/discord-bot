@@ -27,6 +27,7 @@ ensure dynos are enabled
 
 - process: add lucidchart of how everything works
 
+- frontend: make task times v-for, use checkboxinput base component.
 - frontend/server: allow user to set reminder for a task during day. (reminder will send a custom message on discord at a certain time). remind me: 1. to cross off tasks, or 2. custom reminder text.
 
 - server/frontend: change plan.watchers to [ { name: 'rob', message: 'let's go!' }]
