@@ -10,6 +10,7 @@ const SITE_URL = process.env.SITE_URL;
 const {
   getCurrentDate,
   getCurrentTime,
+  roundTimeToMinutes,
 } = require("../../utilities/helpers.js");
 
 // Get all plans FOR user
@@ -71,11 +72,11 @@ router.post("/", async (req, res) => {
   const filteredReminders = req.body.reminders.filter(
     (reminder) => reminder.name && reminder.time
   );
-  const trimmedReminders = filteredReminders.map((reminder, index) => {
+  const roundedReminders = filteredReminders.map((reminder, index) => {
     return {
       id: index,
       name: reminder.name.trim(),
-      time: reminder.time,
+      time: roundTimeToMinutes(10, reminder.time),
       sent: reminder.sent,
     };
   });
@@ -90,7 +91,7 @@ router.post("/", async (req, res) => {
     watchedBy: req.body.watchedBy,
     tasks: trimmedTasks,
     conclusion: "",
-    reminders: trimmedReminders,
+    reminders: roundedReminders,
   };
 
   const createdByFirstName = users.find(

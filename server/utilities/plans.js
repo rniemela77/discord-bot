@@ -5,8 +5,8 @@ const { messageUser } = require("../discord/functions.js");
 const { getDiscordIdFromUsername } = require("./users.js");
 const { SITE_URL } = process.env;
 
-// TODO change to every 10 min
-const intervalSpeed = 1000 * 60; // 1 minutes
+// TODO make 10 min based on variable elsewhere. (used in /api/plans.js too)
+const intervalSpeed = 1000 * 600; // 10 min
 
 client.on("ready", async () => {
   setInterval(() => {
