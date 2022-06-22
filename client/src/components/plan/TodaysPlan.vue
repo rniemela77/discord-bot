@@ -40,7 +40,7 @@ const savePlan = async () => {
   const newPlan = {
     id: plan.value.id,
     createdBy: userStore.username,
-    watchedBy: plan.value.watchedBy,
+    watchers: plan.value.watchers,
     createdAtDate: getCurrentDate(),
     createdAtTime: getCurrentTime(),
     tasks: [...plan.value.tasks],
@@ -128,7 +128,7 @@ const addReminder = async () => {
         <label :for="`watcher-${user}`">{{ user }}</label>
         <input
           type="checkbox"
-          v-model="plan.watchedBy"
+          v-model="plan.watchers"
           :value="user"
           :id="`watcher-${user}`"
           :disabled="!isEditing"

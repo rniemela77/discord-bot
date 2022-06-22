@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
   // Return plans created by user, and plans watched by user
   let plansForUser = {};
   plansForUser.plans = plans.filter((plan) => plan.createdBy === user);
-  plansForUser.watching = plans.filter((plan) => plan.watchedBy.includes(user));
+  plansForUser.watching = plans.filter((plan) => plan.watchers.includes(user));
   plansForUser.today = plans.find(
     (plan) => plan.createdAtDate === getCurrentDate() && plan.createdBy === user
   );
@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
       dueDate: getCurrentDate(), // make end of day
       dueTime: getCurrentTime(), // make end of day
       createdBy: user,
-      watchedBy: [],
+      watchers: [],
       tasks: [{ name: "", times: [""], completed: false }],
       conclusion: "",
       reminders: [],
@@ -88,7 +88,7 @@ router.post("/", async (req, res) => {
     dueDate: req.body.createdAtDate, //todo fix
     dueTime: req.body.createdAtTime, //todo fix
     createdBy: req.body.createdBy,
-    watchedBy: req.body.watchedBy,
+    watchers: req.body.watchers,
     tasks: trimmedTasks,
     conclusion: "",
     reminders: roundedReminders,
@@ -113,7 +113,7 @@ router.post("/", async (req, res) => {
   message += `Visit ${SITE_URL} to support them!`;
 
   await Promise.all(
-    updatedPlan.watchedBy.map(async (username) => {
+    updatedPlan.watchers.map(async (username) => {
       const discordId = getDiscordIdFromUsername(username);
 
       if (discordId) {
@@ -146,9 +146,9 @@ router.put("/:planId", async (req, res) => {
 });
 
 // Get tasks watched by username
-// router.get("/watchedBy/:username", (req, res) => {
+// router.get("/watchers/:username", (req, res) => {
 //   const tasks = plans.tasks.filter((task) => {
-//     return task.watchedBy.includes(req.params.username);
+//     return task.watchers.includes(req.params.username);
 //   });
 
 //   if (tasks.length < 1) return res.status(200).send([]);

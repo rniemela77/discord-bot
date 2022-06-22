@@ -11,7 +11,7 @@ exports.plans = [
     dueDate: "2022-06-21",
     dueTime: "22:19",
     createdBy: "admin",
-    watchedBy: ["rob"],
+    watchers: ["rob"],
     tasks: [
       { id: 0, name: "eat", times: ["Morning"], completed: false },
       { id: 1, name: "exercise", times: ["Afternoon"], completed: false },
@@ -26,7 +26,7 @@ exports.plans = [
     dueDate: "2022-06-21",
     dueTime: "22:19",
     createdBy: "rob",
-    watchedBy: ["admin"],
+    watchers: ["admin"],
     tasks: [
       { id: 0, name: "task A", times: ["Morning"], completed: false },
       { id: 1, name: "task B", times: ["Afternoon"], completed: false },

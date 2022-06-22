@@ -27,22 +27,20 @@ ensure dynos are enabled
 
 - process: add lucidchart of how everything works
 
+- server/frontend: change plan.watchers to [ { name: 'rob', message: 'let's go!' }]
+- frontend: add support button per each user plan being watched. click shows modal. allow sending message, or default message. send PUT request to server.
+- server: receive PUT request, modify plan in db, and discord PM the taskCreator.
+
 - frontend/server: create custom select inputs for reminders. this way I can make sure the user only gets reminders in steps of 15/30 min.
 - frontend: make task times v-for, use checkboxinput base component.
 
 - frontend/server: have user fill out password when they edit profile. (this way we can pass password in the PUT request, and we don't store the password on the client, or return the password in the PUT request response).
 - frontend: use formStatus, grey out fields when form is submitting. grey out Save button if fields haven't changed.
 
-- server/frontend: change plan.watchers to [ { name: 'rob', message: 'let's go!' }]
-- frontend: add support button per each user plan being watched. click shows modal. allow sending message, or default message. send PUT request to server.
-- server: receive PUT request, modify plan in db, and discord PM the taskCreator.
-
 - frontend/server: have section in profile where user inputs GOAL(s).
 - frontend/server: on each new day, allow user to write how todays tasks will help them achieve GOAL(s) when they attempt to save/edit/add plan.
 
-- server/frontend: let user set "due" time for each individual day. Have the server check all plans every 10 minutes to see if any plans are due. dueAtTime...
 - frontend: add common keywords for quickly setting task name. "meal prep", "exercise", "study", "meditate"... (this can pop up as a tooltip selector when the user focuses in on the input field for the name)
-- frontend: let users select their "wake up" and "sleep" times. they won't be notified until they wake up. the 'wake up call' will ask what their intentions for the day are. 'sleep' alarm will check up on how they did.
 - frontend: add page transitions
 - frontend: use base components for inputs (form, textarea, text, checkbox, radio...)
 - frontend/server: develop profile screen. allow users to upload/set avatar
