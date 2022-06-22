@@ -25,7 +25,16 @@ router.get("/", async (req, res) => {
   // Return plans created by user, and plans watched by user
   let plansForUser = {};
   plansForUser.plans = plans.filter((plan) => plan.createdBy === user);
-  plansForUser.watching = plans.filter((plan) => plan.watchers.includes(user));
+  plansForUser.watching = [];
+  plans.forEach((plan) => {
+    plan.watchers.forEach((watcher) => {
+      if (watcher.name === user) {
+        console.log("watching");
+        plansForUser.watching.push(plan);
+      }
+    });
+  });
+
   plansForUser.today = plans.find(
     (plan) => plan.createdAtDate === getCurrentDate() && plan.createdBy === user
   );
