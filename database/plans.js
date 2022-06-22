@@ -11,7 +11,11 @@ exports.plans = [
     dueDate: "2022-06-21",
     dueTime: "22:19",
     createdBy: "admin",
-    watchers: ["rob"],
+    watchers: [
+      { name: "rob", message: "yooo" },
+      { name: "jane", message: "lets go!!!!" },
+      { name: "joe", message: "" },
+    ],
     tasks: [
       { id: 0, name: "eat", times: ["Morning"], completed: false },
       { id: 1, name: "exercise", times: ["Afternoon"], completed: false },
@@ -26,7 +30,7 @@ exports.plans = [
     dueDate: "2022-06-21",
     dueTime: "22:19",
     createdBy: "rob",
-    watchers: ["admin"],
+    watchers: [],
     tasks: [
       { id: 0, name: "task A", times: ["Morning"], completed: false },
       { id: 1, name: "task B", times: ["Afternoon"], completed: false },

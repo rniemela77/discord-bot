@@ -25,6 +25,7 @@ const login = async () => {
       .login(user)
       .then(() => {
         planStore.getAllPlansForUser(userStore.username);
+        userStore.getAllUsers();
         router.push("/");
       })
       .catch((err) => {

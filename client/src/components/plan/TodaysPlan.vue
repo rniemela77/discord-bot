@@ -80,7 +80,6 @@ const addReminder = async () => {
 
 <template>
   <div>
-    <h1>Today's Plan</h1>
     <div v-if="plan.tasks">
       <div v-for="(task, index) in plan.tasks" :key="index">
         <label for="task-name">Task</label>
@@ -160,7 +159,7 @@ const addReminder = async () => {
     </div>
 
     <div v-else>
-      <h2>No plan found for today</h2>
+      <small>Connecting...</small>
     </div>
   </div>
 </template>

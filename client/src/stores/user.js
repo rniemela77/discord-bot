@@ -82,10 +82,11 @@ export const useUserStore = defineStore({
     logout() {
       this.username = "";
       this.password = "";
+      this.firstName = "";
       this.discordUserId = "";
       this.wakeTime = "";
       this.sleepTime = "";
-      this.firstName = "";
+      this.allUsers = [];
     },
     getAllUsers() {
       return axios
