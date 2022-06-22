@@ -1,17 +1,43 @@
 const { client } = require("../discord/index.js");
-const planList = require("../../database/plans.js");
-const { getCurrentDate, getCurrentTime, listStrings } = require("./helpers.js");
+const { plans } = require("../../database/plans.js");
+const { getCurrentDate, getCurrentTime } = require("./helpers.js");
 const { messageUser } = require("../discord/functions.js");
 const { getDiscordIdFromUsername } = require("./users.js");
+const { SITE_URL } = process.env;
+
+// TODO change to every 10 min
+const intervalSpeed = 1000 * 60; // 1 minutes
 
 client.on("ready", async () => {
   setInterval(() => {
-    planList.plans.forEach((plan) => {
-      checkIfDue(plan);
+    plans.forEach((plan) => {
+      isReminderReady(plan);
     });
-  }, 3000);
+  }, intervalSpeed);
 });
 
+isReminderReady = (plan) => {
+  const { reminders } = plan;
+  const currentTime = getCurrentTime();
+  const currentDate = getCurrentDate();
+
+  if (plan.createdAtDate !== currentDate) return;
+
+  // check if reminder is ready
+  reminders.forEach((reminder) => {
+    if (reminder.time <= currentTime && !reminder.sent) {
+      const userDiscordId = getDiscordIdFromUsername(plan.createdBy);
+
+      let message = `[Reminder] ${reminder.name} @ ${currentTime}\n`;
+      message += `${SITE_URL}`;
+
+      messageUser(userDiscordId, message);
+      reminder.sent = true;
+      console.log(reminder, "is ready");
+    }
+  });
+};
+/*
 const isPlanDue = (plan) => {
   if (plan.date === getCurrentDate() && plan.time === getCurrentTime())
     return true;
@@ -75,3 +101,4 @@ exports.notifyWatchers = async (plan) => {
     })
   );
 };
+*/

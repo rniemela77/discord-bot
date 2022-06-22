@@ -44,6 +44,7 @@ const savePlan = async () => {
     createdAtDate: getCurrentDate(),
     createdAtTime: getCurrentTime(),
     tasks: [...plan.value.tasks],
+    reminders: [...plan.value.reminders],
   };
 
   try {
@@ -64,6 +65,16 @@ const savePlan = async () => {
 const setTaskCompleted = async (taskId, isCompleted) => {
   await planStore.setTaskCompleted(plan.value.id, taskId, isCompleted);
   await planStore.getAllPlansForUser(userStore.username);
+};
+
+const addReminder = async () => {
+  const newReminder = {
+    id: plan.value.reminders.length,
+    name: "",
+    time: "",
+    sent: false,
+  };
+  plan.value.reminders.push(newReminder);
 };
 </script>
 
@@ -123,6 +134,23 @@ const setTaskCompleted = async (taskId, isCompleted) => {
           :disabled="!isEditing"
         />
       </template>
+
+      <br />
+      <button @click="addReminder">Add Reminder</button>
+
+      <!-- TODO: make reminders required if it exists.-->
+      <template v-for="reminder in plan.reminders" :key="reminder.id">
+        <br />
+        <input type="text" v-model="reminder.name" :disabled="!isEditing" />
+        <label :for="`reminder-${reminder.id}`">Remind me at</label>
+        <input
+          type="time"
+          v-model="reminder.time"
+          :id="`reminder-${reminder.id}`"
+          :disabled="!isEditing"
+        />
+      </template>
+      <br />
 
       <button @click="toggleEditingMode">
         {{ isEditing ? "Save" : "Edit" }}

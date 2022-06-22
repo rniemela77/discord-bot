@@ -41,6 +41,7 @@ router.get("/", async (req, res) => {
       watchedBy: [],
       tasks: [{ name: "", times: [""], completed: false }],
       conclusion: "",
+      reminders: [],
     };
     plans.push(newPlan);
     id.number + 1;
@@ -66,6 +67,19 @@ router.post("/", async (req, res) => {
     };
   });
 
+  //Only return reminders with name and time
+  const filteredReminders = req.body.reminders.filter(
+    (reminder) => reminder.name && reminder.time
+  );
+  const trimmedReminders = filteredReminders.map((reminder, index) => {
+    return {
+      id: index,
+      name: reminder.name.trim(),
+      time: reminder.time,
+      sent: reminder.sent,
+    };
+  });
+
   const updatedPlan = {
     id: req.body.id,
     createdAtDate: req.body.createdAtDate,
@@ -76,6 +90,7 @@ router.post("/", async (req, res) => {
     watchedBy: req.body.watchedBy,
     tasks: trimmedTasks,
     conclusion: "",
+    reminders: trimmedReminders,
   };
 
   const createdByFirstName = users.find(
