@@ -78,6 +78,10 @@ router.post("/", async (req, res) => {
     conclusion: "",
   };
 
+  const createdByFirstName = users.find(
+    (user) => user.username === updatedPlan.createdBy
+  ).firstName;
+
   // Replace plan in DB with updated plan
   const index = plans.findIndex((plan) => plan.id === updatedPlan.id);
   plans[index] = updatedPlan;
@@ -86,11 +90,11 @@ router.post("/", async (req, res) => {
 
   // Message all watchers
   let message = "**Plan** ";
-  message += `${updatedPlan.createdBy} updated their plan for today.\n`;
-  message += `\`\`\`ini`;
+  message += `${createdByFirstName} updated their plan for today.\n`;
+  message += `\`\`\`ini\n`;
   message += `${updatedPlan.tasks.map((task) => task.name).join(", ")}\n`;
-  message += `\`\`\``;
-  message += `Visit ${SITE_URL} to confirm you will watch this plan.`;
+  message += `\n\`\`\``;
+  message += `Visit ${SITE_URL} to support them!`;
 
   await Promise.all(
     updatedPlan.watchedBy.map(async (username) => {

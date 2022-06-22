@@ -30,6 +30,9 @@ ensure dynos are enabled
 - frontend: make task times v-for, use checkboxinput base component.
 - frontend/server: allow user to set reminder for a task during day. (reminder will send a custom message on discord at a certain time). remind me: 1. to cross off tasks, or 2. custom reminder text.
 
+- frontend/server: have user fill out password when they edit profile. (this way we can pass password in the PUT request, and we don't store the password on the client, or return the password in the PUT request response).
+- frontend: use formStatus, grey out fields when form is submitting. grey out Save button if fields haven't changed.
+
 - server/frontend: change plan.watchers to [ { name: 'rob', message: 'let's go!' }]
 - frontend: add support button per each user plan being watched. click shows modal. allow sending message, or default message. send PUT request to server.
 - server: receive PUT request, modify plan in db, and discord PM the taskCreator.
