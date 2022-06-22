@@ -9,3 +9,18 @@ exports.getDiscordIdFromUsername = (username) => {
     return null;
   }
 };
+
+exports.isUserAwake = (username, time) => {
+  const user = userList.users.find((user) => user.username === username);
+  if (user) {
+    const wakeTime = user.wakeTime;
+    const sleepTime = user.sleepTime;
+    if (time >= wakeTime && time <= sleepTime) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+};

@@ -2,19 +2,41 @@ const { client } = require("../discord/index.js");
 const { plans } = require("../../database/plans.js");
 const { getCurrentDate, getCurrentTime } = require("./helpers.js");
 const { messageUser } = require("../discord/functions.js");
-const { getDiscordIdFromUsername } = require("./users.js");
+const { getDiscordIdFromUsername, isUserAwake } = require("./users.js");
 const { SITE_URL } = process.env;
+const { queue } = require("../../database/messages.js");
 
 // TODO make 10 min based on variable elsewhere. (used in /api/plans.js too)
-const intervalSpeed = 1000 * 600; // 10 min
+const intervalMinutes = 10;
+const intervalSpeed = 1000 * 60 * intervalMinutes; // 10 min
 
 client.on("ready", async () => {
   setInterval(() => {
     plans.forEach((plan) => {
       isReminderReady(plan);
     });
+    queue.forEach((message) => {
+      isMessageReady(message);
+    });
   }, intervalSpeed);
 });
+
+isMessageReady = async (queuedMessage) => {
+  const { username, message } = queuedMessage;
+  const currentTime = getCurrentTime();
+
+  // get user's discord id, and wakeTime
+  const userDiscordId = getDiscordIdFromUsername(username);
+
+  if (!isUserAwake(username, currentTime)) {
+    console.log(username, "is asleep");
+    return;
+  }
+
+  console.log("sending to", username);
+  await messageUser(userDiscordId, message);
+  queue.splice(queue.indexOf(queuedMessage), 1);
+};
 
 isReminderReady = (plan) => {
   const { reminders } = plan;
@@ -33,7 +55,6 @@ isReminderReady = (plan) => {
 
       messageUser(userDiscordId, message);
       reminder.sent = true;
-      console.log(reminder, "is ready");
     }
   });
 };
