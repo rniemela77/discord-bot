@@ -8,6 +8,11 @@ export const useUserStore = defineStore({
   id: "user",
   state: () => ({
     username: "",
+    password: "",
+    firstName: "",
+    discordUserId: "",
+    wakeTime: "",
+    sleepTime: "",
     allUsers: [],
   }),
   actions: {
@@ -29,17 +34,42 @@ export const useUserStore = defineStore({
           }
         });
     },
+    updateUser() {
+      const updatedUser = {
+        username: this.username,
+        password: this.password,
+        firstName: this.firstName,
+        discordUserId: this.discordUserId,
+        wakeTime: this.wakeTime,
+        sleepTime: this.sleepTime,
+      };
+      return axios
+        .put(`${url}/${updatedUser.username}`, updatedUser)
+        .then((res) => {
+          this.username = res.data.username;
+          this.password = res.data.password;
+          this.discordUserId = res.data.discordUserId;
+          this.wakeTime = res.data.wakeTime;
+          this.sleepTime = res.data.sleepTime;
+          this.firstName = res.data.firstName;
+        })
+        .catch((err) => {
+          if (err.response) {
+            throw new Error(err.response.data);
+          }
+          throw new Error(err.message);
+        });
+    },
     login(user) {
       return axios
         .post(url, user)
         .then((res) => {
-          if (res.status === 200) {
-            this.username = user.username;
-          } else {
-            throw new Error(
-              "Received a response with status code other than 200"
-            );
-          }
+          this.username = res.data.username;
+          this.password = res.data.password;
+          this.discordUserId = res.data.discordUserId;
+          this.wakeTime = res.data.wakeTime;
+          this.sleepTime = res.data.sleepTime;
+          this.firstName = res.data.firstName;
         })
         .catch((err) => {
           if (err.response) {
@@ -51,6 +81,11 @@ export const useUserStore = defineStore({
     },
     logout() {
       this.username = "";
+      this.password = "";
+      this.discordUserId = "";
+      this.wakeTime = "";
+      this.sleepTime = "";
+      this.firstName = "";
     },
     getAllUsers() {
       return axios

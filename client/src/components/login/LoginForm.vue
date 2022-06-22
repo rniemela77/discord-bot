@@ -9,8 +9,6 @@ import { usePlanStore } from "../../stores/plans";
 const userStore = useUserStore();
 const planStore = usePlanStore();
 
-const username = ref("");
-const password = ref("");
 const errorMessage = ref("");
 const formStatus = ref("initial"); // initial, sending, success, error
 
@@ -18,13 +16,9 @@ const login = async () => {
   formStatus.value = "sending";
 
   try {
-    if (!username.value || !password.value) {
-      throw new Error("Username or password missing");
-    }
-
     const user = {
-      username: username.value,
-      password: password.value,
+      username: userStore.username,
+      password: userStore.password,
     };
 
     await userStore
@@ -51,7 +45,7 @@ const login = async () => {
       <input
         type="text"
         id="username"
-        v-model="username"
+        v-model="userStore.username"
         placeholder="Username"
         :disabled="formStatus === 'sending'"
         required
@@ -61,7 +55,7 @@ const login = async () => {
       <input
         type="password"
         id="password"
-        v-model="password"
+        v-model="userStore.password"
         placeholder="Password"
         :disabled="formStatus === 'sending'"
         required
