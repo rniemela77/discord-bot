@@ -60,6 +60,23 @@ export const usePlanStore = defineStore({
           }
         });
     },
+    setWatcherMessage(planId, supportMessage) {
+      return axios
+        .put(`${url}/${planId}/setwatchermessage`, {
+          name: supportMessage.name,
+          message: supportMessage.message,
+        })
+        .then((response) => {
+          return response;
+        })
+        .catch((err) => {
+          if (err.response) {
+            throw new Error(err.response.data);
+          } else {
+            throw new Error(err.message);
+          }
+        });
+    },
     // confirmWatcher(planId, confirmation) {
     //   return axios
     //     .post(`${url}/confirm/${planId}`, { confirmation })

@@ -27,9 +27,15 @@ ensure dynos are enabled
 
 - process: add lucidchart of how everything works
 
-- server/frontend: change plan.watchers to [ { name: 'rob', message: 'let's go!' }]
-- frontend: add support button per each user plan being watched. click shows modal. allow sending message, or default message. send PUT request to server.
-- server: receive PUT request, modify plan in db, and discord PM the taskCreator.
+- server: for setting watchermessage, add a default message if a message is not provided
+- server: abstract some logic into other functions. remove the amount of code in the HTTP route handlers.
+- frontend: add form status to all areas with buttons. (initial, loading, sending, success, error)
+- frontend: form status 'sending' should disable buttons and inputs
+- frontend: show 'success' message/state briefly
+- frontend: communicate success on API calls
+- frontend: communicate error on API calls
+- frontend: allow user to view their own plan on one tab, and watched plans on another tab.
+- frontend: move more logic into store functions. (import each store into the other stores if possible)
 
 - frontend/server: create custom select inputs for reminders. this way I can make sure the user only gets reminders in steps of 15/30 min.
 - frontend: make task times v-for, use checkboxinput base component.

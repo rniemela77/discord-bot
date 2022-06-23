@@ -154,6 +154,21 @@ router.put("/:planId", async (req, res) => {
   });
 });
 
+// Set watcher message
+router.put("/:planId/setwatchermessage", async (req, res) => {
+  const { planId } = req.params;
+  const { name, message } = req.body;
+  // Find plan in DB
+  const plan = plans.find((plan) => plan.id === Number(planId));
+  // Find watcher in plan
+  const watcherIndex = plan.watchers.findIndex(
+    (watcher) => watcher.name === name
+  );
+  plan.watchers[watcherIndex].message = message;
+  console.log("works?");
+  res.status(200).send("Watcher message updated successfully.");
+});
+
 // Get tasks watched by username
 // router.get("/watchers/:username", (req, res) => {
 //   const tasks = plans.tasks.filter((task) => {
