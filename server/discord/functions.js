@@ -9,8 +9,12 @@ exports.messageUser = async (userId, message) => {
   const user = users.find((user) => user.discordUserId === userId);
 
   // If a message is being sent to a user outside of their waking hours,
+  // AND the message is not already in the queue,
   // store it in the message queue
-  if (!isUserAwake(user.username, getCurrentTime())) {
+  if (
+    !isUserAwake(user.username, getCurrentTime()) &&
+    !queueContainsMessage(user.username, message)
+  ) {
     queue.push({ username: user.username, message });
     return;
   }
@@ -24,6 +28,14 @@ exports.messageUser = async (userId, message) => {
     .catch((err) => {
       console.log("messageUser() error:" + err.message + ". userId:" + userId);
     });
+};
+
+const queueContainsMessage = (username, message) => {
+  return queue.some((queuedMessage) => {
+    return (
+      queuedMessage.username === username && queuedMessage.message === message
+    );
+  });
 };
 
 /*
