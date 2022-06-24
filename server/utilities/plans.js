@@ -7,7 +7,7 @@ const { SITE_URL } = process.env;
 const { queue } = require("../../database/messages.js");
 const { id } = require("../../database/plans.js");
 
-exports.intervalMinutes = 0.5;
+exports.intervalMinutes = 10;
 
 // TODO make 10 min based on variable elsewhere. (used in /api/plans.js too)
 const intervalSpeed = 1000 * 60 * this.intervalMinutes; // 10 min
