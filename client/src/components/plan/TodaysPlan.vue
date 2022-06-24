@@ -43,6 +43,8 @@ const savePlan = async () => {
     watchers: plan.value.watchers,
     createdAtDate: getCurrentDate(),
     createdAtTime: getCurrentTime(),
+    dueDate: getCurrentDate(),
+    dueTime: getCurrentTime(),
     tasks: [...plan.value.tasks],
     reminders: [...plan.value.reminders],
   };

@@ -27,6 +27,7 @@ ensure dynos are enabled
 
 - process: add lucidchart of how everything works
 
+- server: check if a message is already in the queue before adding it
 - server: for setting watchermessage, add a default message if a message is not provided
 - server: abstract some logic into other functions. remove the amount of code in the HTTP route handlers.
 - frontend: add form status to all areas with buttons. (initial, loading, sending, success, error)

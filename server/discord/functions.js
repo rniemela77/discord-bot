@@ -5,17 +5,17 @@ const { queue } = require("../../database/messages.js");
 const { isUserAwake } = require("../utilities/users.js");
 
 exports.messageUser = async (userId, message) => {
+  // Find user in DB
   const user = users.find((user) => user.discordUserId === userId);
-  const currentTime = getCurrentTime();
-  const userWakeTime = user.wakeTime;
 
-  // compare HH:MM times
-  if (!isUserAwake(user.username, currentTime)) {
-    console.log("too early for user");
+  // If a message is being sent to a user outside of their waking hours,
+  // store it in the message queue
+  if (!isUserAwake(user.username, getCurrentTime())) {
     queue.push({ username: user.username, message });
     return;
   }
 
+  // Otherwise, send the message to the user
   await client.users
     .fetch(userId)
     .then((user) => {

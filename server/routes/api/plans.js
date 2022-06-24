@@ -1,17 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const discordWebhook = require("../../discord/webhook");
 const { getDiscordIdFromUsername } = require("../../utilities/users");
 const { messageUser } = require("../../discord/functions.js");
-const { plans, id } = require("../../../database/plans.js");
+const { plans } = require("../../../database/plans.js");
 const { users } = require("../../../database/users.js");
-const { notifyWatchers } = require("../../utilities/plans");
 const SITE_URL = process.env.SITE_URL;
 const {
   getCurrentDate,
   getCurrentTime,
   roundTimeToMinutes,
 } = require("../../utilities/helpers.js");
+const {
+  intervalMinutes,
+  createEmptyPlan,
+} = require("../../utilities/plans.js");
 
 // Get all plans FOR user
 router.get("/", async (req, res) => {
@@ -22,39 +24,29 @@ router.get("/", async (req, res) => {
     return res.status(400).send("User does not exist");
   }
 
-  // Return plans created by user, and plans watched by user
   let plansForUser = {};
+  // Return all plans created by user
   plansForUser.plans = plans.filter((plan) => plan.createdBy === user);
+  // Return all plans that the user is watching
   plansForUser.watching = [];
   plans.forEach((plan) => {
     plan.watchers.forEach((watcher) => {
       if (watcher.name === user) {
-        console.log("watching");
         plansForUser.watching.push(plan);
       }
     });
   });
 
+  // Return today's plan for the user
   plansForUser.today = plans.find(
-    (plan) => plan.createdAtDate === getCurrentDate() && plan.createdBy === user
+    (plan) => plan.dueDate === getCurrentDate() && plan.createdBy === user
   );
 
   // If there is no plan for today, create a new plan
   if (!plansForUser.today) {
-    const newPlan = {
-      id: id.number + 1,
-      createdAtDate: getCurrentDate(),
-      createdAtTime: getCurrentTime(),
-      dueDate: getCurrentDate(), // make end of day
-      dueTime: getCurrentTime(), // make end of day
-      createdBy: user,
-      watchers: [],
-      tasks: [{ name: "", times: [""], completed: false }],
-      conclusion: "",
-      reminders: [],
-    };
+    const newPlan = createEmptyPlan(user);
+
     plans.push(newPlan);
-    id.number + 1;
 
     plansForUser.today = newPlan;
   }
@@ -77,7 +69,7 @@ router.post("/", async (req, res) => {
     };
   });
 
-  //Only return reminders with name and time
+  // Only return reminders with name and time
   const filteredReminders = req.body.reminders.filter(
     (reminder) => reminder.name && reminder.time
   );
@@ -85,11 +77,12 @@ router.post("/", async (req, res) => {
     return {
       id: index,
       name: reminder.name.trim(),
-      time: roundTimeToMinutes(10, reminder.time),
+      time: roundTimeToMinutes(intervalMinutes, reminder.time),
       sent: reminder.sent,
     };
   });
 
+  // Create the updated plan
   const updatedPlan = {
     id: req.body.id,
     createdAtDate: req.body.createdAtDate,
@@ -103,10 +96,6 @@ router.post("/", async (req, res) => {
     reminders: roundedReminders,
   };
 
-  const createdByFirstName = users.find(
-    (user) => user.username === updatedPlan.createdBy
-  ).firstName;
-
   // Replace plan in DB with updated plan
   const index = plans.findIndex((plan) => plan.id === updatedPlan.id);
   plans[index] = updatedPlan;
@@ -114,8 +103,12 @@ router.post("/", async (req, res) => {
   res.status(201).send("Task added successfully.");
 
   // Message all watchers
+  const createdByFirstName = users.find(
+    (user) => user.username === updatedPlan.createdBy
+  ).firstName;
+
   let message = "**Plan** ";
-  message += `${createdByFirstName} updated their plan for today.\n`;
+  message += `${createdByFirstName} set their plan for today.\n`;
   message += `\`\`\`ini\n`;
   message += `${updatedPlan.tasks.map((task) => task.name).join(", ")}\n`;
   message += `\n\`\`\``;
@@ -136,7 +129,6 @@ router.post("/", async (req, res) => {
 router.put("/:planId", async (req, res) => {
   const { planId } = req.params;
   const { taskId, isCompleted } = req.body;
-  console.log(req.body);
 
   // Find plan in DB
   const plan = plans.find((plan) => plan.id === Number(planId));
@@ -144,71 +136,29 @@ router.put("/:planId", async (req, res) => {
   // Find task in plan
   const task = plan.tasks.find((task) => task.id === taskId);
 
-  // Update task completed status
+  // Mark task as completed
   task.completed = isCompleted;
 
   res.status(200).send("Task updated successfully.");
-
-  plan.tasks.forEach((task) => {
-    console.log(task);
-  });
 });
 
 // Set watcher message
 router.put("/:planId/setwatchermessage", async (req, res) => {
   const { planId } = req.params;
   const { name, message } = req.body;
+
   // Find plan in DB
   const plan = plans.find((plan) => plan.id === Number(planId));
+
   // Find watcher in plan
   const watcherIndex = plan.watchers.findIndex(
     (watcher) => watcher.name === name
   );
+
+  // Set watcher message in plan
   plan.watchers[watcherIndex].message = message;
-  console.log("works?");
+
   res.status(200).send("Watcher message updated successfully.");
 });
-
-// Get tasks watched by username
-// router.get("/watchers/:username", (req, res) => {
-//   const tasks = plans.tasks.filter((task) => {
-//     return task.watchers.includes(req.params.username);
-//   });
-
-//   if (tasks.length < 1) return res.status(200).send([]);
-
-//   res.status(200).send(tasks);
-// });
-
-// Set task status
-// router.post("/complete/:id", (req, res) => {
-//   const taskId = req.params.id;
-//   const conclusion = req.body;
-
-//   // Get task by id
-//   const task = plans.tasks.find((task) => task.id.toString() === taskId);
-
-//   if (!task) return res.status(404).send("Task not found");
-
-//   // add the task to the due list with the added status
-//   task.conclusion = conclusion.text;
-
-//   notifyWatchers(task);
-
-//   res.status(200).send("Task completed");
-// });
-
-// router.delete(
-//   "/:id",
-//   (req, res) => {
-//     const id = req.params.id;
-//     plans.tasks = plans.tasks.filter((task) => task.id.toString() !== id);
-
-//     res.status(200).send("Task deleted");
-//   },
-//   (err) => {
-//     console.log(err);
-//   }
-// );
 
 module.exports = router;

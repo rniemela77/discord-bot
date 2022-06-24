@@ -5,10 +5,12 @@ const { messageUser } = require("../discord/functions.js");
 const { getDiscordIdFromUsername, isUserAwake } = require("./users.js");
 const { SITE_URL } = process.env;
 const { queue } = require("../../database/messages.js");
+const { id } = require("../../database/plans.js");
+
+exports.intervalMinutes = 0.5;
 
 // TODO make 10 min based on variable elsewhere. (used in /api/plans.js too)
-const intervalMinutes = 10;
-const intervalSpeed = 1000 * 60 * intervalMinutes; // 10 min
+const intervalSpeed = 1000 * 60 * this.intervalMinutes; // 10 min
 
 client.on("ready", async () => {
   setInterval(() => {
@@ -43,7 +45,7 @@ isReminderReady = (plan) => {
   const currentTime = getCurrentTime();
   const currentDate = getCurrentDate();
 
-  if (plan.createdAtDate !== currentDate) return;
+  if (plan.dueDate !== currentDate) return;
 
   // check if reminder is ready
   reminders.forEach((reminder) => {
@@ -57,6 +59,25 @@ isReminderReady = (plan) => {
       reminder.sent = true;
     }
   });
+};
+
+exports.createEmptyPlan = (username) => {
+  const newPlan = {
+    id: id.number + 1,
+    createdAtDate: getCurrentDate(),
+    createdAtTime: getCurrentTime(),
+    dueDate: getCurrentDate(), // make end of day
+    dueTime: getCurrentTime(), // make end of day
+    createdBy: username,
+    watchers: [],
+    tasks: [{ name: "", times: [""], completed: false }],
+    conclusion: "",
+    reminders: [],
+  };
+
+  id.number + 1;
+
+  return newPlan;
 };
 /*
 const isPlanDue = (plan) => {
