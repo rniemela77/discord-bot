@@ -28,7 +28,6 @@ ensure dynos are enabled
 - process: add lucidchart of how everything works
 
 - frontend: show date next to most recent watched tasks. (Is this task for today, yesterday, etc?)
-- server: check if a message is already in the queue before adding it
 - frontend: send generic watcher message if not provided a message
 - server: abstract some logic into other functions. remove the amount of code in the HTTP route handlers.
 - frontend: add form status to all areas with buttons. (initial, loading, sending, success, error)
