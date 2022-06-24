@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { getCurrentDate } from "@/utils/index.js";
+import { useUserStore } from "@/stores/user.js";
 
 const url = "/api/plans";
 
@@ -17,12 +19,20 @@ export const usePlanStore = defineStore({
       this.today = {};
     },
     getAllPlansForUser(username) {
+      const userStore = useUserStore();
+
       return axios
         .get(`${url}?user=${username}`)
         .then((res) => {
-          this.all = res.data.plans;
-          this.watching = res.data.watching;
-          this.today = res.data.today;
+          this.all = res.data;
+          this.watching = res.data.filter((plan) =>
+            plan.watchers.find((watcher) => watcher.name === userStore.username)
+          );
+          this.today = res.data.find(
+            (plan) =>
+              plan.dueDate === getCurrentDate() &&
+              plan.createdBy === userStore.username
+          );
         })
         .catch((err) => {
           if (err.response) {

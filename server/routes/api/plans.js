@@ -7,7 +7,6 @@ const { users } = require("../../../database/users.js");
 const SITE_URL = process.env.SITE_URL;
 const {
   getCurrentDate,
-  getCurrentTime,
   roundTimeToMinutes,
 } = require("../../utilities/helpers.js");
 const {
@@ -24,34 +23,25 @@ router.get("/", async (req, res) => {
     return res.status(400).send("User does not exist");
   }
 
-  let plansForUser = {};
-  // Return all plans created by user
-  plansForUser.plans = plans.filter((plan) => plan.createdBy === user);
-  // Return all plans that the user is watching
-  plansForUser.watching = [];
-  plans.forEach((plan) => {
-    plan.watchers.forEach((watcher) => {
-      if (watcher.name === user) {
-        plansForUser.watching.push(plan);
-      }
-    });
-  });
-
-  // Return today's plan for the user
-  plansForUser.today = plans.find(
-    (plan) => plan.dueDate === getCurrentDate() && plan.createdBy === user
-  );
-
-  // If there is no plan for today, create a new plan
-  if (!plansForUser.today) {
+  // If this user has no plan for today, create a new plan and push it to the DB
+  if (
+    !plans.find((p) => {
+      p.dueDate === getCurrentDate() && p.createdBy === user;
+    })
+  ) {
     const newPlan = createEmptyPlan(user);
-
     plans.push(newPlan);
-
-    plansForUser.today = newPlan;
   }
 
-  res.status(200).send(plansForUser);
+  // return plans created by the user, or watched by the user
+  const userPlans = plans.filter((plan) => {
+    return (
+      plan.createdBy === user ||
+      plan.watchers.find((watcher) => watcher.name === user)
+    );
+  });
+
+  res.status(200).send(userPlans);
 });
 
 // Add/Edit Plan
