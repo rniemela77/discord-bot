@@ -28,6 +28,8 @@ ensure dynos are enabled
 - process: add lucidchart of how everything works
 
 - frontend/server: on each new day, allow user to write how todays tasks will help them achieve GOAL(s) when they attempt to save/edit/add plan.
+- frontend: set FormTemplate to all forms.
+- frontend: give FormTemplate a prop, "statusMessage", which will show the result/error text. (catch(err) will be shown here. maybe have generic success message?)
 
 - frontend: show date next to most recent watched tasks. (Is this task for today, yesterday, etc?)
 - frontend: send generic watcher message if not provided a message
