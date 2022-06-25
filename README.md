@@ -27,6 +27,8 @@ ensure dynos are enabled
 
 - process: add lucidchart of how everything works
 
+- frontend/server: on each new day, allow user to write how todays tasks will help them achieve GOAL(s) when they attempt to save/edit/add plan.
+
 - frontend: show date next to most recent watched tasks. (Is this task for today, yesterday, etc?)
 - frontend: send generic watcher message if not provided a message
 - server: abstract some logic into other functions. remove the amount of code in the HTTP route handlers.
@@ -43,9 +45,6 @@ ensure dynos are enabled
 
 - frontend/server: have user fill out password when they edit profile. (this way we can pass password in the PUT request, and we don't store the password on the client, or return the password in the PUT request response).
 - frontend: use formStatus, grey out fields when form is submitting. grey out Save button if fields haven't changed.
-
-- frontend/server: have section in profile where user inputs GOAL(s).
-- frontend/server: on each new day, allow user to write how todays tasks will help them achieve GOAL(s) when they attempt to save/edit/add plan.
 
 - frontend: add common keywords for quickly setting task name. "meal prep", "exercise", "study", "meditate"... (this can pop up as a tooltip selector when the user focuses in on the input field for the name)
 - frontend: add page transitions

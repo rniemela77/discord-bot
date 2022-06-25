@@ -46,6 +46,11 @@ const router = createRouter({
       name: "plan",
       component: () => import("@/views/TaskView.vue"),
     },
+    {
+      path: "/goals",
+      name: "goals",
+      component: () => import("@/views/GoalsView.vue"),
+    },
   ],
 });
 

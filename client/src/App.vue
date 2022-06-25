@@ -38,6 +38,7 @@ onMounted(async () => {
       <RouterLink to="/">Tasks</RouterLink>
       <RouterLink to="/profile">Profile</RouterLink>
       <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/goals">Goals</RouterLink>
     </header>
 
     <RouterView />

@@ -14,6 +14,7 @@ export const useUserStore = defineStore({
     wakeTime: "",
     sleepTime: "",
     allUsers: [],
+    goals: [],
   }),
   actions: {
     signup(info) {
@@ -42,6 +43,7 @@ export const useUserStore = defineStore({
         discordUserId: this.discordUserId,
         wakeTime: this.wakeTime,
         sleepTime: this.sleepTime,
+        goals: this.goals,
       };
       return axios
         .put(`${url}/${updatedUser.username}`, updatedUser)
@@ -52,6 +54,7 @@ export const useUserStore = defineStore({
           this.wakeTime = res.data.wakeTime;
           this.sleepTime = res.data.sleepTime;
           this.firstName = res.data.firstName;
+          this.goals = res.data.goals;
         })
         .catch((err) => {
           if (err.response) {
@@ -70,6 +73,7 @@ export const useUserStore = defineStore({
           this.wakeTime = res.data.wakeTime;
           this.sleepTime = res.data.sleepTime;
           this.firstName = res.data.firstName;
+          this.goals = res.data.goals;
         })
         .catch((err) => {
           if (err.response) {
@@ -87,6 +91,7 @@ export const useUserStore = defineStore({
       this.wakeTime = "";
       this.sleepTime = "";
       this.allUsers = [];
+      this.goals = [];
     },
     getAllUsers() {
       return axios

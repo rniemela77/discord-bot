@@ -35,6 +35,7 @@ router.put("/:username", async (req, res) => {
     discordUserId: req.body.discordUserId.trim(),
     wakeTime: req.body.wakeTime.trim(),
     sleepTime: req.body.sleepTime.trim(),
+    goals: req.body.goals,
   };
 
   if (!user.username || !user.password) {
@@ -50,10 +51,16 @@ router.put("/:username", async (req, res) => {
     return res.status(400).send("Username or password incorrect");
   }
 
+  // Re-order the IDs of the goals
+  user.goals.forEach((goal, index) => {
+    goal.id = index;
+  });
+
   userExists.firstName = user.firstName;
   userExists.discordUserId = user.discordUserId;
   userExists.wakeTime = user.wakeTime;
   userExists.sleepTime = user.sleepTime;
+  userExists.goals = user.goals;
 
   res.status(200).send(userExists);
   console.log("updated user info");

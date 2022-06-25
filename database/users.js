@@ -6,6 +6,20 @@ exports.users = [
     discordUserId: "288080302377795585",
     wakeTime: "08:00",
     sleepTime: "22:00",
+    goals: [
+      {
+        id: 0,
+        name: "Become more assertive",
+      },
+      {
+        id: 1,
+        name: "Be in shape and feel healthy",
+      },
+      {
+        id: 2,
+        name: "Get more sleep",
+      },
+    ],
   },
   {
     username: "rob",
